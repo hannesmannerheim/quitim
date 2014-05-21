@@ -42,29 +42,29 @@ Setup
 
 5. In lib/framework.php, set these variables like this:
 
-	`define('AVATAR_PROFILE_SIZE', 192);`
-	`define('AVATAR_STREAM_SIZE', 96);`
-	`define('AVATAR_MINI_SIZE', 48);`
-	`define('NOTICES_PER_PAGE', 10);`
+	define('AVATAR_PROFILE_SIZE', 192);
+	define('AVATAR_STREAM_SIZE', 96);
+	define('AVATAR_MINI_SIZE', 48);
+	define('NOTICES_PER_PAGE', 10);
 
 6. In `function showAuthor()` in lib/noticelistitem.php change
 
-	`$this->out->element('span',array('class' => 'fn'), $this->profile->getStreamName());`
+	$this->out->element('span',array('class' => 'fn'), $this->profile->getStreamName());
 
 to
 
-	`$this->out->element('span',array('class' => 'fn'), $this->profile->nickname);`
+	$this->out->element('span',array('class' => 'fn'), $this->profile->nickname);
 	
 7. At ~line 440 in lib/threadednoticelist.php change
 
-	`$links[] = sprintf('<a href="%s">%s</a>',
+	$links[] = sprintf('<a href="%s">%s</a>',
 					   htmlspecialchars($profile->profileurl),
-					   htmlspecialchars($profile->getBestName()));`
+					   htmlspecialchars($profile->getBestName()));
 
 to 
 
-	`$links[] = sprintf('<a href="%s">%s</a>',
+	$links[] = sprintf('<a href="%s">%s</a>',
 				   htmlspecialchars($profile->profileurl),
-				   htmlspecialchars($profile->nickname));`
+				   htmlspecialchars($profile->nickname));
 
 	
