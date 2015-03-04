@@ -189,7 +189,7 @@ $('body').on('DOMNodeInserted', '.notice-options', function(e) {
 // like on doubletap
 $('body').on('doubletap dblclick','.quitim-notice img',function(){
 	$(this).parent().append('<div class="double-tap-heart"></div>');
-	$(this).parent().parent().parent().find('input[value="Favor"]').trigger('click');
+	$(this).closest('.notice').children('.notice-options').find('input[value="Favor"]').trigger('click');
 	setTimeout(function(){
 		$('.double-tap-heart').fadeOut(500,function(){
 			$('.double-tap-heart').remove();
