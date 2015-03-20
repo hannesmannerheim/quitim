@@ -187,14 +187,27 @@ $('body').on('DOMNodeInserted', '.notice-options', function(e) {
 	});
 
 // like on doubletap
-$('body').on('doubletap dblclick','.quitim-notice img',function(){
-	$(this).parent().append('<div class="double-tap-heart"></div>');
-	$(this).closest('.notice').children('.notice-options').find('input[value="Favor"]').trigger('click');
-	setTimeout(function(){
-		$('.double-tap-heart').fadeOut(500,function(){
-			$('.double-tap-heart').remove();
-			});		
-		},200);
+window.lastClick = new Object();
+window.lastClick.time = 0;
+window.lastClick.scrollPos = 0;
+$('body').on('click touchend','.quitim-notice img',function(){
+	var timeNow = Date.now();
+	var scrollPosNow = $(window).scrollTop();
+	var timeSinceLastClick = timeNow - window.lastClick.time;
+	var scrollSinceLastClick = Math.abs(scrollPosNow-window.lastClick.scrollPos);
+	if(timeSinceLastClick<400 && scrollSinceLastClick<5) {
+		$(this).parent().append('<div class="double-tap-heart"></div>');
+		$(this).closest('.notice').children('.notice-options').find('input[value="Favor"]').trigger('click');
+		setTimeout(function(){
+			$('.double-tap-heart').fadeOut(500,function(){
+				$('.double-tap-heart').remove();
+				});		
+			},200);		
+		}
+	else {
+		window.lastClick.time = timeNow;
+		window.lastClick.scrollPos = scrollPosNow;		
+		}
 	});
 
 // check for new notifications	
@@ -268,7 +281,7 @@ function checkForNewNotifications() {
    · · · · · · · · · · · · · */ 
 
 $('.register-link').click(function(e){
-	e.preventDefault();			
+	e.preventDefault();
 
 	display_overlay_loading();
 	// 7 s timeout to annoy human spammers

@@ -270,7 +270,7 @@ class QuitimPlugin extends Plugin {
         $action->script($this->path('js/jquery.vintage.min.js'));                             
         $action->script($this->path('js/jquery.mobile-events.min.js'));                                             
         $action->script($this->path('js/jpeg_encoder_basic.js'));                                                     
-        $action->script($this->path('js/quitim.js?v=2'));        
+        $action->script($this->path('js/quitim.js?v=8'));        
         return true;
     }    
 
