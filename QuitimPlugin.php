@@ -4,6 +4,7 @@ common_config_set('attachments', 'thumb_width', '306');
 common_config_set('attachments', 'thumb_height', '306');
 error_reporting(E_ALL ^ E_STRICT); // no PHP Strict Standards errors...
 
+const QUITIMDIR = __DIR__;
 
 class QuitimPlugin extends Plugin {
 
@@ -270,7 +271,7 @@ class QuitimPlugin extends Plugin {
         $action->script($this->path('js/jquery.vintage.min.js'));                             
         $action->script($this->path('js/jquery.mobile-events.min.js'));                                             
         $action->script($this->path('js/jpeg_encoder_basic.js'));                                                     
-        $action->script($this->path('js/quitim.js?v=8'));        
+        $action->script($this->path('js/quitim.js') . '?changed='.date('YmdHis',filemtime(QUITIMDIR.'/js/quitim.js')));
         return true;
     }    
 
