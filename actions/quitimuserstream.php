@@ -50,7 +50,7 @@ class QuitimUserStreamAction extends ProfileAction
     function showStylesheets()
     {
 
-        $this->cssLink('plugins/Quitim/css/quitim.css');
+        $this->cssLink(Plugin::staticPath('Quitim', 'css/quitim.css'));
 
     }
 
