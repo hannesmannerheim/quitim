@@ -15,14 +15,10 @@ class QuitimUserStreamAction extends ProfileAction
 {
     var $notice;
 
-    protected function prepare(array $args=array())
+    protected function profileActionPreparation(array $args=array())
     {
-        parent::prepare($args);
-        
         $this->notice = $this->getNoticesButNotReplies(($this->page-1)*NOTICES_PER_PAGE,
                                             NOTICES_PER_PAGE + 1);
-        
-        return true;
     }
 
     function isReadOnly($args)
@@ -33,13 +29,6 @@ class QuitimUserStreamAction extends ProfileAction
     function title()
     {
         return $this->profile->getFancyName();
-    }
-
-    protected function handle()
-    {
-        parent::handle();
-
-        $this->showPage();
     }
 
     function showSections()

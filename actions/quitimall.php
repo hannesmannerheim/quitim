@@ -20,33 +20,12 @@ class QuitimAllAction extends ProfileAction
         return true;
     }
 
-    protected function prepare(array $args=array())
+    protected function profileActionPreparation()
     {
-        parent::prepare($args);
-
-        $user = common_current_user();
-
-
         $stream = new ChronologicalInboxStream($this->target, $this->scoped);
 
         $this->notice = $stream->getNotices(($this->page-1)*NOTICES_PER_PAGE,
                                             NOTICES_PER_PAGE + 1);
-
-
-        return true;
-    }
-
-    protected function handle()
-    {
-        parent::handle();
-
-        if (!$this->target instanceof Profile) {
-            // TRANS: Client error when user not found for an action.
-            $this->clientError(_('No such user.'));
-        }
-        
-        $this->showPage();
-
     }
 
     function title()
@@ -115,7 +94,7 @@ class QuitimAllAction extends ProfileAction
         $this->elementStart('div', array('id' => 'content_inner'));
 
         $this->elementStart('div', array('id' => 'usernotices', 'class' => 'noticestream threaded-view'));
-		if(count($this->notice->_items)>0) {
+		if(count($this->notice->N)>0) {
 			$this->showNoticesWithCommentsAndFavs();
 			}
 		else {
