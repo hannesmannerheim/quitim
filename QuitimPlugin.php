@@ -343,7 +343,7 @@ class QuitimPlugin extends Plugin {
 					$thumbnail_path = File::path($thumbnail_filename);
 					$this->adjustPicOrientation($thumbnail_path, $exif_from_full_file);
 					// flip in db if rotated
-					if($exif_from_full_file['Orientation'] != 1) {	
+					if(array_key_exists('Orientation', $exif_from_full_file) && $exif_from_full_file['Orientation'] != 1) {	
 						$thumb_w = $thumbnail->width;
 						$thumb_h = $thumbnail->height;
 						$thumbnail->width = $thumb_h;
