@@ -74,7 +74,7 @@ class QuitimAllAction extends AllAction
         $this->elementStart('div', array('id' => 'content_inner'));
 
         $this->elementStart('div', array('id' => 'usernotices', 'class' => 'noticestream threaded-view'));
-		if(count($this->notice->N)>0) {
+		if($this->notice->N>0) {
 			$this->showNoticesWithCommentsAndFavs();
 			}
 		else {

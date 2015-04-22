@@ -148,7 +148,7 @@ class QuitimUserStreamAction extends ProfileAction
 
 
         $this->elementStart('div', array('id' => 'usernotices', 'class' => 'noticestream thumbnail-view'));
-		if(count($this->notice->_items)>0) {
+		if($this->notice->N>0) {
 			$this->showNoticesWithCommentsAndFavs();
 			}
 		else {
