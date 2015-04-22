@@ -11,15 +11,8 @@
  *
  */
 
-class QuitimAllAction extends ProfileAction
+class QuitimAllAction extends AllAction
 {
-    var $notice;
-
-    function isReadOnly($args)
-    {
-        return true;
-    }
-
     protected function profileActionPreparation()
     {
         $stream = new ChronologicalInboxStream($this->target, $this->scoped);
@@ -28,27 +21,14 @@ class QuitimAllAction extends ProfileAction
                                             NOTICES_PER_PAGE + 1);
     }
 
-    function title()
-    {
-        if (!empty($this->scoped) && $this->scoped->id == $this->target->id) {
-            // TRANS: Title of a user's own start page.
-            return _('Home timeline');
-        } else {
-            // TRANS: Title of another user's start page.
-            // TRANS: %s is the other user's name.
-            return sprintf(_("%s's home timeline"), $this->target->getBestName());
-        }
-    }
-
-
     function showSections()
     {
-
+        // We don't want these
     }
     
     function showStylesheets()
     {
-
+        // We only want quitim stylesheet
         $this->cssLink(Plugin::staticPath('Quitim', 'css/quitim.css'));
 
     }
@@ -59,12 +39,12 @@ class QuitimAllAction extends ProfileAction
 		$current_user = common_current_user();
 
 		$bodyclasses = 'quitim';
-		if($current_user) {
-			$bodyclasses .= ' user_in'; 
-			}
-        if($current_user->id == $this->profile->id) {
-        	$bodyclasses .= ' me'; 
+        if ($this->scoped instanceof Profile) {
+            $bodyclasses .= ' user_in';
+            if ($this->scoped->id === $this->target->id) {
+                $bodyclasses .= ' me';
         	}
+        }
 		$this->elementStart('body', array('id' => strtolower($this->trimmed('action')), 'class' => $bodyclasses, 'ontouchstart' => ''));        
         $this->element('div', array('id' => 'spinner-overlay'));
 
@@ -121,21 +101,21 @@ class QuitimAllAction extends ProfileAction
 
     function showProfileBlock()
     {
-        $block = new QuitimAccountProfileBlock($this, $this->profile);
+        $block = new QuitimAccountProfileBlock($this, $this->target);
         $block->show();
     }
 
 	
 	function showNoticesWithCommentsAndFavs()
 	{
-        $nl = new QuitimThreadedNoticeList($this->notice, $this, $this->profile);
+        $nl = new QuitimThreadedNoticeList($this->notice, $this, $this->target);
         $cnt = $nl->show();
 		if (0 == $cnt) {
 			$this->showEmptyListMessage();
 		}
 		$this->pagination(
 			$this->page > 1, $cnt > NOTICES_PER_PAGE,
-			$this->page, 'quitimall', array('nickname' => $this->profile->nickname)
+			$this->page, 'quitimall', array('nickname' => $this->target->getNickname())
 		);				
 	}
 	
