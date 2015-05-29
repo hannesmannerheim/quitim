@@ -665,10 +665,10 @@ body#quitimlogin #form_login #submit,
 	display:none;
 	}	
 	
-.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-options .form_favor fieldset,
-.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-options .form_disfavor fieldset,
-.noticestream.threaded-view #notices_primary > .notices > .notice > .notice-options .form_favor fieldset,
-.noticestream.threaded-view #notices_primary > .notices > .notice > .notice-options .form_disfavor fieldset {
+#notices_primary > .notices > .infscr-pages > .notice > .notice-options .form_favor fieldset,
+#notices_primary > .notices > .infscr-pages > .notice > .notice-options .form_disfavor fieldset,
+#notices_primary > .notices > .notice > .notice-options .form_favor fieldset,
+#notices_primary > .notices > .notice > .notice-options .form_disfavor fieldset {
 	border:0 none; padding:0;margin:0;
 	width:40px;
 	height:40px;
