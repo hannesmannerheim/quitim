@@ -43,12 +43,12 @@ body.quitim {
 
 .quitim address a,
 #quitimuserstream #topright,
-.noticestream.threaded-view .notice .notice-options .form_favor fieldset input,
-.noticestream.threaded-view .notice .notice-options .form_disfavor fieldset input,
-.noticestream.threaded-view #notices_primary > .notices > .notice > .notice-options .notice_reply,
-.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-options .notice_reply,
-.noticestream.threaded-view #notices_primary > .notices > .notice > .notice-options .notice_delete,
-.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-options .notice_delete,
+.noticestream.threaded-view .notice > footer > .notice-options .form_favor fieldset input,
+.noticestream.threaded-view .notice > footer > .notice-options .form_disfavor fieldset input,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_reply,
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .notice_reply,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_delete,
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .notice_delete,
 .noticestream.threaded-view .threaded-replies .notice-faves,
 .noticestream.threaded-view .threaded-replies .notice-reply-comments a,
 #set-thumbnail-view,
@@ -513,10 +513,8 @@ body#quitimlogin #form_login #submit,
 	display:block;
 	}	
 .noticestream.thumbnail-view h2,
-.noticestream.thumbnail-view .notice .entry-title,
-.noticestream.thumbnail-view .notice .notice-options,
-.noticestream.thumbnail-view .notice .entry-content .source,
-.noticestream.thumbnail-view .notice .entry-content .location,
+.noticestream.thumbnail-view .notice .notice-headers,
+.noticestream.thumbnail-view .notice > footer > .notice-options,
 .noticestream.thumbnail-view .notices.threaded-replies {
 	display:none;
 	}	
@@ -538,7 +536,7 @@ body#quitimlogin #form_login #submit,
 	width:100%;
 	}
 
-.noticestream.thumbnail-view .notice .entry-content:not(.thumbnails) {
+.noticestream.thumbnail-view .notice .e-content:not(.thumbnails) {
 	width:100%;
 	height:100%;
 	position:absolute;
@@ -547,7 +545,7 @@ body#quitimlogin #form_login #submit,
 	z-index:2;
 	}
 
-.noticestream.thumbnail-view .notice .entry-content:not(.thumbnails) a.timestamp {
+.noticestream.thumbnail-view .notice .e-content:not(.thumbnails) a.timestamp {
 	display:block;
 	position:absolute;
 	width:100%;
@@ -556,7 +554,7 @@ body#quitimlogin #form_login #submit,
 	color:transparent;
 	}
 	
-.noticestream.thumbnail-view .notice .entry-content.thumbnails {
+.noticestream.thumbnail-view .notice .e-content.thumbnails {
 	display:block;
 	position:relative;
 	z-index:1;	
@@ -588,8 +586,8 @@ body#quitimlogin #form_login #submit,
 	
 	
 
- .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .entry-title,	
- .noticestream.threaded-view #notices_primary > .notices > .notice > .entry-title {	
+ .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-headers,	
+ .noticestream.threaded-view #notices_primary > .notices > .notice > .notice-headers {	
 	font-size:0;
 	color:transparent;
 	}
@@ -598,11 +596,10 @@ body#quitimlogin #form_login #submit,
 	line-height:50px;
 	height:50px;	
 	position:relative;
-	padding-left:50px;
 	font-size:13px;
 	font-weight:bold;
 	}
-.noticestream.threaded-view .notice-headers > .p-author img {
+.noticestream.threaded-view .notice-headers > .p-author .u-photo {
 	position:absolute;
 	display:block;
 	left:8px;
@@ -625,6 +622,7 @@ body#quitimlogin #form_login #submit,
 .noticestream.threaded-view .notice-headers > .addressees,
 .noticestream.threaded-view .notice footer > .attachments,
 .noticestream.threaded-view .notice footer > .attachments-title,
+.noticestream.threaded-view .notice footer > .permalink,
 .noticestream.threaded-view .notice footer > .source {
 	display:none;
 	}
@@ -658,30 +656,30 @@ body#quitimlogin #form_login #submit,
 	}
 
 
-.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-options .form_favor legend,
-.noticestream.threaded-view #notices_primary > .notices > .notice > .notice-options .form_favor legend,
-.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice .notice-options .form_disfavor legend,
-.noticestream.threaded-view #notices_primary > .notices > .notice .notice-options .form_disfavor legend {
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_favor legend,
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_disfavor legend,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_favor legend,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_disfavor legend {
 	display:none;
 	}	
 	
-#notices_primary > .notices > .infscr-pages > .notice > .notice-options .form_favor fieldset,
-#notices_primary > .notices > .infscr-pages > .notice > .notice-options .form_disfavor fieldset,
-#notices_primary > .notices > .notice > .notice-options .form_favor fieldset,
-#notices_primary > .notices > .notice > .notice-options .form_disfavor fieldset {
+#notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_favor fieldset,
+#notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_disfavor fieldset,
+#notices_primary > .notices > .notice > footer > .notice-options .form_favor fieldset,
+#notices_primary > .notices > .notice > footer > .notice-options .form_disfavor fieldset {
 	border:0 none; padding:0;margin:0;
 	width:40px;
 	height:40px;
 	}
 
-.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-options .notice_reply,
-.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-options .notice_delete,
-.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-options .form_favor fieldset input,
-.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-options .form_disfavor fieldset input,
-.noticestream.threaded-view #notices_primary > .notices > .notice > .notice-options .notice_reply,
-.noticestream.threaded-view #notices_primary > .notices > .notice > .notice-options .notice_delete,
-.noticestream.threaded-view #notices_primary > .notices > .notice > .notice-options .form_favor fieldset input,
-.noticestream.threaded-view #notices_primary > .notices > .notice > .notice-options .form_disfavor fieldset input {
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .notice_reply,
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .notice_delete,
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_favor fieldset input,
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_disfavor fieldset input,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_reply,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_delete,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_favor fieldset input,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_disfavor fieldset input {
 	border:0 none; padding:0;margin:0;
 	width:40px;
 	height:40px;
@@ -696,18 +694,18 @@ body#quitimlogin #form_login #submit,
 	cursor:pointer;
 	}	
 
-.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-options .form_disfavor fieldset input,
-.noticestream.threaded-view #notices_primary > .notices > .notice > .notice-options .form_disfavor fieldset input {
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_disfavor fieldset input,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_disfavor fieldset input {
 	background-position:-46px -196px;
 	}	
 
-.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-options .notice_reply,
-.noticestream.threaded-view #notices_primary > .notices > .notice > .notice-options .notice_reply {
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .notice_reply,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_reply {
 	background-position:-100px -196px;
 	left:80px;
 	}		
-.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-options .notice_delete,
-.noticestream.threaded-view #notices_primary > .notices > .notice > .notice-options .notice_delete {
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .notice_delete,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_delete {
 	background-position:-260px -190px;
 	right:15px;
 	left:auto;
@@ -736,31 +734,25 @@ body#quitimlogin #form_login #submit,
 	}
 
 
-.noticestream.threaded-view .threaded-replies .notice .entry-title .quitim-notice,
-.noticestream.threaded-view .threaded-replies .notice:first-child .entry-title .attachment {
+.noticestream.threaded-view .threaded-replies .notice .notice-headers .quitim-notice,
+.noticestream.threaded-view .threaded-replies .notice:first-child .notice-headers .attachment {
 	display:none;
 	}
 
-.noticestream.threaded-view .threaded-replies .notice .entry-title > .author {
-	padding:0;
-	display:inline;
-	font-size:13px;
-	line-height:20px;
-	}	
-.noticestream.threaded-view .threaded-replies .notice .entry-title {
+.noticestream.threaded-view .threaded-replies .notice .notice-headers {
 	padding:0 15px;
 	font-size:13px;
+	display:inline;
 	}	
-.noticestream.threaded-view .threaded-replies .notice .entry-title > p {
+.noticestream.threaded-view .threaded-replies .notice .e-content {
 	display:inline;
 	font-size:13px;	
 	} 	
-.noticestream.threaded-view .threaded-replies .notice .entry-title > p > br {
+.noticestream.threaded-view .threaded-replies .notice .e-content > br {
 	display:none;
 	}	
-.noticestream.threaded-view .threaded-replies .notice > .entry-title .author img,
-.noticestream.threaded-view .threaded-replies .notice > .entry-content,
-.noticestream.threaded-view .threaded-replies .notice > .notice-options,
+.noticestream.threaded-view .threaded-replies .notice > .notice-headers .p-author > .u-photo,
+.noticestream.threaded-view .threaded-replies .notice > footer,
 .noticestream.threaded-view .threaded-replies .notice-reply-placeholder {
 	display:none !important;
 	}
@@ -813,23 +805,23 @@ body#quitimlogin #form_login #submit,
 	border-top:1px solid #333;
 	}	
 	
- .noticestream.threaded-view #notices_primary > .notices > .notice.notification > .entry-title {
+ .noticestream.threaded-view #notices_primary > .notices > .notice.notification > .notice-headers {
 	font-size:13px;
 	color:#333;
 	}
-.noticestream.threaded-view .notice.notification .entry-title > .author { 
+.noticestream.threaded-view .notice.notification .notice-headers > .p-author { 
 	display:inline-block;
 	}
 	
-.noticestream.threaded-view .notice.notification .entry-title > .author {	
+.noticestream.threaded-view .notice.notification .notice-headers > .p-author {	
 	line-height:20px;
 	padding-top:8px;
 	padding-right:80px;
 	}
-.noticestream.threaded-view .notice.notification .entry-title > .author img {
+.noticestream.threaded-view .notice.notification .notice-headers > .p-author .u-photo {
 	margin-top:0px;
 	}
-.noticestream.threaded-view .notice.notification .entry-title > .author span.notificationtext {
+.noticestream.threaded-view .notice.notification .notice-headers > .p-author span.notificationtext {
 	font-weight:400;
 	}
 
@@ -845,12 +837,12 @@ body#quitimlogin #form_login #submit,
 	border-top:1px solid #333;
 	margin-top:-1px;
 	}	
-.noticestream.threaded-view .notice.notification .entry-title > .author {	
+.noticestream.threaded-view .notice.notification .notice-headers > .p-author {	
 	display:block;
 	height:auto;
 	min-height:45px;	
 	}
-.noticestream.threaded-view .notice.notification .entry-title > .author abbr {
+.noticestream.threaded-view .notice.notification .notice-headers > .p-author abbr {
 	display:inline;
 	color:#aaa;
 	text-decoration:none;
