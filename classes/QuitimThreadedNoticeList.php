@@ -506,7 +506,7 @@ class QuitimThreadedNoticeListFavesItem extends QuitimNoticeListActorsItem
 {
     function getProfiles()
     {
-        $faves = $this->notice->getFaves();
+        $faves = Fave::byNotice($this->notice);
         $profiles = array();
         foreach ($faves as $fave) {
             $profiles[] = $fave->user_id;
