@@ -43,16 +43,7 @@ class QuitimLoginAction extends LoginAction
 
     function showBody()
     {
-        
-		$current_user = common_current_user();
-
 		$bodyclasses = 'quitim';
-		if($current_user) {
-			$bodyclasses .= ' user_in'; 
-			}
-        if($current_user->id == $this->profile->id) {
-        	$bodyclasses .= ' me'; 
-        	}
 		$this->elementStart('body', array('id' => strtolower($this->trimmed('action')), 'class' => $bodyclasses, 'ontouchstart' => ''));        
 
         $this->element('div', array('id' => 'spinner-overlay'));
