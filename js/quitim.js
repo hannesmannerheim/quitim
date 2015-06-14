@@ -938,3 +938,7 @@ $('body').on('click','#submit-image',function(){
 		},50);
 
 	});	
+
+SN.U.addCallback('notice_posted', function (userdata) {
+    location.reload(true);
+});
