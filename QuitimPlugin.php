@@ -277,7 +277,7 @@ class QuitimPlugin extends Plugin {
 
 
 
-    public function onPluginVersion(&$versions)
+    public function onPluginVersion(array &$versions)
     {
         $versions[] = array('name' => 'Quitim',
                             'version' => '0.1',
