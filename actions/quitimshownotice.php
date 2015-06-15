@@ -87,7 +87,7 @@ class QuitimShownoticeAction extends Action
 
 			$cur = common_current_user();
 
-			if (!$this->notice->inScope($curProfile)) {
+			if (!$this->notice->inScope($this->scoped)) {
 				// TRANS: Client exception thrown when trying a view a notice the user has no access to.
 				throw new ClientException(_('Not available.'), 403);
 			}
