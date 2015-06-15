@@ -94,13 +94,6 @@ class QuitimShownoticeAction extends Action
 
 			$this->profile = $this->notice->getProfile();
 
-			if (empty($this->profile)) {
-				// TRANS: Server error displayed trying to show a notice without a connected profile.
-				$this->serverError(_('Notice has no profile.'), 500);
-			}
-
-			$this->user = User::getKV('id', $this->profile->id);
-
 			try {
 				$this->avatar = $this->profile->getAvatar(AVATAR_PROFILE_SIZE);
 			} catch (Exception $e) {
@@ -375,20 +368,13 @@ class QuitimShownoticeAction extends Action
 
     function showAjax()
     {
-        $cur = common_current_user();
-
-        if (empty($cur)) {
-            $this->userProfile = null;
-        } else {
-            $this->userProfile = $cur->getProfile();
-        }    
         $this->startHTML('text/xml;charset=utf-8');
         $this->elementStart('head');
         // TRANS: Title for conversation page.
         $this->element('title', null, _m('TITLE','Notice'));
         $this->elementEnd('head');
         $this->elementStart('body');
-        $ct = new QuitimFullThreadedNoticeList($this->notice, $this, $this->userProfile);
+        $ct = new QuitimFullThreadedNoticeList($this->notice, $this, $this->scoped);
         $cnt = $ct->show();
         $this->elementEnd('body');
         $this->endHTML();
