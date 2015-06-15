@@ -65,21 +65,6 @@ class QuitimPlugin extends Plugin {
     }
 
 
-
-    /**
-     * Link in a styelsheet
-     *
-     * @param Action $action Action being shown
-     *
-     * @return boolean hook flag
-     */
-    public function onEndShowStylesheets(Action $action)
-    {
-        $action->cssLink($this->path('css/quitim.css?v=1'));
-        return true;
-    }
-
-
     /**
      * Viewport in head-tag
      *
