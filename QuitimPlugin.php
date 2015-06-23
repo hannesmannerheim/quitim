@@ -4,6 +4,7 @@ common_config_set('attachments', 'thumb_width', '306');
 common_config_set('attachments', 'thumb_height', '306');
 error_reporting(E_ALL ^ E_STRICT); // no PHP Strict Standards errors...
 
+const QUITIMDIR = __DIR__;
 
 class QuitimPlugin extends Plugin {
 
@@ -61,21 +62,6 @@ class QuitimPlugin extends Plugin {
                                                                                              
                                                                                                                         
 
-    }
-
-
-
-    /**
-     * Link in a styelsheet
-     *
-     * @param Action $action Action being shown
-     *
-     * @return boolean hook flag
-     */
-    public function onEndShowStylesheets(Action $action)
-    {
-        $action->cssLink($this->path('css/quitim.css?v=1'));
-        return true;
     }
 
 
@@ -270,13 +256,13 @@ class QuitimPlugin extends Plugin {
         $action->script($this->path('js/jquery.vintage.min.js'));                             
         $action->script($this->path('js/jquery.mobile-events.min.js'));                                             
         $action->script($this->path('js/jpeg_encoder_basic.js'));                                                     
-        $action->script($this->path('js/quitim.js?v=8'));        
+        $action->script($this->path('js/quitim.js') . '?changed='.date('YmdHis',filemtime(QUITIMDIR.'/js/quitim.js')));
         return true;
     }    
 
 
 
-    public function onPluginVersion(&$versions)
+    public function onPluginVersion(array &$versions)
     {
         $versions[] = array('name' => 'Quitim',
                             'version' => '0.1',
@@ -342,7 +328,7 @@ class QuitimPlugin extends Plugin {
 					$thumbnail_path = File::path($thumbnail_filename);
 					$this->adjustPicOrientation($thumbnail_path, $exif_from_full_file);
 					// flip in db if rotated
-					if($exif_from_full_file['Orientation'] != 1) {	
+					if(array_key_exists('Orientation', $exif_from_full_file) && $exif_from_full_file['Orientation'] != 1) {	
 						$thumb_w = $thumbnail->width;
 						$thumb_h = $thumbnail->height;
 						$thumbnail->width = $thumb_h;
@@ -643,6 +629,3 @@ class URLMapperOverwrite extends URLMapper
 				$m->variables[$n][0]['action'] = $newaction;
     }
 }
-
-
-?>

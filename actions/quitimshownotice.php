@@ -87,19 +87,12 @@ class QuitimShownoticeAction extends Action
 
 			$cur = common_current_user();
 
-			if (!$this->notice->inScope($curProfile)) {
+			if (!$this->notice->inScope($this->scoped)) {
 				// TRANS: Client exception thrown when trying a view a notice the user has no access to.
 				throw new ClientException(_('Not available.'), 403);
 			}
 
 			$this->profile = $this->notice->getProfile();
-
-			if (empty($this->profile)) {
-				// TRANS: Server error displayed trying to show a notice without a connected profile.
-				$this->serverError(_('Notice has no profile.'), 500);
-			}
-
-			$this->user = User::getKV('id', $this->profile->id);
 
 			try {
 				$this->avatar = $this->profile->getAvatar(AVATAR_PROFILE_SIZE);
@@ -220,7 +213,7 @@ class QuitimShownoticeAction extends Action
     function showStylesheets()
     {
 
-        $this->cssLink('plugins/Quitim/css/quitim.css');
+        $this->cssLink(Plugin::staticPath('Quitim', 'css/quitim.css'));
 
     }
 
@@ -244,7 +237,7 @@ class QuitimShownoticeAction extends Action
         $this->elementStart('div', array('id' => 'header'));
 		$this->showLogo();
 		$this->elementStart('div', array('id' => 'topright'));
-		$this->element('img', array('id' => 'refresh', 'height' => '30', 'width' => '30', 'src' => '/plugins/Quitim/img/refresh.png'));
+		$this->element('img', array('id' => 'refresh', 'height' => '30', 'width' => '30', 'src' => Plugin::staticPath('Quitim', 'img/refresh.png')));
 		$this->elementEnd('div');				
 		$this->elementEnd('div');
 
@@ -375,20 +368,13 @@ class QuitimShownoticeAction extends Action
 
     function showAjax()
     {
-        $cur = common_current_user();
-
-        if (empty($cur)) {
-            $this->userProfile = null;
-        } else {
-            $this->userProfile = $cur->getProfile();
-        }    
         $this->startHTML('text/xml;charset=utf-8');
         $this->elementStart('head');
         // TRANS: Title for conversation page.
         $this->element('title', null, _m('TITLE','Notice'));
         $this->elementEnd('head');
         $this->elementStart('body');
-        $ct = new QuitimFullThreadedNoticeList($this->notice, $this, $this->userProfile);
+        $ct = new QuitimFullThreadedNoticeList($this->notice, $this, $this->scoped);
         $cnt = $ct->show();
         $this->elementEnd('body');
         $this->endHTML();

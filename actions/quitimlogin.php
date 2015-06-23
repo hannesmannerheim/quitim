@@ -32,138 +32,18 @@
 
 if (!defined('GNUSOCIAL')) { exit(1); }
 
-class QuitimLoginAction extends FormAction
+class QuitimLoginAction extends LoginAction
 {
-    protected $needLogin = false;
-
-    /**
-     * Prepare page to run
-     *
-     *
-     * @param $args
-     * @return string title
-     */
-    protected function prepare(array $args=array())
-    {
-        // @todo this check should really be in index.php for all sensitive actions
-        $ssl = common_config('site', 'ssl');
-        if (empty($_SERVER['HTTPS']) && ($ssl == 'always' || $ssl == 'sometimes')) {
-            common_redirect(common_local_url('login'));
-        }
-
-        return parent::prepare($args);
-    }
-
-    /**
-     * Handle input, produce output
-     *
-     * Switches on request method; either shows the form or handles its input.
-     *
-     * @return void
-     */
-    protected function handle()
-    {
-        if (common_is_real_login()) {
-            common_redirect(common_local_url('all', array('nickname' => $this->scoped->nickname)), 307);
-        }
-
-        return parent::handle();
-    }
-
-    /**
-     * Check the login data
-     *
-     * Determines if the login data is valid. If so, logs the user
-     * in, and redirects to the 'with friends' page, or to the stored
-     * return-to URL.
-     *
-     * @return void
-     */
-    protected function handlePost()
-    {
-        parent::handlePost();
-
-        // XXX: login throttle
-
-        $nickname = $this->trimmed('nickname');
-        $password = $this->arg('password');
-
-        $user = common_check_user($nickname, $password);
-
-        if (!$user instanceof User) {
-            // TRANS: Form validation error displayed when trying to log in with incorrect credentials.
-            throw new ServerException(_('Incorrect username or password.'));
-        }
-
-        // success!
-        if (!common_set_user($user)) {
-            // TRANS: Server error displayed when during login a server error occurs.
-            throw new ServerException(_('Error setting user. You are probably not authorized.'));
-        }
-
-        common_real_login(true);
-        $this->updateScopedProfile(); 
-
-        if ($this->boolean('rememberme')) {
-            common_rememberme($user);
-        }
-
-        $url = common_local_url('all', array('nickname' => $nickname));
-        common_redirect($url, 303);
-    }
-
-    /**
-     * Store an error and show the page
-     *
-     * This used to show the whole page; now, it's just a wrapper
-     * that stores the error in an attribute.
-     *
-     * @param string $error error, if any.
-     *
-     * @return void
-     */
-    public function showForm($msg=null, $success=false)
-    {
-        common_ensure_session();
-        return parent::showForm($msg, $success);
-    }
-
-    function showScripts()
-    {
-        parent::showScripts();
-        $this->autofocus('nickname');
-    }
-
-    /**
-     * Title of the page
-     *
-     * @return string title of the page
-     */
-    function title()
-    {
-        // TRANS: Page title for login page.
-        return _('Login');
-    }
-    
     function showStylesheets()
     {
 
-        $this->cssLink('plugins/Quitim/css/quitim.css');
+        $this->cssLink(Plugin::staticPath('Quitim', 'css/quitim.css'));
 
     }
 
     function showBody()
     {
-        
-		$current_user = common_current_user();
-
 		$bodyclasses = 'quitim';
-		if($current_user) {
-			$bodyclasses .= ' user_in'; 
-			}
-        if($current_user->id == $this->profile->id) {
-        	$bodyclasses .= ' me'; 
-        	}
 		$this->elementStart('body', array('id' => strtolower($this->trimmed('action')), 'class' => $bodyclasses, 'ontouchstart' => ''));        
 
         $this->element('div', array('id' => 'spinner-overlay'));
@@ -269,58 +149,5 @@ class QuitimLoginAction extends FormAction
     function showContent()
     {
 //
-    }
-
-    /**
-     * Instructions for using the form
-     *
-     * For "remembered" logins, we make the user re-login when they
-     * try to change settings. Different instructions for this case.
-     *
-     * @return void
-     */
-    function getInstructions()
-    {
-        if (common_logged_in() && !common_is_real_login() &&
-            common_get_returnto()) {
-            // rememberme logins have to reauthenticate before
-            // changing any profile settings (cookie-stealing protection)
-            // TRANS: Form instructions on login page before being able to change user settings.
-            return _('For security reasons, please re-enter your ' .
-                     'user name and password ' .
-                     'before changing your settings.');
-        } else {
-            // TRANS: Form instructions on login page.
-            $prompt = _('Login with your username and password.');
-            if (!common_config('site', 'closed') && !common_config('site', 'inviteonly')) {
-                $prompt .= ' ';
-                // TRANS: Form instructions on login page. This message contains Markdown links in the form [Link text](Link).
-                // TRANS: %%action.register%% is a link to the registration page.
-                $prompt .= _('Don\'t have a username yet? ' .
-                             '[Register](%%action.register%%) a new account.');
-            }
-            return $prompt;
-        }
-    }
-
-    /**
-     * A local menu
-     *
-     * Shows different login/register actions.
-     *
-     * @return void
-     */
-    function showLocalNav()
-    {
-        $nav = new LoginGroupNav($this);
-        $nav->show();
-    }
-
-    function showNoticeForm()
-    {
-    }
-
-    function showProfileBlock()
-    {
     }
 }

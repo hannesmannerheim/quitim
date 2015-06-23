@@ -11,18 +11,16 @@
  *
  */
 
-class QuitimUserStreamAction extends ProfileAction
+class QuitimUserStreamAction extends ShowstreamAction
 {
-    var $notice;
-
-    protected function prepare(array $args=array())
+    protected function profileActionPreparation()
     {
-        parent::prepare($args);
-        
-        $this->notice = $this->getNoticesButNotReplies(($this->page-1)*NOTICES_PER_PAGE,
-                                            NOTICES_PER_PAGE + 1);
-        
-        return true;
+        // TODO: Turn this into a NoticeStream and just return it from function getStream()
+        $this->notice = $this->getNoticesButNotReplies(($this->page-1)*NOTICES_PER_PAGE, NOTICES_PER_PAGE + 1);
+        if ($this->page > 1 && $this->notice->N == 0) {
+            // TRANS: Client error when page not found (404).
+            $this->clientError(_('No such page.'), 404);
+        }
     }
 
     function isReadOnly($args)
@@ -32,14 +30,7 @@ class QuitimUserStreamAction extends ProfileAction
 
     function title()
     {
-        return $this->profile->getFancyName();
-    }
-
-    protected function handle()
-    {
-        parent::handle();
-
-        $this->showPage();
+        return $this->target->getFancyName();
     }
 
     function showSections()
@@ -50,7 +41,7 @@ class QuitimUserStreamAction extends ProfileAction
     function showStylesheets()
     {
 
-        $this->cssLink('plugins/Quitim/css/quitim.css');
+        $this->cssLink(Plugin::staticPath('Quitim', 'css/quitim.css'));
 
     }
 
@@ -63,7 +54,7 @@ class QuitimUserStreamAction extends ProfileAction
 		if($current_user) {
 			$bodyclasses .= ' user_in'; 
 			}
-        if($current_user->id == $this->profile->id) {
+        if($current_user->id == $this->target->id) {
         	$bodyclasses .= ' me'; 
         	}
 		$this->elementStart('body', array('id' => strtolower($this->trimmed('action')), 'class' => $bodyclasses, 'ontouchstart' => ''));    
@@ -76,7 +67,7 @@ class QuitimUserStreamAction extends ProfileAction
 		
 		$this->elementStart('a', array('href' => '#top'));		
 		$this->elementStart('h1');
-        $this->raw($this->profile->nickname);
+        $this->raw($this->target->getNickname());
 		$this->elementEnd('h1');
         $this->elementEnd('a');		
 		
@@ -104,47 +95,47 @@ class QuitimUserStreamAction extends ProfileAction
 		$this->showProfileBlock();
 
 		// subscribe form if logged in and not me
-		if(common_current_user() && ($current_user->id != $this->profile->id)) {
+		if(common_current_user() && ($current_user->id != $this->target->id)) {
 			$this->elementStart('div', 'profile_subscribe');
 
-			if ($current_user->isSubscribed($this->profile)) {
-				$usff = new UnsubscribeForm($this, $this->profile);
+			if ($current_user->isSubscribed($this->target)) {
+				$usff = new UnsubscribeForm($this, $this->target);
 				$usff->show();
-			} else if ($current_user->hasPendingSubscription($this->profile)) {
-				$sff = new CancelSubscriptionForm($this, $this->profile);
+			} else if ($current_user->hasPendingSubscription($this->target)) {
+				$sff = new CancelSubscriptionForm($this, $this->target);
 				$sff->show();
 			} else {
-				$sff = new SubscribeForm($this, $this->profile);
+				$sff = new SubscribeForm($this, $this->target);
 				$sff->show();
 			}
 			$this->elementEnd('div');
 		} else {
-		   if (Event::handle('StartProfileRemoteSubscribe', array($this, $this->profile))) {
-				Event::handle('EndProfileRemoteSubscribe', array($this, $this->profile));
+		   if (Event::handle('StartProfileRemoteSubscribe', array($this, $this->target))) {
+				Event::handle('EndProfileRemoteSubscribe', array($this, $this->target));
 			}					
 		}
 
 
 		$this->elementStart('h2', array('id'=>'noticecountlink'));
 		// TRANS: H2 text for user subscription statistics.
-        $this->element('a', array('href' => common_local_url('showstream', array('nickname' => $this->profile->nickname)),'class' => ''), _('Images'));
+        $this->element('a', array('href' => common_local_url('showstream', array('nickname' => $this->target->getNickname())),'class' => ''), _('Images'));
 		$this->text(' ');
-		$this->text(QuitimImageNoticeCount::imageNoticeCount($this->profile));
+		$this->text(QuitimImageNoticeCount::imageNoticeCount($this->target));
 		$this->elementEnd('h2');
 
 
 		$this->elementStart('h2', array('id'=>'subscriberscountlink'));
 		// TRANS: H2 text for user subscriber statistics.
-        $this->element('a', array('href' => common_local_url('subscribers', array('nickname' => $this->profile->nickname)),'class' => ''), _('Followers'));
+        $this->element('a', array('href' => common_local_url('subscribers', array('nickname' => $this->target->getNickname())),'class' => ''), _('Followers'));
 		$this->text(' ');
-		$this->text($this->profile->subscriberCount());
+		$this->text($this->target->subscriberCount());
 		$this->elementEnd('h2');
 
 		$this->elementStart('h2', array('id'=>'subscriptionscountlink'));
 		// TRANS: H2 text for user subscription statistics.
-		$this->element('a', array('href' => common_local_url('subscriptions', array('nickname' => $this->profile->nickname)),'class' => ''), _('Following'));
+		$this->element('a', array('href' => common_local_url('subscriptions', array('nickname' => $this->target->getNickname())),'class' => ''), _('Following'));
 		$this->text(' ');
-		$this->text($this->profile->subscriptionCount());
+		$this->text($this->target->subscriptionCount());
 		$this->elementEnd('h2');
 				
         $this->elementEnd('div');
@@ -159,7 +150,7 @@ class QuitimUserStreamAction extends ProfileAction
 
 
         $this->elementStart('div', array('id' => 'usernotices', 'class' => 'noticestream thumbnail-view'));
-		if(count($this->notice->_items)>0) {
+		if($this->notice->N>0) {
 			$this->showNoticesWithCommentsAndFavs();
 			}
 		else {
@@ -186,21 +177,21 @@ class QuitimUserStreamAction extends ProfileAction
 
     function showProfileBlock()
     {
-        $block = new QuitimAccountProfileBlock($this, $this->profile);
+        $block = new QuitimAccountProfileBlock($this, $this->target);
         $block->show();
     }
 
 	
 	function showNoticesWithCommentsAndFavs()
 	{
-        $nl = new QuitimThreadedNoticeList($this->notice, $this, $this->profile);
+        $nl = new QuitimThreadedNoticeList($this->notice, $this, $this->target);
         $cnt = $nl->show();
 		if (0 == $cnt) {
 			$this->showEmptyListMessage();
 		}
 		$this->pagination(
 			$this->page > 1, $cnt > NOTICES_PER_PAGE,
-			$this->page, 'quitimuserstream', array('nickname' => $this->profile->nickname)
+			$this->page, 'quitimuserstream', array('nickname' => $this->target->getNickname())
 		);				
 	}
 
@@ -210,65 +201,65 @@ class QuitimUserStreamAction extends ProfileAction
         if (!empty($this->tag)) {
             return array(new Feed(Feed::RSS1,
                                   common_local_url('userrss',
-                                                   array('nickname' => $this->target->nickname,
+                                                   array('nickname' => $this->target->getNickname(),
                                                          'tag' => $this->tag)),
                                   // TRANS: Title for link to notice feed.
                                   // TRANS: %1$s is a user nickname, %2$s is a hashtag.
                                   sprintf(_('Notice feed for %1$s tagged %2$s (RSS 1.0)'),
-                                          $this->target->nickname, $this->tag)));
+                                          $this->target->getNickname(), $this->tag)));
         }
 
         return array(new Feed(Feed::JSON,
                               common_local_url('ApiTimelineUser',
                                                array(
-                                                    'id' => $this->user->id,
+                                                    'id' => $this->user->getID(),
                                                     'format' => 'as')),
                               // TRANS: Title for link to notice feed.
                               // TRANS: %s is a user nickname.
                               sprintf(_('Notice feed for %s (Activity Streams JSON)'),
-                                      $this->target->nickname)),
+                                      $this->target->getNickname())),
                      new Feed(Feed::RSS1,
                               common_local_url('userrss',
-                                               array('nickname' => $this->target->nickname)),
+                                               array('nickname' => $this->target->getNickname())),
                               // TRANS: Title for link to notice feed.
                               // TRANS: %s is a user nickname.
                               sprintf(_('Notice feed for %s (RSS 1.0)'),
-                                      $this->target->nickname)),
+                                      $this->target->getNickname())),
                      new Feed(Feed::RSS2,
                               common_local_url('ApiTimelineUser',
                                                array(
-                                                    'id' => $this->user->id,
+                                                    'id' => $this->target->getID(),
                                                     'format' => 'rss')),
                               // TRANS: Title for link to notice feed.
                               // TRANS: %s is a user nickname.
                               sprintf(_('Notice feed for %s (RSS 2.0)'),
-                                      $this->target->nickname)),
+                                      $this->target->getNickname())),
                      new Feed(Feed::ATOM,
                               common_local_url('ApiTimelineUser',
                                                array(
-                                                    'id' => $this->user->id,
+                                                    'id' => $this->user->getID(),
                                                     'format' => 'atom')),
                               // TRANS: Title for link to notice feed.
                               // TRANS: %s is a user nickname.
                               sprintf(_('Notice feed for %s (Atom)'),
-                                      $this->target->nickname)),
+                                      $this->target->getNickname())),
                      new Feed(Feed::FOAF,
                               common_local_url('foaf', array('nickname' =>
-                                                             $this->target->nickname)),
+                                                             $this->target->getNickname())),
                               // TRANS: Title for link to notice feed. FOAF stands for Friend of a Friend.
                               // TRANS: More information at http://www.foaf-project.org. %s is a user nickname.
-                              sprintf(_('FOAF for %s'), $this->target->nickname)));
+                              sprintf(_('FOAF for %s'), $this->target->getNickname())));
     }
 
     function extraHead()
     {
-        if ($this->profile->bio) {
+        if ($this->target->bio) {
             $this->element('meta', array('name' => 'description',
-                                         'content' => $this->profile->bio));
+                                         'content' => $this->target->bio));
         }
 
-        if ($this->user->emailmicroid && $this->user->email && $this->profile->profileurl) {
-            $id = new Microid('mailto:'.$this->user->email,
+        if ($this->user->emailmicroid && $this->target->getUser()->email) {
+            $id = new Microid('mailto:'.$this->target->getUser()->email,
                               $this->selfUrl());
             $this->element('meta', array('name' => 'microid',
                                          'content' => $id->toString()));
@@ -278,10 +269,10 @@ class QuitimUserStreamAction extends ProfileAction
 
         $this->element('link', array('rel' => 'microsummary',
                                      'href' => common_local_url('microsummary',
-                                                                array('nickname' => $this->profile->nickname))));
+                                                                array('nickname' => $this->target->getNickname()))));
 
         $rsd = common_local_url('rsd',
-                                array('nickname' => $this->profile->nickname));
+                                array('nickname' => $this->target->getNickname()));
 
         // RSD, http://tales.phrasewise.com/rfc/rsd
         $this->element('link', array('rel' => 'EditURI',
@@ -290,7 +281,7 @@ class QuitimUserStreamAction extends ProfileAction
 
         if ($this->page != 1) {
             $this->element('link', array('rel' => 'canonical',
-                                         'href' => $this->profile->profileurl));
+                                         'href' => $this->target->getUrl()));
         }
     }
     
@@ -304,7 +295,7 @@ class QuitimUserStreamAction extends ProfileAction
         
         $notice = new Notice();
 
-        $notice->profile_id = $this->profile->id;
+        $notice->profile_id = $this->target->id;
 
         $notice->selectAdd();
         $notice->selectAdd('id');

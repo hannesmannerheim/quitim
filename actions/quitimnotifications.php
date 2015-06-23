@@ -117,7 +117,7 @@ class QuitimNotificationsAction extends Action
         $this->elementStart('div', array('id' => 'header'));
 		$this->showLogo();
 		$this->elementStart('div', array('id' => 'topright'));
-		$this->element('img', array('id' => 'refresh', 'height' => '30', 'width' => '30', 'src' => '/plugins/Quitim/img/refresh.png'));
+		$this->element('img', array('id' => 'refresh', 'height' => '30', 'width' => '30', 'src' => Plugin::staticPath('Quitim', 'img/refresh.png')));
 		$this->elementEnd('div');						
         $this->elementEnd('div');
 
@@ -251,7 +251,7 @@ class QuitimNotificationsAction extends Action
     function showStylesheets()
     {
 
-        $this->cssLink('plugins/Quitim/css/quitim.css');
+        $this->cssLink(Plugin::staticPath('Quitim', 'css/quitim.css'));
 
     }    
     

@@ -11,66 +11,25 @@
  *
  */
 
-class QuitimAllAction extends ProfileAction
+class QuitimAllAction extends AllAction
 {
-    var $notice;
-
-    function isReadOnly($args)
+    protected function profileActionPreparation()
     {
-        return true;
-    }
-
-    protected function prepare(array $args=array())
-    {
-        parent::prepare($args);
-
-        $user = common_current_user();
-
-
         $stream = new ChronologicalInboxStream($this->target, $this->scoped);
 
         $this->notice = $stream->getNotices(($this->page-1)*NOTICES_PER_PAGE,
                                             NOTICES_PER_PAGE + 1);
-
-
-        return true;
     }
-
-    protected function handle()
-    {
-        parent::handle();
-
-        if (!$this->target instanceof Profile) {
-            // TRANS: Client error when user not found for an action.
-            $this->clientError(_('No such user.'));
-        }
-        
-        $this->showPage();
-
-    }
-
-    function title()
-    {
-        if (!empty($this->scoped) && $this->scoped->id == $this->target->id) {
-            // TRANS: Title of a user's own start page.
-            return _('Home timeline');
-        } else {
-            // TRANS: Title of another user's start page.
-            // TRANS: %s is the other user's name.
-            return sprintf(_("%s's home timeline"), $this->target->getBestName());
-        }
-    }
-
 
     function showSections()
     {
-
+        // We don't want these
     }
     
     function showStylesheets()
     {
-
-        $this->cssLink('plugins/Quitim/css/quitim.css');
+        // We only want quitim stylesheet
+        $this->cssLink(Plugin::staticPath('Quitim', 'css/quitim.css'));
 
     }
 
@@ -80,12 +39,12 @@ class QuitimAllAction extends ProfileAction
 		$current_user = common_current_user();
 
 		$bodyclasses = 'quitim';
-		if($current_user) {
-			$bodyclasses .= ' user_in'; 
-			}
-        if($current_user->id == $this->profile->id) {
-        	$bodyclasses .= ' me'; 
+        if ($this->scoped instanceof Profile) {
+            $bodyclasses .= ' user_in';
+            if ($this->scoped->id === $this->target->id) {
+                $bodyclasses .= ' me';
         	}
+        }
 		$this->elementStart('body', array('id' => strtolower($this->trimmed('action')), 'class' => $bodyclasses, 'ontouchstart' => ''));        
         $this->element('div', array('id' => 'spinner-overlay'));
 
@@ -95,7 +54,7 @@ class QuitimAllAction extends ProfileAction
         $this->elementStart('div', array('id' => 'header'));
 		$this->showLogo();
 		$this->elementStart('div', array('id' => 'topright'));
-		$this->element('img', array('id' => 'refresh', 'height' => '30', 'width' => '30', 'src' => '/plugins/Quitim/img/refresh.png'));
+		$this->element('img', array('id' => 'refresh', 'height' => '30', 'width' => '30', 'src' => Plugin::staticPath('Quitim', 'img/refresh.png')));
 		$this->elementEnd('div');				
 		$this->elementEnd('div');
 
@@ -115,7 +74,7 @@ class QuitimAllAction extends ProfileAction
         $this->elementStart('div', array('id' => 'content_inner'));
 
         $this->elementStart('div', array('id' => 'usernotices', 'class' => 'noticestream threaded-view'));
-		if(count($this->notice->_items)>0) {
+		if($this->notice->N>0) {
 			$this->showNoticesWithCommentsAndFavs();
 			}
 		else {
@@ -142,21 +101,21 @@ class QuitimAllAction extends ProfileAction
 
     function showProfileBlock()
     {
-        $block = new QuitimAccountProfileBlock($this, $this->profile);
+        $block = new QuitimAccountProfileBlock($this, $this->target);
         $block->show();
     }
 
 	
 	function showNoticesWithCommentsAndFavs()
 	{
-        $nl = new QuitimThreadedNoticeList($this->notice, $this, $this->profile);
+        $nl = new QuitimThreadedNoticeList($this->notice, $this, $this->target);
         $cnt = $nl->show();
 		if (0 == $cnt) {
 			$this->showEmptyListMessage();
 		}
 		$this->pagination(
 			$this->page > 1, $cnt > NOTICES_PER_PAGE,
-			$this->page, 'quitimall', array('nickname' => $this->profile->nickname)
+			$this->page, 'quitimall', array('nickname' => $this->target->getNickname())
 		);				
 	}
 	
