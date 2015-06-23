@@ -277,8 +277,8 @@ class QuitimPlugin extends Plugin {
 
 
     /**
-     * If a local image url is found in the rendered content before saving, we add it as an
-     * inline <img>
+     * 
+     * Make sure only "conversation starters" have attachments
      *
      * @return boolean hook flag
      */
@@ -305,84 +305,38 @@ class QuitimPlugin extends Plugin {
 		else if(!$matches) {
 			throw new ClientException(_('No image!'));
 			}
-		else {
-			
-			// the last image is always the new upload 
-			$last_match = end($matches[0]);
-
-			// only local files
-			$image = File::getKV('url', $last_match);
-            
-            if ($image instanceof File) {	
-	        	
-	        	$imageid = $image->id;	        	
-	        	$imagepath = File::path($image->filename);
-								
-				// rotate full image
-				$exif_from_full_file = $exif_of_full_image = $this->adjustPicOrientation($imagepath);
-
-				// rotate thumbnail
-				$thumbnail = $image->getThumbnail();
-				if($thumbnail) {
-					$thumbnail_filename = substr($thumbnail->url, strpos($thumbnail->url,'/file/')+6);
-					$thumbnail_path = File::path($thumbnail_filename);
-					$this->adjustPicOrientation($thumbnail_path, $exif_from_full_file);
-					// flip in db if rotated
-					if(array_key_exists('Orientation', $exif_from_full_file) && $exif_from_full_file['Orientation'] != 1) {	
-						$thumb_w = $thumbnail->width;
-						$thumb_h = $thumbnail->height;
-						$thumbnail->width = $thumb_h;
-						$thumbnail->height = $thumb_w;				
-						$thumbnail->update();		
-						}
-					}
-				
-
-				// resize
-				try {
-					$imagefile = new ImageFile($imageid, $imagepath);
-					}
-				catch (Exception $e) {
-					throw new ClientException(_('Could not read image.'));
-					}
-				if ($imagefile === null) {
-					throw new ClientException(_('Image file not found.'));
-					}	
-				
-				$current_user = common_current_user();
-				$current_profile = $current_user->getProfile();
-			
-				$outname = File::filename($current_profile, 'thumb-' . $image->filename, $image->mimetype);
-				$outpath = File::path($outname);
-
-				$maxWidth = 800;
-				$maxHeight = 800;
-
-				if($imagefile->width > $maxWidth || $imagefile->height > $maxHeight) {
-					list($width, $height) = MediaFile::scaleToFit($imagefile->width, $imagefile->height, $maxWidth, $maxHeight);
-
-					$imagefile->resizeTo($outpath, $width, $height);						
-					$resized_image_url = File::url($outname);				
-					}
-				else {
-					$resized_image_url = $last_match;
-					}
-
-				// if no image caption
-				$file_redirection = File_redirection::getKV('file_id', $imageid);
-				$notice_content = trim(str_replace($file_redirection->url, '', $notice->content));
-				if(strlen($notice_content) == 0) {
-					$notice->content = '--no caption-- '.$notice->content;
-					}		
-				
-				$notice->rendered = '<div class="quitim-notice"><img src="'.$resized_image_url.'" /></div>'.$notice->rendered;
-	        	}
-
-			}
 		
         return true;
     	}
 
+
+
+    /**
+     * 
+     * Modify the notice output 
+     *
+     * @return boolean hook flag
+     */
+    function onEndShowNoticeContent($notice, $out, $scoped) {
+ 		
+//   		$out->raw('<pre>'.print_r($notice->attachments(),true).'</pre>');
+//   		$out->raw('<pre>'.print_r($notice,true).'</pre>');  		
+
+ 		$attachments = $notice->attachments();
+ 		
+ 		foreach($attachments as $attachment) {
+ 			$attachment_type = substr($attachment->mimetype, 0, strpos($attachment->mimetype,'/'));
+ 			
+ 			// we only show conversation starting images
+ 			if(empty($notice->reply_to) && $attachment_type == 'image' && $attachment instanceof File) {
+ 				
+ 				// show full image if small
+ 				if($attachment->width < 1000) {
+ 					$out->raw('<div class="quitim-notice"><img src="'.$attachment->url.'" /></div>');
+				}
+			}
+		}
+ 	}
 
 
     /**

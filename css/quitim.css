@@ -712,8 +712,15 @@ body#quitimlogin #form_login #submit,
 
 
 .noticestream.threaded-view .threaded-replies .notice .notice-headers .quitim-notice,
-.noticestream.threaded-view .threaded-replies .notice:first-child .notice-headers .attachment {
+.noticestream.threaded-view .threaded-replies .notice:nth-child(2) .notice-headers .attachment,
+.noticestream.threaded-view .threaded-replies .notice:nth-child(2) .quitim-notice {
 	display:none;
+	}
+
+.noticestream.threaded-view .notice > .e-content {
+	font-size:0;
+	line-height:0;
+	color:transparent;
 	}
 
 .noticestream.threaded-view .threaded-replies .notice .notice-headers {
