@@ -77,16 +77,16 @@ class QuitimThreadedNoticeList extends NoticeList
 		$notices = $this->notice->fetchAll();
 		$total = count($notices);
 		$notices = array_slice($notices, 0, NOTICES_PER_PAGE);
-		
+
         $allnotices = self::_allNotices($notices);
     	self::prefill($allnotices);
-    	
+
         $conversations = array();
-        
+
         foreach ($notices as $notice) {
 
             // Collapse repeats into their originals...
-            
+
             if ($notice->repeat_of) {
                 $orig = Notice::getKV('id', $notice->repeat_of);
                 if ($orig) {
@@ -208,21 +208,14 @@ class QuitimThreadedNoticeListItem extends QuitimNoticeListItem
             $moreCutoff = null;
             while ($notice->fetch()) {
                 if (Event::handle('StartAddNoticeReply', array($this, $this->notice, $notice))) {
-//                     if ($notice->id == $this->notice->id) {
-//                         // Skip!
-//                         continue;
-//                     }
-                    if (substr($notice->content,0,14) == '--no caption--') {
-                        // Skip!
-                        continue;
+                    if ($notice->id == $this->notice->id) {
+                        $notice->is_conversation_starter = true;
+                        continue; // skip
                     }
                     $cnt++;
                     if ($cnt > $max) {
                         // boo-yah
                         $moreCutoff = clone($notice);
-	                    if (substr($this->notice->content,0,14) != '--no caption--') {                        
-	                        $notices[] = $this->notice;
-	                        }
                         break;
                     }
                     $notices[] = clone($notice); // *grumble* inefficient as hell
@@ -234,38 +227,32 @@ class QuitimThreadedNoticeListItem extends QuitimNoticeListItem
 
                 $this->out->elementStart('ul', 'notices threaded-replies xoxo');
 
-                $item = new QuitimThreadedNoticeListFavesItem($this->notice, $this->out);
-                $hasFaves = $item->show();
-                
-                // add a fav container even if no faves, to load into with ajax when faving
-                if(!$hasFaves) {
-                	$this->element('li',array('class' => 'notice-data notice-faves'));
-                	}
+
 
 //                 $item = new ThreadedNoticeListRepeatsItem($this->notice, $this->out);
 //                 $hasRepeats = $item->show();
 
-                if ($notices) {                
+                if ($notices) {
 
                     $i=0;
                     foreach (array_reverse($notices) as $notice) {
-                        
+
 						if ($notice->id == $this->notice->id && $moreCutoff && $i==0) {
                             $item = new QuitimThreadedNoticeListSubItem($notice, $this->notice, $this->out);
-                            $item->show();      							
-							$item = new QuitimThreadedNoticeListMoreItem($moreCutoff, $this->out, count($notices));
-							$item->show();
+                            $item->show();
+							$showMoreItem = new QuitimThreadedNoticeListMoreItem($moreCutoff, $this->out, count($notices));
+							$showMoreItem->showMoreItem();
 							$moreCutoffShown = true;
 						} else if ($moreCutoff && $i==0 && !$moreCutoffShown) {
-							$item = new QuitimThreadedNoticeListMoreItem($moreCutoff, $this->out, count($notices));
-							$item->show();
+							$showMoreItem = new QuitimThreadedNoticeListMoreItem($moreCutoff, $this->out, count($notices));
+							$showMoreItem->showMoreItem();
                             $item = new QuitimThreadedNoticeListSubItem($notice, $this->notice, $this->out);
-                            $item->show();      								
+                            $item->show();
 						} else {
                             $item = new QuitimThreadedNoticeListSubItem($notice, $this->notice, $this->out);
-                            $item->show();      					
+                            $item->show();
 						}
-                        
+
                     	$i++;
                     }
                 }
@@ -346,14 +333,15 @@ class QuitimThreadedNoticeListSubItem extends QuitimNoticeListItem
 /**
  * Placeholder for loading more replies...
  */
-class QuitimThreadedNoticeListMoreItem extends NoticeListItem
+class QuitimThreadedNoticeListMoreItem
 {
     protected $cnt;
 
     function __construct($notice, $out, $cnt)
     {
-        parent::__construct($notice, $out);
         $this->cnt = $cnt;
+        $this->notice = $notice;
+        $this->out = $out;
     }
 
     /**
@@ -364,11 +352,11 @@ class QuitimThreadedNoticeListMoreItem extends NoticeListItem
      *
      * @return void
      */
-    function show()
+    function showMoreItem()
     {
-        $this->showStart();
-        $this->showMiniForm();
-        $this->showEnd();
+        $this->showMoreItemStart();
+        $this->showMoreItemMiniForm();
+        $this->showMoreItemEnd();
     }
 
     /**
@@ -376,23 +364,28 @@ class QuitimThreadedNoticeListMoreItem extends NoticeListItem
      *
      * @return void
      */
-    function showStart()
+    function showMoreItemStart()
     {
         $this->out->elementStart('li', array('class' => 'notice-reply-comments'));
     }
 
-    function showMiniForm()
+    function showMoreItemMiniForm()
     {
         $id = $this->notice->conversation;
-        $url = common_local_url('conversationreplies', array('id' => $id));
+        $url = common_local_url('quitimshownotice', array('id' => $id));
 
+        //
         $n = Conversation::noticeCount($id) - 1;
-
-        // TRANS: Link to show replies for a notice.
-        // TRANS: %d is the number of replies to a notice and used for plural.
+        //
+        // // TRANS: Link to show replies for a notice.
+        // // TRANS: %d is the number of replies to a notice and used for plural.
         $msg = sprintf(_m('Show reply', 'Show all %d replies', $n), $n);
-
+        //
+        // error_log( common_local_url('conversationreplies', array('id' => $id)));
         $this->out->element('a', array('href' => $url), $msg);
+    }
+    function showMoreItemEnd() {
+        $this->out->elementEnd('li');
     }
 }
 
@@ -550,12 +543,12 @@ class QuitimThreadedNoticeListFavesItem extends QuitimNoticeListActorsItem
 
     function showStart()
     {
-        $this->out->elementStart('li', array('class' => 'notice-data notice-faves'));
+        $this->out->elementStart('div', array('class' => 'notice-data notice-faves'));
     }
 
     function showEnd()
     {
-        $this->out->elementEnd('li');
+        $this->out->elementEnd('div');
     }
 }
 

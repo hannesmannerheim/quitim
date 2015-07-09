@@ -58,7 +58,7 @@ class ChronologicalInboxStream extends ScopingNoticeStream
             $scoped = Profile::current();
         }
         // FIXME: we don't use CachingNoticeStream - but maybe we should?
-        parent::__construct(new CachingNoticeStream(new RawInboxNoticeStream($target), 'profileall'), $scoped);
+        parent::__construct(new CachingNoticeStream(new QuitimRawInboxNoticeStream($target), 'quitimprofileall'), $scoped);
     }
 }
 
@@ -72,7 +72,7 @@ class ChronologicalInboxStream extends ScopingNoticeStream
  * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html AGPL 3.0
  * @link      http://status.net/
  */
-class RawInboxNoticeStream extends NoticeStream
+class QuitimRawInboxNoticeStream extends NoticeStream
 {
     protected $target  = null;
     protected $inbox = null;

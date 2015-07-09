@@ -8,10 +8,10 @@ address img {
 	}
 
 body.quitim {
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     padding:0;
     margin:0;
-	background-color:#eee;	
+	background-color:#eee;
 	color:#555;
 	}
 
@@ -27,10 +27,10 @@ body.quitim {
 	}
 
 .quitim #wrap {
-    font-weight: 400;	
-    font-size:14px;	
+    font-weight: 400;
+    font-size:14px;
 	width:100%;
-    max-width:1000px;
+    max-width:800px;
     position:relative;
     background-color:#fff;
     margin: 50px auto 50px auto;
@@ -39,7 +39,11 @@ body.quitim {
 
 .quitim-notice {
 	position:relative;
+	clear:both;
 	}
+.noticestream.threaded-view .quitim-notice {
+	padding-bottom: 7px;
+}
 
 .quitim address a,
 #quitimuserstream #topright,
@@ -49,27 +53,27 @@ body.quitim {
 .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .notice_reply,
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_delete,
 .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .notice_delete,
-.noticestream.threaded-view .threaded-replies .notice-faves,
+.noticestream.threaded-view .notice-faves,
 .noticestream.threaded-view .threaded-replies .notice-reply-comments a,
 #set-thumbnail-view,
 #set-threaded-view,
 .quitim #fixed-footer a div,
 .quitim #loginlogo,
-body#quitimlogin #form_login,
-body#quitimlogin #form_login fieldset,
-body#quitimlogin #form_login fieldset .form_data,
-body#quitimlogin #form_login #submit,
+body#quitimfavorited #form_login,
+body#quitimfavorited #form_login fieldset,
+body#quitimfavorited #form_login fieldset .form_data,
+body#quitimfavorited #form_login #submit,
 #image-preview #image-nav #close-image,
 #image-preview #image-nav #submit-image,
 #image-preview .toolbar-button-extra,
 .double-tap-heart {
-	background-image: url("../img/sprite.png?v=7");	
+	background-image: url("../img/sprite.png?v=7");
 	background-size: 500px 2000px;
 	background-repeat:no-repeat;
 	}
 
 #image-toolbar div .filter-thumb {
-	background-image: url("../img/sprite-preview.jpg?v=2");	
+	background-image: url("../img/sprite-preview.jpg?v=2");
 	background-size: 500px 300px;
 	background-repeat:no-repeat;
 	}
@@ -95,9 +99,9 @@ body#quitimlogin #form_login #submit,
 	height:50px;
 	position:fixed;
 	width:100%;
-	max-width:1000px;
+	max-width:800px;
 	top:-5px;
-	padding-top:5px;		
+	padding-top:5px;
 	z-index:100;
 	}
 
@@ -109,7 +113,7 @@ body#quitimlogin #form_login #submit,
 	height:50px;
 	background-color:#444;
 	z-index:1000;
-	max-width: 1000px;	
+	max-width: 800px;
 	}
 .quitim #fixed-footer a {
 	display:block;
@@ -117,71 +121,71 @@ body#quitimlogin #form_login #submit,
 	width:20%;
 	height:50px;
 	left:50%;
-	}		
+	}
 .quitim #fixed-footer a:active {
-	background-color:#333;	
-	}	
+	background-color:#333;
+	}
 .quitim #fixed-footer a:active > div {
 	border-color:#333;
 	}
 .quitim #fixed-footer a > div {
 	position:relative;
 	border:2px solid #444;
-	height:48px;	
-	background-position:-300px -450px;	
-	}		
+	height:48px;
+	background-position:-300px -450px;
+	}
 .quitim #fixed-footer a.active > div {
-	border-color:#222;	
+	border-color:#222;
 	background-color:#222;
-	}		
-	
+	}
+
 .quitim #fixed-footer a.active > div > div {
 	position:relative;
 	border-bottom:3px solid #0084B4;
-	height:45px;		
-	}			
+	height:45px;
+	}
 .quitim #fixed-footer a#home-all {
 	margin-left:-50%;
 	}
-.quitim #fixed-footer a#home-all div {	
+.quitim #fixed-footer a#home-all div {
 	background-position:center -450px;
 	}
 .quitim #fixed-footer a#my-profile {
 	margin-left:30%;
 	}
-.quitim #fixed-footer a#my-profile div {	
+.quitim #fixed-footer a#my-profile div {
 	background-position:center -505px;
 	}
 .quitim #fixed-footer a#notifications {
 	margin-left:10%;
 	}
-.quitim #fixed-footer a#notifications div {	
+.quitim #fixed-footer a#notifications div {
 	background-position:center -567px;
-	}	
+	}
 .quitim #fixed-footer a#popular {
 	margin-left:-30%;
 	}
-.quitim #fixed-footer a#popular div {	
+.quitim #fixed-footer a#popular div {
 	background-position:center -625px;
-	}	
+	}
 .quitim #fixed-footer a#camera {
 	margin-left:-10%;
 	background-color:#0084B4;
 	}
-.quitim #fixed-footer a#camera div {	
+.quitim #fixed-footer a#camera div {
 	border-color:#0084B4;
 	background-position:center -684px;
-	}			
+	}
 .quitim #fixed-footer a#camera:active {
 	background-color:#000;
 	}
-.quitim #fixed-footer a#camera:active div {	
+.quitim #fixed-footer a#camera:active div {
 	border-color:#000;
 	}
 
 .quitim h1 {
 	text-transform:uppercase;
-    font-weight: 500;	
+    font-weight: 500;
 	margin:0;
 	font-size:18px;
 	line-height:50px;
@@ -198,7 +202,7 @@ body#quitimlogin #form_login #submit,
 	cursor:pointer;
 	}
 #quitimuserstream #topright	{
-	background-position:30px -95px;	
+	background-position:30px -95px;
 	}
 #quitimuserstream #topright:active {
 	background-color:rgba(0,0,0,0.2);
@@ -208,7 +212,7 @@ body#quitimlogin #form_login #submit,
 	right:10px;
 	top:10px;
 	}
-	
+
 #quitimuserstream:not(.user_in) #topright {
 	display:none;
 	}
@@ -232,7 +236,7 @@ body#quitimlogin #form_login #submit,
 	position:absolute;
 	width:100%;
 	height:auto;
-	background:transparent;		
+	background:transparent;
 	}
 
 #quitimuserstream .account_profile_block .entity_actions h2 {
@@ -259,7 +263,7 @@ body#quitimlogin #form_login #submit,
 	box-shadow:0 0 10px rgba(0,0,0,0.2);
 	border:0 none;
 	}
-	
+
 #form_ostatus_connect #ostatus_nickname,
 #form_ostatus_connect .close {
 	display:none;
@@ -280,7 +284,7 @@ body#quitimlogin #form_login #submit,
     position: relative;
     text-align: center;
     width: 100%;
-	}	
+	}
 #form_ostatus_connect input#submit {
     border: 0 none;
     display: block;
@@ -289,19 +293,19 @@ body#quitimlogin #form_login #submit,
     margin: 0 auto;
     padding: 0;
     position: relative;
-    font-size:14px;	
+    font-size:14px;
     color:#fff;
     background:green;
     text-decoration:none;
     text-align:center;
     border-radius:3px;
     width:50%;
-    cursor:pointer;	
-	}	
-	
+    cursor:pointer;
+	}
+
 #quitimuserstream .account_profile_block .entity_actions ul li p {
 	display:none;
-	}	
+	}
 #quitimuserstream .account_profile_block .entity_actions ul li form fieldset {
 	padding:0;
 	margin:0;
@@ -309,19 +313,19 @@ body#quitimlogin #form_login #submit,
 	width:100%;
 	border:0 none;
 	position:relative;
-	}		
+	}
 #quitimuserstream .account_profile_block .entity_actions ul li form fieldset legend {
 	display:block;
 	position:absolute;
 	height:40px;
-	line-height:40px;	
-	z-index:1;	
+	line-height:40px;
+	z-index:1;
 	color:#333;
 	text-align:left;
 	font-weight:bold;
-	font-size:12px;	
+	font-size:12px;
 	padding-left:10px;
-	}			
+	}
 #quitimuserstream .account_profile_block .entity_actions ul li form fieldset input {
 	display:block;
 	position:relative;
@@ -336,13 +340,13 @@ body#quitimlogin #form_login #submit,
 	font-weight:bold;
 	font-size:12px;
 	z-index:2;
-	}				
+	}
 #quitimuserstream .account_profile_block .entity_actions ul li form fieldset input:hover {
-	background:rgba(0,0,0,0.1);	
-	}	
+	background:rgba(0,0,0,0.1);
+	}
 #quitimuserstream .account_profile_block .entity_actions ul li form fieldset input:active {
-	background:rgba(0,0,0,0.2);	
-	}		
+	background:rgba(0,0,0,0.2);
+	}
 #quitimuserstream .account_profile_block .entity_actions ul li.entity_send-a-message	{
 	display:none;
 	}
@@ -354,8 +358,8 @@ body#quitimlogin #form_login #submit,
 	margin:0;
 	padding:0;
 	border:0 none;
-	}	
-	
+	}
+
 #quitimuserstream #profileblock {
 	margin-left:115px;
 	margin-right:15px;
@@ -381,12 +385,12 @@ body#quitimlogin #form_login #submit,
     position: absolute;
     top:70px;
     width:100%;
-    padding-left:115px;    
+    padding-left:115px;
     display:block;
     height:50px;
 	}
 
-	
+
 #quitimuserstream #profileblock li.entity_subscribe a.entity_remote_subscribe,
 #quitimuserstream.me .account_profile_block .entity_actions ul li.entity_edit a,
 #quitimuserstream #profileblock > .profile_subscribe form fieldset input {
@@ -397,7 +401,7 @@ body#quitimlogin #form_login #submit,
     margin: 0;
     padding: 0;
     position: relative;
-    font-size:14px;	
+    font-size:14px;
     color:#333;
     background:#ddd;
     text-decoration:none;
@@ -406,25 +410,25 @@ body#quitimlogin #form_login #submit,
     width:100%;
     cursor:pointer;
 	}
-#quitimuserstream #profileblock li.entity_subscribe a.entity_remote_subscribe,	
+#quitimuserstream #profileblock li.entity_subscribe a.entity_remote_subscribe,
 #quitimuserstream #profileblock > .profile_subscribe form.form_user_unsubscribe fieldset input {
 	background:green;
 	color:#fff;
-	}	
+	}
 #quitimuserstream #profileblock > .profile_subscribe form.form_user_subscribe fieldset input {
 	background:#0084B4;
 	color:#fff;
-	}	
+	}
 
 #quitimuserstream #profileblock .ur_face {
 	margin:20px 15px 15px;
 	width:82px;
-	height:82px;	
+	height:82px;
 	border-radius:40px;
 	overflow:hidden;
 	box-shadow: inset 0 0 5px #000000;
 	}
-	
+
 #quitimuserstream #profileblock > h2 {
 	width:29%;
 	position:absolute;
@@ -433,28 +437,28 @@ body#quitimlogin #form_login #submit,
 	height:45px;
 	padding-top:5px;
 	font-size:18px;
-	}	
+	}
 #quitimuserstream #profileblock > h2 a {
 	display:block;
 	position:absolute;
 	width:100%;
 	text-align:center;
 	height:20px;
-	line-height:20px;	
+	line-height:20px;
 	padding-top:20px;
 	color:#aaa;
 	font-size:13px;
 	text-decoration:none;
 	text-transform:lowercase;
 	font-weight:400;
-	}	
+	}
 #quitimuserstream #profileblock > h2#subscriberscountlink {
 	margin-left:33%;
 	}
 #quitimuserstream #profileblock > h2#subscriptionscountlink	{
-	margin-left:66%;	
+	margin-left:66%;
 	}
-	
+
 #quitimuserstream .profile_block_location {
 	display:none;
 	}
@@ -470,18 +474,18 @@ body#quitimlogin #form_login #submit,
 	font-weight:bold;
 	text-decoration:none;
 	color:#000;
-	}	
-	
+	}
+
 
 /* thumb-thread selector */
 
 #thumb-thread {
 	width:100%;
 	border-top:1px solid #ccc;
-	border-bottom:1px solid #ccc;	
+	border-bottom:1px solid #ccc;
 	height:50px;
 	position:relative;
-	margin-top:20px;	
+	margin-top:20px;
 	}
 #set-thumbnail-view,
 #set-threaded-view {
@@ -491,11 +495,11 @@ body#quitimlogin #form_login #submit,
 	top:0;
 	left:0;
 	cursor:pointer;
-	background-position:center -322px;	
+	background-position:center -322px;
 	background-repeat:none;
-	}	
+	}
 #set-threaded-view {
-	background-position:center -362px;	
+	background-position:center -362px;
 	left:50%;
 	}
 
@@ -506,28 +510,28 @@ body#quitimlogin #form_login #submit,
 	width:100%;
 	position:relative;
 	overflow:hidden;
-	}	
+	}
 
 .noticestream.thumbnail-view ol {
 	margin:0;padding:0;list-style:none;
 	display:block;
-	}	
+	}
 .noticestream.thumbnail-view h2,
 .noticestream.thumbnail-view .notice .notice-headers,
 .noticestream.thumbnail-view .notice > footer,
 .noticestream.thumbnail-view .notices.threaded-replies {
 	display:none;
-	}	
+	}
 
-.noticestream.thumbnail-view #notices_primary {	
+.noticestream.thumbnail-view #notices_primary {
 	width:102%;
 	position:relative;
-	}	
+	}
 
 .noticestream.thumbnail-view .notice {
    line-height: 0;
    width:19.5%;
-   padding:0 0.3% 0.3% 0;   
+   padding:0 0.3% 0.3% 0;
    position:relative;
    }
 
@@ -535,7 +539,7 @@ body#quitimlogin #form_login #submit,
 	height:auto;
 	width:100%;
 	}
-	
+
 .noticestream.thumbnail-view .notice .e-content > a {
     display: none;
 }
@@ -545,7 +549,7 @@ body#quitimlogin #form_login #submit,
 	height:0;
 	overflow:hidden;
 	}
-	
+
 /* threaded notice view */
 .noticestream.threaded-view #notices_primary h2 {
 	display:none;
@@ -555,45 +559,49 @@ body#quitimlogin #form_login #submit,
 .noticestream.threaded-view #notices_primary > .notices > .notice {
 	position:relative;
 	border-bottom:1px solid #ccc;
-	}	
+	}
 
  .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice,
  .noticestream.threaded-view #notices_primary > .notices > .notice	{
-	padding-bottom:50px;	
+	padding-bottom:50px;
 	}
-	
-	
 
- .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-headers,	
- .noticestream.threaded-view #notices_primary > .notices > .notice > .notice-headers {	
+
+
+ .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > .notice-headers,
+ .noticestream.threaded-view #notices_primary > .notices > .notice > .notice-headers {
 	font-size:0;
 	color:transparent;
 	}
 
 .noticestream.threaded-view .notice-headers > .p-author {
 	line-height:50px;
-	height:50px;	
+	height:50px;
 	position:relative;
 	font-size:13px;
 	font-weight:bold;
 	}
 .noticestream.threaded-view .notice-headers > .p-author .u-photo {
+	border-radius: 35px;
+    box-shadow: 0 0 5px #000000 inset;
+    display: block;
+    height: 34px;
+    width: 34px;
 	display:block;
     float: left;
-	height:3em;
-	width:3em;
-	margin: 1ex 1em;
-	border-radius: 1.5em;
-	box-shadow: inset 0 0 5px #000000;
+	margin: 8px 8px;
 	}
 .noticestream.threaded-view .notice > .e-content,
 .noticestream.threaded-view .notice-headers > .notice-title {
 	margin:0;
 	padding:0;
-	} 	
+	}
 
 .noticestream.threaded-view img {
 	width:100%;
+	display:block;
+	margin:0;
+	padding:0;
 	}
 .noticestream.threaded-view .notice-headers > .notice-title,
 .noticestream.threaded-view .notice-headers > .addressees,
@@ -617,11 +625,11 @@ body#quitimlogin #form_login #submit,
 	text-decoration:none;
 	font-size:12px;
 	font-weight:400;
-	border:0 none;	
+	border:0 none;
 	}
 .noticestream.threaded-view .notice > footer > a.timestamp time {
-	border:0 none;		
-	}	 
+	border:0 none;
+	}
 
 .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options,
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options {
@@ -629,7 +637,7 @@ body#quitimlogin #form_login #submit,
 	height:50px;
 	width:100%;
 	left:10px;
-	bottom:0;
+	bottom:-4px;
 	}
 
 
@@ -638,8 +646,8 @@ body#quitimlogin #form_login #submit,
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_favor legend,
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_disfavor legend {
 	display:none;
-	}	
-	
+	}
+
 #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_favor fieldset,
 #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_disfavor fieldset,
 #notices_primary > .notices > .notice > footer > .notice-options .form_favor fieldset,
@@ -669,48 +677,129 @@ body#quitimlogin #form_login #submit,
 	left:0;
 	position:absolute;
 	cursor:pointer;
-	}	
+	}
 
 .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_disfavor fieldset input,
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_disfavor fieldset input {
 	background-position:-46px -196px;
-	}	
+	}
 
 .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .notice_reply,
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_reply {
 	background-position:-100px -196px;
 	left:80px;
-	}		
+	}
 .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .notice_delete,
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_delete {
 	background-position:-260px -190px;
 	right:15px;
 	left:auto;
-	}			
-	
+	}
+
 .noticestream.threaded-view .threaded-replies {
-	margin:10px 0;
+	margin:0;
+	}
+
+.noticestream.thumbnail-view article > .first-comment > .p-author {
+	display: none;
+}
+
+.noticestream.thumbnail-view .notice-faves {
+	display: none;
+}
+
+
+.noticestream.threaded-view article > .first-comment > .p-author img {
+	display: none;
+}
+
+.noticestream.threaded-view .first-comment {
+	padding: 0 15px;
+	line-height: 18px;
+}
+
+.noticestream.threaded-view .threaded-notices > .notice > article > .first-comment > .p-author,
+.noticestream.threaded-view .threaded-notices > .notice > article > .first-comment > .quitim-notice-text {
+	font-size: 13px;
+	line-height:20px;
+}
+.noticestream.threaded-view .threaded-notices article > .first-comment > .p-author {
+	font-weight: bold;
+}
+
+.noticestream.threaded-view .threaded-replies li .quitim-notice {
+	display:none;
+	}
+.noticestream.threaded-view .quitim-notice-text	{
+	display:inline;
+	}
+
+.noticestream.threaded-view .threaded-replies .notice.conversation-starter .attachment {
+	display:none;
+	}
+.noticestream.threaded-view .threaded-replies .notice.conversation-starter.empty-text {
+	display:none;
+	}
+.noticestream.threaded-view .threaded-notices > .notice.empty-text > article > .first-comment > .p-author,
+.noticestream.threaded-view .threaded-notices > .notice.empty-text > article > .first-comment > .quitim-notice-text,
+.noticestream.threaded-view  .threaded-notices > .notice > article > .first-comment > .quitim-notice-text .attachment {
+	display:none;
+	}
+
+.noticestream.threaded-view .threaded-replies .notice-headers > .p-author {
+	display: none;
+	}
+
+.noticestream.threaded-view .notice-faves {
+    background-position: -5px -253px;
+    background-repeat: no-repeat;
+    font-size: 13px;
+    line-height: 30px;
+    margin-bottom: 0;
+    padding-left: 35px;
+	}
+.noticestream.threaded-view .notice-faves a {
+	font-weight:bold;
 	}
 .noticestream.threaded-view .threaded-replies .notice-faves {
-	margin-bottom:10px;
-	padding-left:35px;
-	background-position:-5px -259px;
-	background-repeat:no-repeat;	
-	font-size:13px;	
+	display:none;
 	}
-.noticestream.threaded-view .threaded-replies .notice-faves a {
-	font-weight:bold;
-	}	
-	
+
 .noticestream.threaded-view .threaded-replies .notice-reply-comments a {
 	background-position:-5px -293px;
 	padding-left:36px;
 	font-size:13px;
-	line-height:23px;	
+	line-height:23px;
 	color:#777;
 	}
 
+.form_repeat {
+	display:none;
+}
 
+
+
+.noticestream.thumbnail-view .notice .quitim-notice-text {
+	display:none;
+}
+
+.noticestream.thumbnail-view .notice.no-images {
+	display:none;
+	height:0;
+	width:0;
+}
+
+.noticestream .notice .quitim-notice .no-link {
+	display:none;
+	}
+.noticestream.threaded-view .notice .quitim-notice .link {
+	display:none;
+}
+.noticestream.threaded-view .notice .quitim-notice .no-link {
+	display:block;
+	}
+
+/*
 .noticestream.threaded-view .threaded-replies .notice .notice-headers .quitim-notice,
 .noticestream.threaded-view .threaded-replies .notice:nth-child(2) .notice-headers .attachment,
 .noticestream.threaded-view .threaded-replies .notice:nth-child(2) .quitim-notice {
@@ -721,26 +810,24 @@ body#quitimlogin #form_login #submit,
 	font-size:0;
 	line-height:0;
 	color:transparent;
-	}
+	}*/
 
 .noticestream.threaded-view .threaded-replies .notice .notice-headers {
-	padding:0 15px;
-	font-size:13px;
-	display:inline;
-	}	
+	display:none;
+	}
 .noticestream.threaded-view .threaded-replies .notice .e-content {
 	display:inline;
-	font-size:13px;	
-	} 	
+	font-size:13px;
+	}
 .noticestream.threaded-view .threaded-replies .notice .e-content > br {
 	display:none;
-	}	
+	}
 .noticestream.threaded-view .threaded-replies .notice > .notice-headers .p-author > .u-photo,
 .noticestream.threaded-view .threaded-replies .notice > footer,
 .noticestream.threaded-view .threaded-replies .notice-reply-placeholder {
 	display:none !important;
 	}
-	
+
 .noticestream.threaded-view .threaded-replies .notice-reply	{
 	position:fixed;
 	display:block;
@@ -752,14 +839,14 @@ body#quitimlogin #form_login #submit,
 	background:#fff;
 	height:100%;
 	}
-	
+
 #infscr-loading {
 	display:none !important;
 	}
 .quitim .infscr-pages {
 	opacity:0;
-	}	
-	
+	}
+
 #quitimfavorited #thumb-thread {
     margin-top: 0px;
     border-top:0 none;
@@ -772,9 +859,9 @@ body#quitimlogin #form_login #submit,
     position: absolute;
     top: 50%;
     width: 100%;
-    z-index: 10;		
+    z-index: 10;
 	}
-    
+
 /* notifications */
 
 #new-notifications-start {
@@ -787,54 +874,70 @@ body#quitimlogin #form_login #submit,
 	height:10px;
 	margin:15px;
 	border-top:1px solid #333;
-	}	
-	
- .noticestream.threaded-view #notices_primary > .notices > .notice.notification > .notice-headers {
+	}
+
+ .noticestream.threaded-view #notices_primary > .notices > .notice.notification > .entry-title {
 	font-size:13px;
 	color:#333;
 	}
-.noticestream.threaded-view .notice.notification .notice-headers > .p-author { 
+.noticestream.threaded-view .notice.notification .entry-title > .author {
 	display:inline-block;
 	}
-	
-.noticestream.threaded-view .notice.notification .notice-headers > .p-author {	
+
+.noticestream.threaded-view .notice.notification .entry-title > .author {
 	line-height:20px;
 	padding-top:8px;
 	padding-right:80px;
+	font-weight:bold;
 	}
-.noticestream.threaded-view .notice.notification .notice-headers > .p-author .u-photo {
+.noticestream.threaded-view .notice.notification .entry-title > .author .u-photo {
 	margin-top:0px;
 	}
-.noticestream.threaded-view .notice.notification .notice-headers > .p-author span.notificationtext {
+
+.noticestream.threaded-view .notification .vcard img {
+	border-radius: 35px;
+    box-shadow: 0 0 5px #000000 inset;
+    display: block;
+    height: 34px;
+    width: 34px;
+	display:block;
+    float:left;
+	margin: 0 8px;
+	}
+
+
+
+.noticestream.threaded-view .notice.notification .entry-title > .author span.notificationtext {
 	font-weight:400;
 	}
 
- .noticestream.threaded-view #notices_primary > .notices > .notice.notification {	
+ .noticestream.threaded-view #notices_primary > .notices > .notice.notification {
 	padding-bottom:10px;
 	}
 .noticestream.threaded-view #notices_primary > .notices > .notice.notification {
 	margin:0 10px;
 	border-color:#ddd;
+	min-height: 50px;
 	}
 .noticestream.threaded-view #notices_primary > .notices > .notice.notification.first-seen {
 	padding-top:40px;
 	border-top:1px solid #333;
 	margin-top:-1px;
-	}	
-.noticestream.threaded-view .notice.notification .notice-headers > .p-author {	
+	}
+.noticestream.threaded-view .notice.notification .entry-title > .author {
 	display:block;
 	height:auto;
-	min-height:45px;	
+	min-height:45px;
 	}
-.noticestream.threaded-view .notice.notification .notice-headers > .p-author abbr {
+.noticestream.threaded-view .notice.notification .entry-title > .author abbr {
 	display:inline;
 	color:#aaa;
 	text-decoration:none;
 	font-size:12px;
 	font-weight:400;
 	border:0 none;
-	}		
-	
+	}
+
 .noticestream.notification-stream.threaded-view a.thumb {
 	display:block;
 	position:absolute;
@@ -842,15 +945,15 @@ body#quitimlogin #form_login #submit,
 	right:0;
 	width:80px;
 	height:50px;
-	z-index:10;	
+	z-index:10;
 	}
 .noticestream.notification-stream.threaded-view .notice.notification.first-seen a.thumb {
 	margin-top:40px;
 	}
 
-.noticestream.notification-stream.threaded-view img:not(.avatar) {	
+.noticestream.notification-stream.threaded-view img:not(.avatar) {
 	width:auto;
-	height:auto;	
+	height:auto;
 	margin:0;
 	max-height:50px;
 	position:absolute;
@@ -875,31 +978,31 @@ body#quitimlogin #form_login #submit,
 	display:inline-block;
 	height:40px;
 	line-height:38px;
-	text-align:left;	
+	text-align:left;
 	padding-left:37px;
 	padding-right:7px;
 	color:#fff;
 	font-weight:bold;
 	font-size:15px;
-	border:0 none;	
+	border:0 none;
 	}
 .quitim #fixed-footer a#notifications div#notifications-bubble div#noti-comments-mentions {
 	background-position:-97px -748px;
-	}	
+	}
 .quitim #fixed-footer a#notifications div#notifications-bubble div#noti-likes {
 	background-position:10px -748px;
-	}	
+	}
 .quitim #fixed-footer a#notifications div#notifications-bubble div#noti-follow {
 	background-position:-193px -749px;
-	}			
+	}
 .quitim #fixed-footer a#notifications div#notifications-bubble div:first-child {
 	border-top-left-radius:5px;
-	border-bottom-left-radius:5px;	
-	}	
+	border-bottom-left-radius:5px;
+	}
 .quitim #fixed-footer a#notifications div#notifications-bubble div:last-child {
 	border-top-right-radius:5px;
-	border-bottom-right-radius:5px;	
-	}		
+	border-bottom-right-radius:5px;
+	}
 .quitim #fixed-footer a#notifications div#notifications-arrow {
 	background:none;
 	position:absolute;
@@ -913,159 +1016,6 @@ body#quitimlogin #form_login #submit,
 	border-color: #FF8000 transparent transparent transparent;
 	}
 
-/* login page */
-
-body#quitimlogin {
-	background-image: url("../img/ekan4.jpg?v=1");
-	background-attachment:fixed;
-	background-size: auto auto;
-	background-position: center -100px;		
-	}
-
-body#quitimlogin #wrap {
-	background:transparent;
-	}
-
-.quitim #loginlogo {
-	height:150px;
-	width:100%;
-	max-width:380px;
-	background-position: center -1300px;		
-	background-repeat: no-repeat;
-	margin:0 auto;
-	}
-
-body#quitimlogin form, body#quitimlogin fieldset {
-	border:0 none;
-	margin:0;
-	padding:0;
-	}
-
-body#quitimlogin #content_inner {
-	padding:0 80px 0 50px;
-	position:relative;
-	}
-
-body#quitimlogin #form_login {
-	margin:0 auto;	
-	width:100%;
-	max-width:500px;
-	position:relative;
-	height:120px;
-	background-position:0 -805px;
-	background-repeat:repeat-x;
-	}
-
-body#quitimlogin #form_login fieldset {
-	background-position:0 -1030px;
-	margin-left:-20px;		
-	}
-body#quitimlogin #form_login fieldset .form_data {
-	background-position:right -1160px;	
-	width:100%;
-	margin-right:-38px;
-	padding-right:38px;
-	}
-	
-body#quitimlogin #form_login li {
-	height:55px;
-	padding: 0 30px 0 0;
-	margin-left:25px;
-	}
-body#quitimlogin #form_login li input {
-	width:100%;
-	height:55px;
-	box-sizing:content-box;
-	border:0 none;
-	background:transparent;
-	font-size:15px;
-	font-weight:bold;
-	color:#333;
-	}	
-	
-::-webkit-input-placeholder { /* android */
-	color:#555;
-}
-	
-body#quitimlogin #form_login li input:focus {
-    outline-width: 0;	
-    }
-body#quitimlogin #form_login li:first-child {
-	margin-bottom:2px;
-	padding-top:5px;
-	}
-body#quitimlogin #form_login li:nth-child(2) {
-	line-height:53px;
-	height:53px;
-	padding-bottom:5px;
-	}
-body#quitimlogin #rememberme,
-body#quitimlogin label[for="rememberme"] {
-	display:none; 
-	}	
-body#quitimlogin #form_login li:last-child {	
-	display:none
-	}
-body#quitimlogin #form_login #submit {
-	position:absolute;
-	top:23px;
-	right:-72px;
-	box-sizing:content-box;
-	margin:0;
-	padding:0;
-	background-color:transparent;
-	border:0 none;
-	font-size:0;
-	color:transparent;
-	background-position:-7px -930px;	
-	width:65px;
-	height:70px;
-	cursor:pointer;
-	}
-body#quitimlogin #form_login #submit:hover {
-	background-position:-101px -930px;		
-	}	
-body#quitimlogin #form_login #submit:active {
-	background-position:-195px -930px;		
-	}	
-
-body#quitimlogin p#lostpassword a {
-	text-align:center;
-	padding:20px 0;
-	display:block;
-	color:rgba(255,255,255,0.7);
-	font-weight:bold;
-	}
-body#quitimlogin p#lostpassword a:hover {
-	color:rgba(255,255,255,1);
-	}
-	
-body#quitimlogin #what-is-quitim {
-	text-align:left;
-	max-width:460px;
-	color:rgba(255,255,255,0.8);
-	background-color:rgba(0,0,0,0.3);	
-	padding:30px;
-	margin:0 auto;
-	}
-
-body#quitimlogin a#quitim-sign-up {
-	display:block;
-	padding:30px 0;
-	font-size:50px;
-	font-weight:300;
-	color:#0084B4;
-	}
-	
-body#quitimlogin.quitim #wrap {
-	margin-bottom:0;
-	}
-	
-body#quitimlogin #content_inner > .error {
-	text-align:center;
-	color:pink;
-	padding:20px 0;
-	}
 
 #spinner-overlay,
 #popup-register,
@@ -1081,17 +1031,17 @@ body#quitimlogin #content_inner > .error {
 #image-preview {
 	background-color:#333;
 	overflow:hidden;
-	}	
-#image-preview canvas, #image-preview img {	
+	}
+#image-preview canvas, #image-preview img {
 	height:auto !important;
 	width:100% !important;
 	max-width:1000px;
 	padding-top:50px;
 	position:absolute;
-	}	
+	}
 #image-preview #hires_image {
 	display:none;
-	}	
+	}
 #spinner-overlay #clock-container {
 	position:absolute;
 	left:50%;
@@ -1102,8 +1052,8 @@ body#quitimlogin #content_inner > .error {
 #popup-register {
 	z-index:9000;
 	background-color:rgba(0,0,0,0.9);
-	overflow-y: scroll;	
-	padding:0 50px 0 25px;    	
+	overflow-y: scroll;
+	padding:0 50px 0 25px;
 	}
 
 /* filter toolbar */
@@ -1113,7 +1063,7 @@ body#quitimlogin #content_inner > .error {
 	position:fixed;
 	left:0;
 	background:#222;
-    bottom: -40px; /* hides scrollbar but enables scroll */ 
+    bottom: -40px; /* hides scrollbar but enables scroll */
     height: 150px;
 	z-index:10;
 	overflow: auto;
@@ -1126,7 +1076,7 @@ body#quitimlogin #content_inner > .error {
 	bottom:110px;
 	background:#444;
 	text-align:center;
-	}	
+	}
 #image-toolbar > div {
     color: #fff;
     display: inline-block;
@@ -1145,12 +1095,12 @@ body#quitimlogin #content_inner > .error {
     height: 50px;
     width: 50px;
     margin:0 10px;
-	}	
+	}
 #image-toolbar-extras > div:active {
 	background-color:#666;
-	}	
+	}
 #image-toolbar > div.active {
-	color:#0084B4;	
+	color:#0084B4;
 	}
 #image-toolbar > div .filter-thumb {
     border: 2px solid #222222;
@@ -1163,8 +1113,8 @@ body#quitimlogin #content_inner > .error {
     width: 80px;
 	}
 #image-toolbar > div.active .filter-thumb {
-	border:2px solid #0084B4;	
-	}	
+	border:2px solid #0084B4;
+	}
 #image-toolbar #filter-normal .filter-thumb { background-position: 0 0; }
 #image-toolbar #filter-luddite .filter-thumb { background-position: -100px 0; }
 #image-toolbar #filter-che .filter-thumb { background-position: -200px 0; }
@@ -1190,7 +1140,7 @@ body#quitimlogin #content_inner > .error {
 	left:0;
 	background:#222;
 	height:50px;
-	z-index:10;	
+	z-index:10;
 	}
 #image-preview #image-nav #close-image,
 #image-preview #image-nav #submit-image {
@@ -1199,32 +1149,32 @@ body#quitimlogin #content_inner > .error {
 	position:absolute;
 	left:0;
 	top:0;
-	background-position: -55px -1495px;	
+	background-position: -55px -1495px;
 	color:transparent;
 	font-size:0;
-	}	
+	}
 #image-preview #image-nav #submit-image {
 	left:auto;
 	right:0;
-	background-position: 0 -1495px;	
+	background-position: 0 -1495px;
 	}
 #image-preview #image-nav #close-image:active,
 #image-preview #image-nav #submit-image:active {
-	background-color:#000;			
+	background-color:#000;
 	}
 
 #image-preview #image-toolbar-extras #exposure-contrast {
-	background-position: -110px -1495px;	
+	background-position: -110px -1495px;
 	}
 #image-preview #image-toolbar-extras #exposure-contrast.active {
-	background-position: -170px -1495px;		
-	}	
+	background-position: -170px -1495px;
+	}
 #image-preview #image-toolbar-extras #vignette {
-	background-position: -232px -1495px;	
+	background-position: -232px -1495px;
 	}
 #image-preview #image-toolbar-extras #vignette.active {
-	background-position: -292px -1495px;		
-	}			
+	background-position: -292px -1495px;
+	}
 
 /* signup */
 
@@ -1232,36 +1182,36 @@ body#quitimlogin #content_inner > .error {
 	}
 .front-signup {
 	margin-top:123px;
-    height: 206px;    	
-	}	
+    height: 206px;
+	}
 .front-signup:not(#popup-signup) {
     height: auto;
-    padding-bottom: 53px;    		
+    padding-bottom: 53px;
 	}
-	
+
 .front-signup input {
 	width:100%;
 	border:0 none;
-	}	
+	}
 .front-signup input {
     border: 0 none;
     height: 40px;
     margin: 5px 0;
     outline: 0 none;
-    position: relative;	
+    position: relative;
     padding:0 10px;
     border-radius:5px;
     font-size:16px;
-	}	
-	
+	}
+
 .front-signup input.disabled {
 	background-color:#ccc;
-	}	
+	}
 
 .signup-input-container {
 	position:relative;
     color: #333333;
-	}		
+	}
 
 .front-signup h2 {
     border-bottom: 1px solid #E2E2E2;
@@ -1283,9 +1233,9 @@ body#quitimlogin #content_inner > .error {
 	}
 
 .front-signup .signup-btn {
-	font-family: "Helvetica Neue",Arial,sans-serif;	
-	border-radius: 4px 4px 4px 4px;	
-	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);   
+	font-family: "Helvetica Neue",Arial,sans-serif;
+	border-radius: 4px 4px 4px 4px;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
     color: #333333;
     cursor: pointer;
     display: block;
@@ -1316,11 +1266,11 @@ body#quitimlogin #content_inner > .error {
 	background: linear-gradient(to bottom, rgba(254,220,77,1) 0px,rgba(253,149,18,1) 100%);
     border-color: #EC8B11;
 	}
-	
-	
+
+
 .front-signup {
 	max-width:600px;
-	padding: 0 60px 0 5px;	
+	padding: 0 60px 0 5px;
 	opacity: 1;
     position: relative;
     margin:10px auto 0 auto;
@@ -1340,8 +1290,8 @@ body#quitimlogin #content_inner > .error {
     width: 20px;
     color:#ccc;
     height:50px;
-    line-height:50px;    
-	}	
+    line-height:50px;
+	}
 .front-signup .fieldhelp {
    color: #AAAAAA;
     font-size: 14px;
@@ -1349,14 +1299,14 @@ body#quitimlogin #content_inner > .error {
     padding-left: 5px;
     right: -45px;
     top: 0;
-    }	
+    }
 .front-signup .signup-input-container input.invalid,
-.front-signup .signup-input-container input.nickname-taken {	
+.front-signup .signup-input-container input.nickname-taken {
 	background-color:pink;
 	}
 button.signup-btn.disabled:hover,
 button.signup-btn.disabled:focus,
-button.signup-btn.disabled {	
+button.signup-btn.disabled {
 	background-color: #DDDDDD;
     background-image: none;
     border-color: #CCCCCC;
@@ -1365,31 +1315,196 @@ button.signup-btn.disabled {
     opacity: 0.65;
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
 	}
-	
+
 .front-signup #terms {
 	color:#fff;
 	font-size:11px;
 	padding:20px;
-	}	
+	}
+
+
+
+
+/* login / popular images page */
+
+body#quitimfavorited.logged-out #wrap {
+	max-width: none;
+	position: fixed;
+	z-index:1;
+	margin-top:0;
+}
+
+body#quitimfavorited.logged-out #wrap > #header,
+body#quitimfavorited.logged-out #wrap #thumb-thread {
+	display:none;
+}
+
+body#quitimfavorited.logged-out #login-overlay {
+	z-index: 2;
+	position: relative;
+	padding-top: 100px;
+}
+
+body#quitimfavorited #login-content_inner {
+	max-width:60%;
+	margin:0 auto;
+}
+
+.quitim #loginlogo {
+	height:150px;
+	width:100%;
+	max-width:380px;
+	background-position: center -1300px;
+	background-repeat: no-repeat;
+	margin:0 auto;
+	}
+
+body#quitimfavorited form, body#quitimfavorited fieldset {
+	border:0 none;
+	margin:0;
+	padding:0;
+	}
+
+body#quitimfavorited #form_login {
+	margin:0 auto;
+	width:100%;
+	max-width:500px;
+	position:relative;
+	height:120px;
+	background-position:0 -805px;
+	background-repeat:repeat-x;
+	}
+
+body#quitimfavorited #form_login fieldset {
+	background-position:0 -1030px;
+	margin-left:-20px;
+	}
+body#quitimfavorited #form_login fieldset .form_data {
+	background-position:right -1160px;
+	width:100%;
+	margin-right:-38px;
+	padding-right:38px;
+	}
+
+body#quitimfavorited #form_login li {
+	height:55px;
+	padding: 0 30px 0 0;
+	margin-left:25px;
+	}
+body#quitimfavorited #form_login li input {
+	width:100%;
+	height:55px;
+	box-sizing:content-box;
+	border:0 none;
+	background:transparent;
+	font-size:15px;
+	font-weight:bold;
+	color:#333;
+	}
+
+::-webkit-input-placeholder { /* android */
+	color:#555;
+}
+
+body#quitimfavorited #form_login li input:focus {
+    outline-width: 0;
+    }
+body#quitimfavorited #form_login li:first-child {
+	margin-bottom:2px;
+	padding-top:5px;
+	}
+body#quitimfavorited #form_login li:nth-child(2) {
+	line-height:53px;
+	height:53px;
+	padding-bottom:5px;
+	}
+body#quitimfavorited #rememberme,
+body#quitimfavorited label[for="rememberme"] {
+	display:none;
+	}
+body#quitimfavorited #form_login li:last-child {
+	display:none
+	}
+body#quitimfavorited #form_login #submit {
+	position:absolute;
+	top:23px;
+	right:-72px;
+	box-sizing:content-box;
+	margin:0;
+	padding:0;
+	background-color:transparent;
+	border:0 none;
+	font-size:0;
+	color:transparent;
+	background-position:-7px -930px;
+	width:65px;
+	height:70px;
+	cursor:pointer;
+	}
+body#quitimfavorited #form_login #submit:hover {
+	background-position:-101px -930px;
+	}
+body#quitimfavorited #form_login #submit:active {
+	background-position:-195px -930px;
+	}
+
+body#quitimfavorited p#lostpassword a {
+	text-align:center;
+	padding:20px 0;
+	display:block;
+	color:rgba(255,255,255,0.7);
+	font-weight:bold;
+	}
+body#quitimfavorited p#lostpassword a:hover {
+	color:rgba(255,255,255,1);
+	}
+
+body#quitimfavorited #what-is-quitim {
+	text-align:left;
+	max-width:460px;
+	color:rgba(255,255,255,0.8);
+	background-color:rgba(0,0,0,0.8);
+	padding:30px;
+	margin:0 auto;
+	}
+
+body#quitimfavorited a#quitim-sign-up {
+	display:block;
+	padding:30px 0;
+	font-size:50px;
+	font-weight:300;
+	color:#0084B4;
+	}
+
+
+body#quitimfavorited #content_inner > .error {
+	text-align:center;
+	color:pink;
+	padding:20px 0;
+	}
+
+
+
+
 
 /* responsive */
 
 @media (max-width: 800px) {
 
-	.noticestream.thumbnail-view #notices_primary {	
+	.noticestream.thumbnail-view #notices_primary {
 		width:102%;
 		position:relative;
 		}
 
 	.noticestream.thumbnail-view .notice  {
 		width:24%;
-		padding:0 0.2% 0.2% 0;		
+		padding:0 0.2% 0.2% 0;
 		}
 	}
 
 @media (max-width: 600px) {
 
-	.noticestream.thumbnail-view #notices_primary {	
+	.noticestream.thumbnail-view #notices_primary {
 		width:103%;
 		position:relative;
 		}
@@ -1397,16 +1512,16 @@ button.signup-btn.disabled {
 	.noticestream.thumbnail-view .notice  {
 		width:32%;
 		padding:0 1% 1% 0;
-		}		
-		
-	body#quitimlogin #what-is-quitim {
+		}
+
+	body#quitimfavorited #what-is-quitim {
 		text-align:left;
 		color:rgba(255,255,255,0.8);
-		background-color:rgba(0,0,0,0.3);	
+		background-color:rgba(0,0,0,0.8);
 		padding:30px;
 		}
 
-		
+
 	}
 
 @media (max-width: 300px) {
@@ -1470,7 +1585,7 @@ button.signup-btn.disabled {
   from {
     -webkit-transform: rotate(0deg);
   }
-  to { 
+  to {
     -webkit-transform: rotate(360deg);
   }
 }
@@ -1479,32 +1594,32 @@ button.signup-btn.disabled {
   from {
     -moz-transform: rotate(0deg);
   }
-  to { 
+  to {
     -moz-transform: rotate(360deg);
   }
 }
 
 @-ie-keyframes rotate {
   from {
-    -ie-transform: rotate(0deg);        
+    -ie-transform: rotate(0deg);
   }
-  to { 
-    -ie-transform: rotate(360deg);        
+  to {
+    -ie-transform: rotate(360deg);
   }
 }
 
 .spinning
 {
-    -webkit-animation-name:             rotate; 
-    -webkit-animation-duration:         1.5s; 
+    -webkit-animation-name:             rotate;
+    -webkit-animation-duration:         1.5s;
     -webkit-animation-iteration-count:  infinite;
     -webkit-animation-timing-function: linear;
-    -moz-animation-name:             rotate; 
-    -moz-animation-duration:         1.5s; 
+    -moz-animation-name:             rotate;
+    -moz-animation-duration:         1.5s;
     -moz-animation-iteration-count:  infinite;
-    -moz-animation-timing-function: linear;    
-    -ie-animation-name:             rotate; 
-    -ie-animation-duration:         1.5s; 
+    -moz-animation-timing-function: linear;
+    -ie-animation-name:             rotate;
+    -ie-animation-duration:         1.5s;
     -ie-animation-iteration-count:  infinite;
-    -ie-animation-timing-function: linear;        
+    -ie-animation-timing-function: linear;
 }

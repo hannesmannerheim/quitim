@@ -72,7 +72,7 @@ class QuitimShownoticeAction extends Action
      */
     protected function prepare(array $args=array())
     {
-    
+
     	// conversations redirect here too
     	if(isset($args['id'])) {
     		$args['notice'] = $args['id'];
@@ -99,7 +99,7 @@ class QuitimShownoticeAction extends Action
 			} catch (Exception $e) {
 				$this->avatar = null;
 			}
-        }    	
+        }
 
         return true;
     }
@@ -209,27 +209,30 @@ class QuitimShownoticeAction extends Action
     {
 
     }
-    
+
     function showStylesheets()
     {
 
-        $this->cssLink(Plugin::staticPath('Quitim', 'css/quitim.css'));
+        // We only want quitim stylesheet
+        $path = Plugin::staticPath('Quitim');
+        $this->cssLink($path.'css/quitim.css?changed='.date('YmdHis',filemtime(QUITIMDIR.'/css/quitim.css')));
+
 
     }
 
     function showBody()
     {
-        
+
 		$current_user = common_current_user();
 
 		$bodyclasses = 'quitim';
 		if($current_user) {
-			$bodyclasses .= ' user_in'; 
+			$bodyclasses .= ' user_in';
 			}
         if($current_user->id == $this->profile->id) {
-        	$bodyclasses .= ' me'; 
+        	$bodyclasses .= ' me';
         	}
-		$this->elementStart('body', array('id' => strtolower($this->trimmed('action')), 'class' => $bodyclasses, 'ontouchstart' => ''));        
+		$this->elementStart('body', array('id' => strtolower($this->trimmed('action')), 'class' => $bodyclasses, 'ontouchstart' => ''));
         $this->element('div', array('id' => 'spinner-overlay'));
 
         $this->elementStart('div', array('id' => 'wrap'));
@@ -238,7 +241,7 @@ class QuitimShownoticeAction extends Action
 		$this->showLogo();
 		$this->elementStart('div', array('id' => 'topright'));
 		$this->element('img', array('id' => 'refresh', 'height' => '30', 'width' => '30', 'src' => Plugin::staticPath('Quitim', 'img/refresh.png')));
-		$this->elementEnd('div');				
+		$this->elementEnd('div');
 		$this->elementEnd('div');
 
         $this->elementStart('div', array('id' => 'core'));
@@ -259,7 +262,7 @@ class QuitimShownoticeAction extends Action
         $this->elementStart('div', array('id' => 'usernotices', 'class' => 'noticestream threaded-view'));
 		$this->showNoticesWithCommentsAndFavs();
         $this->elementEnd('div');
-        
+
         $this->elementEnd('div');
         $this->elementEnd('div');
 
@@ -271,7 +274,7 @@ class QuitimShownoticeAction extends Action
 
         QuitimFooter::showQuitimFooter();
 
-        $this->elementEnd('div');        
+        $this->elementEnd('div');
         $this->showScripts();
         $this->elementEnd('body');
     }
@@ -283,14 +286,14 @@ class QuitimShownoticeAction extends Action
         $block->show();
     }
 
-	
+
 	function showNoticesWithCommentsAndFavs()
 	{
         if(isset($this->args['id'])) { // full conversations
 	        $nl = new QuitimFullThreadedNoticeList($this->notice, $this, $this->profile);
         	}
         else { // notices, i.e. collapsed conversations
-	        $nl = new QuitimThreadedNoticeList($this->notice, $this, $this->profile);        	
+	        $nl = new QuitimThreadedNoticeList($this->notice, $this, $this->profile);
         	}
         $cnt = $nl->show();
 		if (0 == $cnt) {
@@ -299,7 +302,7 @@ class QuitimShownoticeAction extends Action
 		$this->pagination(
 			$this->page > 1, $cnt > NOTICES_PER_PAGE,
 			$this->page, 'quitimall', array('nickname' => $this->profile->nickname)
-		);				
+		);
 	}
 
 

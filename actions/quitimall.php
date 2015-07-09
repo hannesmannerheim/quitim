@@ -1,10 +1,10 @@
 <?php
 
 /**
- * 
+ *
  *   QUITIM
  *
- *   h@nnesmannerhe.im 
+ *   h@nnesmannerhe.im
  *
  *   Me and my friends stream (/all)
  *
@@ -13,29 +13,28 @@
 
 class QuitimAllAction extends AllAction
 {
-    protected function profileActionPreparation()
-    {
-        $stream = new ChronologicalInboxStream($this->target, $this->scoped);
-
-        $this->notice = $stream->getNotices(($this->page-1)*NOTICES_PER_PAGE,
-                                            NOTICES_PER_PAGE + 1);
-    }
 
     function showSections()
     {
         // We don't want these
     }
-    
+
     function showStylesheets()
     {
         // We only want quitim stylesheet
-        $this->cssLink(Plugin::staticPath('Quitim', 'css/quitim.css'));
+        $path = Plugin::staticPath('Quitim','');
+        $this->cssLink($path.'css/quitim.css?changed='.date('YmdHis',filemtime(QUITIMDIR.'/css/quitim.css')));
 
     }
 
     function showBody()
     {
-        
+
+        $stream = new ChronologicalInboxStream($this->target, $this->scoped);
+
+        $this->notice = $stream->getNotices(($this->page-1)*NOTICES_PER_PAGE,
+                                            NOTICES_PER_PAGE + 1);
+
 		$current_user = common_current_user();
 
 		$bodyclasses = 'quitim';
@@ -45,17 +44,18 @@ class QuitimAllAction extends AllAction
                 $bodyclasses .= ' me';
         	}
         }
-		$this->elementStart('body', array('id' => strtolower($this->trimmed('action')), 'class' => $bodyclasses, 'ontouchstart' => ''));        
+		$this->elementStart('body', array('id' => strtolower($this->trimmed('action')), 'class' => $bodyclasses, 'ontouchstart' => ''));
         $this->element('div', array('id' => 'spinner-overlay'));
 
 
         $this->elementStart('div', array('id' => 'wrap'));
+        QuitimFooter::showQuitimFooter();
 
         $this->elementStart('div', array('id' => 'header'));
 		$this->showLogo();
 		$this->elementStart('div', array('id' => 'topright'));
 		$this->element('img', array('id' => 'refresh', 'height' => '30', 'width' => '30', 'src' => Plugin::staticPath('Quitim', 'img/refresh.png')));
-		$this->elementEnd('div');				
+		$this->elementEnd('div');
 		$this->elementEnd('div');
 
         $this->elementStart('div', array('id' => 'core'));
@@ -74,14 +74,14 @@ class QuitimAllAction extends AllAction
         $this->elementStart('div', array('id' => 'content_inner'));
 
         $this->elementStart('div', array('id' => 'usernotices', 'class' => 'noticestream threaded-view'));
-		if($this->notice->N>0) {
+        if($this->notice->N>0) {
 			$this->showNoticesWithCommentsAndFavs();
 			}
 		else {
 			// show welcome
 			}
         $this->elementEnd('div');
-        
+
         $this->elementEnd('div');
         $this->elementEnd('div');
 
@@ -91,9 +91,8 @@ class QuitimAllAction extends AllAction
         $this->elementEnd('div');
         $this->elementEnd('div');
 
-        QuitimFooter::showQuitimFooter();
 
-        $this->elementEnd('div');        
+        $this->elementEnd('div');
         $this->showScripts();
         $this->elementEnd('body');
     }
@@ -105,7 +104,7 @@ class QuitimAllAction extends AllAction
         $block->show();
     }
 
-	
+
 	function showNoticesWithCommentsAndFavs()
 	{
         $nl = new QuitimThreadedNoticeList($this->notice, $this, $this->target);
@@ -116,44 +115,9 @@ class QuitimAllAction extends AllAction
 		$this->pagination(
 			$this->page > 1, $cnt > NOTICES_PER_PAGE,
 			$this->page, 'quitimall', array('nickname' => $this->target->getNickname())
-		);				
+		);
 	}
-	
-    /**
-     * Get notices but not replies
-     *
-     * @return array notices
-     */
-    function getNoticesButNotReplies($offset, $limit, $since_id=0, $max_id=0)
-    {
-        
-        $notice = new Notice();
 
-        $notice->profile_id = $this->profile->id;
 
-        $notice->selectAdd();
-        $notice->selectAdd('id');
-
-        Notice::addWhereSinceId($notice, $since_id);
-        Notice::addWhereMaxId($notice, $max_id);
-        $notice->whereAdd("(reply_to IS NULL)");
-
-        $notice->orderBy('created DESC, id DESC');
-
-        if (!is_null($offset)) {
-            $notice->limit($offset, $limit);
-        }
-
-        $notice->find();
-
-        $ids = array();
-
-        while ($notice->fetch()) {
-            $ids[] = $notice->id;
-        }
-
-        return Notice::multiGet('id', $ids);
-    }  	
-     
 
 }

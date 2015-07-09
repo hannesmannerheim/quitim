@@ -23,17 +23,17 @@ class QuitimNotificationsAction extends Action
 
         $this->user = User::getKV('nickname', $nickname);
         $current_user = Profile::current();
-        
+
 
         if (!$this->user) {
             // TRANS: Client error displayed when trying to reply to a non-exsting user.
             $this->clientError(_('No such user.'));
         }
-        
+
         if ($this->user->id != $current_user->id) {
             // TRANS: Client error displayed when trying to access someone elses notifications
             $this->clientError(_('Not available.'));
-        }        
+        }
 
         $profile = $this->user->getProfile();
 
@@ -54,7 +54,7 @@ class QuitimNotificationsAction extends Action
         if($this->page > 1 && $this->notifications->N == 0){
             // TRANS: Server error when page not found (404)
             $this->serverError(_('No such page.'),$code=404);
-        }        
+        }
 
         return true;
     }
@@ -99,26 +99,27 @@ class QuitimNotificationsAction extends Action
 
     function showBody()
     {
-        
+
 		$current_user = common_current_user();
 
 		$bodyclasses = 'quitim';
 		if($current_user) {
-			$bodyclasses .= ' user_in'; 
+			$bodyclasses .= ' user_in';
 			}
         if($current_user->id == $this->profile->id) {
-        	$bodyclasses .= ' me'; 
+        	$bodyclasses .= ' me';
         	}
-		$this->elementStart('body', array('id' => strtolower($this->trimmed('action')), 'class' => $bodyclasses, 'ontouchstart' => ''));        
+		$this->elementStart('body', array('id' => strtolower($this->trimmed('action')), 'class' => $bodyclasses, 'ontouchstart' => ''));
         $this->element('div', array('id' => 'spinner-overlay'));
 
         $this->elementStart('div', array('id' => 'wrap'));
+        QuitimFooter::showQuitimFooter();
 
         $this->elementStart('div', array('id' => 'header'));
 		$this->showLogo();
 		$this->elementStart('div', array('id' => 'topright'));
 		$this->element('img', array('id' => 'refresh', 'height' => '30', 'width' => '30', 'src' => Plugin::staticPath('Quitim', 'img/refresh.png')));
-		$this->elementEnd('div');						
+		$this->elementEnd('div');
         $this->elementEnd('div');
 
         $this->elementStart('div', array('id' => 'core'));
@@ -137,25 +138,25 @@ class QuitimNotificationsAction extends Action
         $this->elementStart('div', array('id' => 'content_inner'));
         $this->elementStart('div', array('id' => 'usernotices', 'class' => 'noticestream notification-stream threaded-view'));
         $this->elementStart('div', array('id' => 'notices_primary'));
-        $this->elementStart('ol', array('class' => 'notices notifications'));        
-                
+        $this->elementStart('ol', array('class' => 'notices notifications'));
+
 		$newstarted=false;
 		$newended=false;
 		if($this->notifications->_count > 0) {
 			foreach($this->notifications->_items as $notification){
-				
+
 				$first_seen_class = '';
 				if(!$newstarted && $notification->is_seen == 0) {
 			        $this->elementStart('li', array('id' => 'new-notifications-start'));
-					$this->raw(_("New notifications"));					
-			        $this->elementEnd('li');				        
+					$this->raw(_("New notifications"));
+			        $this->elementEnd('li');
 					$newstarted=true;
 					}
 				elseif($newstarted && !$newended && $notification->is_seen == 1) {
-					$newended=true;	
-					$first_seen_class = 'first-seen';									
+					$newended=true;
+					$first_seen_class = 'first-seen';
 					}
-				
+
 				// mark as seen
 				if($notification->is_seen == 0) {
 					$notification->is_seen = 1;
@@ -163,15 +164,15 @@ class QuitimNotificationsAction extends Action
 					$new_notice_class = 'new';
 					}
 				else {
-					$new_notice_class = '';					
+					$new_notice_class = '';
 					}
-				
+
 				$from_profile = Profile::getKV($notification->from_profile_id);
-				$first_notice_id_in_conversation = Notice::getKV($notification->first_notice_id_in_conversation);				
-				
+				$first_notice_id_in_conversation = Notice::getKV($notification->first_notice_id_in_conversation);
+
 				$this->elementStart('li', array('id' => 'notice-'.$notification->id, 'class' => 'notice notification '.$new_notice_class.$first_seen_class));
-		        $this->elementStart('div', array('class' => 'entry-title'));		        
-				
+		        $this->elementStart('div', array('class' => 'entry-title'));
+
 				if($notification->ntype == "follow") {
 					$this->showAuthorAndNotificationText($notification, $from_profile, _("is following you"));
 					}
@@ -182,37 +183,35 @@ class QuitimNotificationsAction extends Action
 				elseif($notification->ntype == "reply") {
 					$this->showThumb($first_notice_id_in_conversation);
 					$comment = Notice::getKV($notification->notice_id);
-					$this->showAuthorAndNotificationText($notification, $from_profile, _("has commented on your image: ").$comment->rendered);			
-					}					
+					$this->showAuthorAndNotificationText($notification, $from_profile, _("has commented on your image: ").$comment->rendered);
+					}
 				elseif($notification->ntype == "mention") {
-					$this->showThumb($first_notice_id_in_conversation);				
-					$comment = Notice::getKV($notification->notice_id);					
+					$this->showThumb($first_notice_id_in_conversation);
+					$comment = Notice::getKV($notification->notice_id);
 					$this->showAuthorAndNotificationText($notification, $from_profile, _("has mentioned you in a comment: ").$comment->rendered);
-					$attachment = new InlineAttachmentList($first_notice_id_in_conversation, $this);
-					$attachment->show();	
-					}										
-				
+					}
+
 		        $this->elementEnd('div');
-		        $this->elementEnd('li');					
-				}			
+		        $this->elementEnd('li');
+				}
 
 			}
 		else {
 			$this->raw(_("No notifications"));
 			}
-			
-        $this->elementEnd('ol');			
-        $this->elementEnd('div');			
-			
-			
-		
+
+        $this->elementEnd('ol');
+        $this->elementEnd('div');
+
+
+
         $this->pagination($this->page > 1, $this->notifications->_count > NOTICES_PER_PAGE,
                           $this->page, 'quitimnotifications',
                           array('nickname' => $this->user->nickname));
 
 
         $this->elementEnd('div');
-        
+
         $this->elementEnd('div');
         $this->elementEnd('div');
 
@@ -222,9 +221,7 @@ class QuitimNotificationsAction extends Action
         $this->elementEnd('div');
         $this->elementEnd('div');
 
-        QuitimFooter::showQuitimFooter();
-
-        $this->elementEnd('div');        
+        $this->elementEnd('div');
         $this->showScripts();
         $this->elementEnd('body');
     }
@@ -241,20 +238,20 @@ class QuitimNotificationsAction extends Action
 	//
     }
 
- 
+
 
     function isReadOnly($args)
     {
         return true;
     }
-    
+
     function showStylesheets()
     {
 
         $this->cssLink(Plugin::staticPath('Quitim', 'css/quitim.css'));
 
-    }    
-    
+    }
+
     function showAuthorAndNotificationText($notification, $profile, $notificationtext)
     {
         $this->elementStart('div', 'author');
@@ -274,12 +271,12 @@ class QuitimNotificationsAction extends Action
         $this->elementEnd('span');
         $this->elementStart('span', array('class' => 'notificationtext'));
 		$this->raw($notificationtext);
-        $this->elementEnd('span');    
+        $this->elementEnd('span');
         $dt = common_date_iso8601($notification->created);
-        $this->element('abbr', array('class' => 'published','title' => $dt),'  ·  '.common_date_string($notification->created));            
+        $this->element('abbr', array('class' => 'published','title' => $dt),'  ·  '.common_date_string($notification->created));
         $this->elementEnd('div');
-    }    
-    
+    }
+
     function showAvatar($profile)
     {
 
@@ -301,11 +298,11 @@ class QuitimNotificationsAction extends Action
 			$thumbnail = File_thumbnail::getKV('file_id', $attachment->id);
 			if ($thumbnail) {
 				$this->elementStart('a', array('class' => 'thumb', 'href' => $first_notice_id_in_conversation->uri));
-				$this->element('img', array('alt' => '', 'src' => $thumbnail->url, 'width' => $thumbnail->width, 'height' => $thumbnail->height));							
+				$this->element('img', array('alt' => '', 'src' => $thumbnail->url, 'width' => $thumbnail->width, 'height' => $thumbnail->height));
 				$this->elementEnd('a');
 				break;
 				}
-			}			
+			}
 		}
 
 }

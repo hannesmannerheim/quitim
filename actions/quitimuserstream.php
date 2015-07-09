@@ -1,10 +1,10 @@
 <?php
 
 /**
- * 
+ *
  *   QUITIM
  *
- *   h@nnesmannerhe.im 
+ *   h@nnesmannerhe.im
  *
  *   Profile page
  *
@@ -13,15 +13,6 @@
 
 class QuitimUserStreamAction extends ShowstreamAction
 {
-    protected function profileActionPreparation()
-    {
-        // TODO: Turn this into a NoticeStream and just return it from function getStream()
-        $this->notice = $this->getNoticesButNotReplies(($this->page-1)*NOTICES_PER_PAGE, NOTICES_PER_PAGE + 1);
-        if ($this->page > 1 && $this->notice->N == 0) {
-            // TRANS: Client error when page not found (404).
-            $this->clientError(_('No such page.'), 404);
-        }
-    }
 
     function isReadOnly($args)
     {
@@ -37,43 +28,49 @@ class QuitimUserStreamAction extends ShowstreamAction
     {
 
     }
-    
+
     function showStylesheets()
     {
 
-        $this->cssLink(Plugin::staticPath('Quitim', 'css/quitim.css'));
+        // We only want quitim stylesheet
+        $path = Plugin::staticPath('Quitim');
+        $this->cssLink($path.'css/quitim.css?changed='.date('YmdHis',filemtime(QUITIMDIR.'/css/quitim.css')));
+
 
     }
 
     function showBody()
     {
-        
+
+        $this->notice = $this->getNoticesButNotReplies(($this->page-1)*NOTICES_PER_PAGE, NOTICES_PER_PAGE + 1);
+
 		$current_user = common_current_user();
 
 		$bodyclasses = 'quitim';
 		if($current_user) {
-			$bodyclasses .= ' user_in'; 
+			$bodyclasses .= ' user_in';
 			}
         if($current_user->id == $this->target->id) {
-        	$bodyclasses .= ' me'; 
+        	$bodyclasses .= ' me';
         	}
-		$this->elementStart('body', array('id' => strtolower($this->trimmed('action')), 'class' => $bodyclasses, 'ontouchstart' => ''));    
+		$this->elementStart('body', array('id' => strtolower($this->trimmed('action')), 'class' => $bodyclasses, 'ontouchstart' => ''));
         $this->element('div', array('id' => 'spinner-overlay'));
 
         $this->elementStart('div', array('id' => 'wrap'));
+        QuitimFooter::showQuitimFooter();
 
         $this->elementStart('div', array('id' => 'header'));
 		$this->showLogo();
-		
-		$this->elementStart('a', array('href' => '#top'));		
+
+		$this->elementStart('a', array('href' => '#top'));
 		$this->elementStart('h1');
         $this->raw($this->target->getNickname());
 		$this->elementEnd('h1');
-        $this->elementEnd('a');		
-		
+        $this->elementEnd('a');
+
 		$this->elementStart('div', array('id' => 'topright'));
-		$this->elementEnd('div');				
-		
+		$this->elementEnd('div');
+
         $this->elementEnd('div');
 
         $this->elementStart('div', array('id' => 'core'));
@@ -90,7 +87,7 @@ class QuitimUserStreamAction extends ShowstreamAction
         }
 
         $this->elementStart('div', array('id' => 'content_inner'));
-        
+
         $this->elementStart('div', array('id' => 'profileblock'));
 		$this->showProfileBlock();
 
@@ -112,7 +109,7 @@ class QuitimUserStreamAction extends ShowstreamAction
 		} else {
 		   if (Event::handle('StartProfileRemoteSubscribe', array($this, $this->target))) {
 				Event::handle('EndProfileRemoteSubscribe', array($this, $this->target));
-			}					
+			}
 		}
 
 
@@ -137,7 +134,7 @@ class QuitimUserStreamAction extends ShowstreamAction
 		$this->text(' ');
 		$this->text($this->target->subscriptionCount());
 		$this->elementEnd('h2');
-				
+
         $this->elementEnd('div');
 
 
@@ -146,7 +143,7 @@ class QuitimUserStreamAction extends ShowstreamAction
         $this->elementEnd('div');
         $this->elementStart('div', array('id' => 'set-threaded-view'));
         $this->elementEnd('div');
-        $this->elementEnd('div');        
+        $this->elementEnd('div');
 
 
         $this->elementStart('div', array('id' => 'usernotices', 'class' => 'noticestream thumbnail-view'));
@@ -167,8 +164,6 @@ class QuitimUserStreamAction extends ShowstreamAction
         $this->elementEnd('div');
         $this->elementEnd('div');
 
-        QuitimFooter::showQuitimFooter();
-        	
         $this->elementEnd('div');
         $this->showScripts();
         $this->elementEnd('body');
@@ -181,7 +176,7 @@ class QuitimUserStreamAction extends ShowstreamAction
         $block->show();
     }
 
-	
+
 	function showNoticesWithCommentsAndFavs()
 	{
         $nl = new QuitimThreadedNoticeList($this->notice, $this, $this->target);
@@ -192,7 +187,7 @@ class QuitimUserStreamAction extends ShowstreamAction
 		$this->pagination(
 			$this->page > 1, $cnt > NOTICES_PER_PAGE,
 			$this->page, 'quitimuserstream', array('nickname' => $this->target->getNickname())
-		);				
+		);
 	}
 
 
@@ -284,7 +279,7 @@ class QuitimUserStreamAction extends ShowstreamAction
                                          'href' => $this->target->getUrl()));
         }
     }
-    
+
     /**
      * Get notices but not replies
      *
@@ -292,7 +287,7 @@ class QuitimUserStreamAction extends ShowstreamAction
      */
     function getNoticesButNotReplies($offset, $limit, $since_id=0, $max_id=0)
     {
-        
+
         $notice = new Notice();
 
         $notice->profile_id = $this->target->id;
@@ -319,21 +314,21 @@ class QuitimUserStreamAction extends ShowstreamAction
         }
 
         return Notice::multiGet('id', $ids);
-    }    
+    }
 
 }
 
 
-class QuitimAccountProfileBlock extends AccountProfileBlock 
+class QuitimAccountProfileBlock extends AccountProfileBlock
 {
-	function showTags() 
+	function showTags()
 	{
 	// don't show tags
 	}
 }
 
 
-class QuitimImageNoticeCount extends Notice 
+class QuitimImageNoticeCount extends Notice
 {
     function imageNoticeCount($profile)
     {
@@ -348,7 +343,7 @@ class QuitimImageNoticeCount extends Notice
 
         $notices = new Notice();
         $notices->profile_id = $profile->id;
-        $notices->reply_to = 'NULL';   // only non-replies     
+        $notices->reply_to = 'NULL';   // only non-replies
         $cnt = (int) $notices->count('distinct id');
 
         if (!empty($c)) {
