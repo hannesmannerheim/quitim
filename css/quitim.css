@@ -420,7 +420,7 @@ body#quitimfavorited #form_login #submit,
 	color:#fff;
 	}
 
-#quitimuserstream #profileblock .ur_face {
+#quitimuserstream #profileblock .avatar.u-photo {
 	margin:20px 15px 15px;
 	width:82px;
 	height:82px;
@@ -716,6 +716,11 @@ body#quitimfavorited #form_login #submit,
 .noticestream.threaded-view .first-comment {
 	padding: 0 15px;
 	line-height: 18px;
+}
+
+/* old quitim had quitim-notices in the rendered field, just hide that */
+.noticestream .first-comment .quitim-notice {
+	display:none;
 }
 
 .noticestream.threaded-view .threaded-notices > .notice > article > .first-comment > .p-author,

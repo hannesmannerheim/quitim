@@ -42,9 +42,8 @@ Setup
 4. Add `addPlugin('Quitim');` and  `addPlugin('InfiniteScroll');` to your
 /config.php file.
 
-5. In lib/framework.php, set these variables like this:
+5. In lib/framework.php, set these constants like this:
 
 		define('AVATAR_PROFILE_SIZE', 192);
 		define('AVATAR_STREAM_SIZE', 96);
 		define('AVATAR_MINI_SIZE', 48);
-		define('NOTICES_PER_PAGE', 10);
