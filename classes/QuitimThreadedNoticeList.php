@@ -235,8 +235,8 @@ class QuitimThreadedNoticeListItem extends QuitimNoticeListItem
                 if ($notices) {
 
                     $i=0;
+                    $moreCutoffShown = false;
                     foreach (array_reverse($notices) as $notice) {
-
 						if ($notice->id == $this->notice->id && $moreCutoff && $i==0) {
                             $item = new QuitimThreadedNoticeListSubItem($notice, $this->notice, $this->out);
                             $item->show();
@@ -257,7 +257,7 @@ class QuitimThreadedNoticeListItem extends QuitimNoticeListItem
                     }
                 }
 
-                if ($notices || $hasFaves) {
+                if ($notices || isset($hasFaves)) {
                     // @fixme do a proper can-post check that's consistent
                     // with the JS side
                     if (common_current_user()) {

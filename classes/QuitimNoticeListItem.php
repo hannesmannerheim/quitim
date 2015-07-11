@@ -90,11 +90,17 @@ class QuitimNoticeListItem extends NoticeListItem
 			}
 		}
 
-        $item = new QuitimThreadedNoticeListFavesItem($this->notice, $this->out);
-        $hasFaves = $item->show();
+        // don't know why i had to do this, but when QuitimNoticeListItem is used from quitimnewnotice.php it can't find this clas...
+        // but we don't need it then, since it's always the question about getting a comment with ajax then.
+        if(class_exists('QuitimThreadedNoticeListFavesItem')) {
+            $item = new QuitimThreadedNoticeListFavesItem($this->notice, $this->out);
+            $hasFaves = $item->show();
+        } else {
+            $hasFaves = false;
+        }
 
         // add a fav container even if no faves, to load into with ajax when faving
-        if(!$hasFaves) {
+        if(!isset($hasFaves) || !$hasFaves) {
         	$this->element('div',array('class' => 'notice-data notice-faves'));
         	}
 

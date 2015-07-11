@@ -33,7 +33,7 @@ class QuitimUserStreamAction extends ShowstreamAction
     {
 
         // We only want quitim stylesheet
-        $path = Plugin::staticPath('Quitim');
+        $path = Plugin::staticPath('Quitim','');
         $this->cssLink($path.'css/quitim.css?changed='.date('YmdHis',filemtime(QUITIMDIR.'/css/quitim.css')));
 
 

@@ -214,7 +214,7 @@ class QuitimShownoticeAction extends Action
     {
 
         // We only want quitim stylesheet
-        $path = Plugin::staticPath('Quitim');
+        $path = Plugin::staticPath('Quitim','');
         $this->cssLink($path.'css/quitim.css?changed='.date('YmdHis',filemtime(QUITIMDIR.'/css/quitim.css')));
 
 
@@ -299,10 +299,6 @@ class QuitimShownoticeAction extends Action
 		if (0 == $cnt) {
 			$this->showEmptyListMessage();
 		}
-		$this->pagination(
-			$this->page > 1, $cnt > NOTICES_PER_PAGE,
-			$this->page, 'quitimall', array('nickname' => $this->profile->nickname)
-		);
 	}
 
 

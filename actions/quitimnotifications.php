@@ -49,7 +49,7 @@ class QuitimNotificationsAction extends Action
         $stream = new NotificationStream($current_user);
 
         $this->notifications = $stream->getNotifications(($this->page-1) * NOTICES_PER_PAGE,
-                                            NOTICES_PER_PAGE + 1);
+                                            NOTICES_PER_PAGE + 1, false, false);
 
         if($this->page > 1 && $this->notifications->N == 0){
             // TRANS: Server error when page not found (404)
@@ -106,9 +106,6 @@ class QuitimNotificationsAction extends Action
 		if($current_user) {
 			$bodyclasses .= ' user_in';
 			}
-        if($current_user->id == $this->profile->id) {
-        	$bodyclasses .= ' me';
-        	}
 		$this->elementStart('body', array('id' => strtolower($this->trimmed('action')), 'class' => $bodyclasses, 'ontouchstart' => ''));
         $this->element('div', array('id' => 'spinner-overlay'));
 

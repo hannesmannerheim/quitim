@@ -563,7 +563,7 @@ body#quitimfavorited #form_login #submit,
 
  .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice,
  .noticestream.threaded-view #notices_primary > .notices > .notice	{
-	padding-bottom:50px;
+	padding-bottom:55px;
 	}
 
 
@@ -1454,11 +1454,15 @@ body#quitimfavorited #form_login #submit:active {
 	}
 
 body#quitimfavorited p#lostpassword a {
-	text-align:center;
-	padding:20px 0;
-	display:block;
-	color:rgba(255,255,255,0.7);
-	font-weight:bold;
+    background: rgba(0, 0, 0, 0.49) none repeat scroll 0 0;
+    border-radius: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    display: block;
+    font-weight: bold;
+    margin: 10px auto;
+    padding: 10px;
+    text-align: center;
+    width: 50%;
 	}
 body#quitimfavorited p#lostpassword a:hover {
 	color:rgba(255,255,255,1);
@@ -1482,10 +1486,14 @@ body#quitimfavorited a#quitim-sign-up {
 	}
 
 
-body#quitimfavorited #content_inner > .error {
-	text-align:center;
-	color:pink;
-	padding:20px 0;
+body#quitimfavorited #login-content_inner > .error {
+    background: red none repeat scroll 0 0;
+    border-radius: 20px;
+    color: #fff;
+    margin: 20px auto;
+    padding: 10px;
+    text-align: center;
+    width: 50%;
 	}
 
 
@@ -1495,6 +1503,11 @@ body#quitimfavorited #content_inner > .error {
 /* responsive */
 
 @media (max-width: 800px) {
+
+	body#quitimfavorited p#lostpassword a,
+	body#quitimfavorited #login-content_inner > .error {
+		width:100%;
+		}
 
 	.noticestream.thumbnail-view #notices_primary {
 		width:102%;

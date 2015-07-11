@@ -25,6 +25,7 @@ class QuitimPlugin extends Plugin {
         $m->connect('favorited',array('action' => 'quitimfavorited'));
         $m->connect('favorited/',array('action' => 'quitimfavorited'));
         $m->connect('main/popular',array('action' => 'quitimfavorited'));
+        $m->connect('notice/new', array('action' => 'quitimnewnotice'));
         $m->connect(':nickname/notifications', array('action' => 'quitimnotifications'),
                                 array('nickname' => Nickname::DISPLAY_FMT));
 		$m->connect('api/quitim/notifications.json',
