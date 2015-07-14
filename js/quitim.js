@@ -16,6 +16,12 @@ $(document).keyup(function(e) {
 		}
 	});
 
+// disable subscribe/unsubscribe button on click
+$('body').on('click','.form_user_subscribe button#submit, .form_user_unsubscribe button#submit', function(){
+	$(this).prop('disabled', true);
+});
+$('.form_user_subscribe button#submit, .form_user_unsubscribe button#submit').prop('disabled', false); // this can be cached by browser..
+
 // hide stuff on click in margin
 $('body').on('click',function(e){
 	if($(e.target).is('#form_ostatus_connect')) {

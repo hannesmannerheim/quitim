@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('../fonts/font-awesome-4.3.0/fontawesome-webfont.eot?v=4.3.0');
+  src: url('../fonts/font-awesome-4.3.0/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('../fonts/font-awesome-4.3.0/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('../fonts/font-awesome-4.3.0/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('../fonts/font-awesome-4.3.0/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('../fonts/font-awesome-4.3.0/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 * { -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
 #site_nav_global_primary {
@@ -218,16 +226,17 @@ body#quitimfavorited #form_login #submit,
 	}
 
 #form_ostatus_connect,
+#form_notice_delete,
 #quitimuserstream:not(.me) .account_profile_block .entity_actions {
 	background-color:rgba(0,0,0,0.5);
-	width:100%;
+	width:100% !important;
 	position:relative;
 	display:none;
 	position:fixed;
 	z-index:1000;
 	top:0;
 	left:0;
-	height:100%;
+	height:100% !important;
 	text-align:center;
 	}
 
@@ -238,6 +247,10 @@ body#quitimfavorited #form_login #submit,
 	height:auto;
 	background:transparent;
 	}
+
+#form_ostatus_connect {
+	display: block;
+}
 
 #quitimuserstream .account_profile_block .entity_actions h2 {
 	display:none;
@@ -250,6 +263,7 @@ body#quitimfavorited #form_login #submit,
 	}
 
 #form_ostatus_connect fieldset,
+#form_notice_delete fieldset,
 #quitimuserstream:not(.me) .account_profile_block .entity_actions > ul {
 	width:90%;
 	display:block
@@ -268,14 +282,16 @@ body#quitimfavorited #form_login #submit,
 #form_ostatus_connect .close {
 	display:none;
 	}
-#form_ostatus_connect fieldset {
+#form_ostatus_connect fieldset,
+#form_notice_delete fieldset {
 	padding:0;
 	margin:0 auto;
 	position:relative;
 	display:block;
 	padding-bottom:20px;
 	}
-#form_ostatus_connect legend {
+#form_ostatus_connect legend,
+#form_notice_delete legend {
     border-bottom: 1px solid #CCCCCC;
     display: block;
     font-size: 16px;
@@ -285,7 +301,9 @@ body#quitimfavorited #form_login #submit,
     text-align: center;
     width: 100%;
 	}
-#form_ostatus_connect input#submit {
+#form_ostatus_connect input#submit,
+#form_notice_delete input#form_action-yes,
+#form_notice_delete input#form_action-no {
     border: 0 none;
     display: block;
     height: 30px;
@@ -302,6 +320,160 @@ body#quitimfavorited #form_login #submit,
     width:50%;
     cursor:pointer;
 	}
+#form_notice_delete input#form_action-yes,
+#form_notice_delete input#form_action-no {
+	width:30%;
+	display:inline-block;
+	}
+#form_notice_delete input#form_action-no {
+	background:#0084b4;
+	margin-right:5px;
+	}
+.ui-dialog-titlebar	{
+	display: none;
+}
+
+/* profile streams */
+.quitimprofilestream li.profile {
+	clear:both;
+	display:block;
+	position:relative;
+	height:40px;
+	margin:10px;
+	margin-top:0;
+	padding-top: 10px;
+	overflow: hidden;
+}
+
+.quitimprofilestream li.profile:not(:first-child) {
+	border-top:0.5px solid #ccc;
+}
+
+.quitimprofilestream li.profile a.u-url {
+	display:block;
+	width:100%;
+	position:absolute;
+	height:40px;
+}
+
+.quitimprofilestream li.profile a.u-url::before {
+	display:block;
+	position:absolute;
+	content: " ";
+	top:0;
+	left:0;
+	width:40px;
+	height:40px;
+	border-radius:40px;
+	box-sizing: border-box;
+	border: 1px solid rgba(0,0,0,0.1);
+	z-index:2;
+}
+
+.quitimprofilestream li.profile a.u-url img.avatar {
+	width:40px;
+	height:40px;
+	border-radius:40px;
+	display:block;
+	position:absolute;
+	top:0px;
+	left:0px;
+	z-index:1;
+}
+
+.quitimprofilestream li.profile .entity_actions {
+	position:relative;
+	float:right;
+}
+
+.quitimprofilestream li.profile .entity_actions * {
+	border:0;
+	margin:0;
+	padding:0;
+	display:block;
+	background-color: transparent;
+}
+.quitimprofilestream li.profile .entity_actions legend {
+	display: none;
+}
+
+
+.form_user_subscribe button[value="Subscribe"],
+.form_user_unsubscribe button[value="Unsubscribe"] {
+	display:block;
+	position: relative;
+	background-color: #fff;
+    border: 1px solid #0084b4 !important;
+    color: #0084b4;
+	text-transform: uppercase;
+	height:27px;
+	margin-top: 7px !important;
+	line-height: 24px;
+	padding: 0	10px !important;
+	min-width:120px;
+	border-radius: 4px;
+	font-size:10px;
+	letter-spacing: 0.3px;
+	cursor:pointer;
+}
+
+body#quitimuserstream .form_user_subscribe button[value="Subscribe"],
+body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
+	width:100%;
+	border-width:1.5px !important;
+}
+
+.form_user_subscribe button[disabled],
+.form_user_unsubscribe button[disabled] {
+	opacity:0.5;
+	cursor:default;
+}
+
+.form_user_subscribe button[value="Subscribe"]::before,
+.form_user_unsubscribe button[value="Unsubscribe"]::before {
+	font-family: 'FontAwesome';
+	content:'\f00c';
+	display:inline-block;
+	padding-right:5px;
+}
+.form_user_subscribe button[value="Subscribe"]::before {
+	content:'\f067';
+}
+
+
+.form_user_unsubscribe button[value="Unsubscribe"] {
+	background-color:#00AA00 !important;
+	border-color:#00AA00 !important;
+	color:#fff;
+}
+
+.quitimprofilestream li.profile .p-nickname,
+.quitimprofilestream li.profile .p-name {
+	display:block;
+	position:relative;
+	line-height:18px;
+	height:18px;
+	padding-top:2px;
+	margin-left:50px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 13px;
+	color:#aaa;
+}
+.quitimprofilestream li.profile .p-nickname {
+	font-weight: bold;
+}
+.quitimprofilestream li.profile .p-nickname span.nickname-container {
+	color:#000;
+}
+.quitimprofilestream li.profile .p-name {
+	clear:left;
+	padding-top:0px;
+	padding-bottom:2px;
+}
+
+/* end profile streams */
 
 #quitimuserstream .account_profile_block .entity_actions ul li p {
 	display:none;
@@ -375,12 +547,12 @@ body#quitimfavorited #form_login #submit,
 	}
 
 
-#quitimuserstream #profileblock li.entity_tag,
-#quitimuserstream #profileblock li.entity_subscribe {
+#quitimuserstream #profileblock li.entity_tag {
 	display:none;
 	}
 
 #quitimuserstream.me .account_profile_block .entity_actions ul li.entity_edit,
+#quitimuserstream #profileblock li.entity_subscribe a.entity_remote_subscribe,
 #quitimuserstream #profileblock > .profile_subscribe form fieldset {
     position: absolute;
     top:70px;
@@ -389,15 +561,22 @@ body#quitimfavorited #form_login #submit,
     display:block;
     height:50px;
 	}
+#quitimuserstream #profileblock li.entity_subscribe a.entity_remote_subscribe {
+	font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+	border-radius: 3px;
+	margin-left:115px;
+	padding:0;
+	text-align: center;
+}
 
-
-#quitimuserstream #profileblock li.entity_subscribe a.entity_remote_subscribe,
 #quitimuserstream.me .account_profile_block .entity_actions ul li.entity_edit a,
 #quitimuserstream #profileblock > .profile_subscribe form fieldset input {
     border: 0 none;
     display: block;
     height: 30px;
-    line-height: 30px;
+    line-height: 26px;
     margin: 0;
     padding: 0;
     position: relative;
@@ -410,15 +589,23 @@ body#quitimfavorited #form_login #submit,
     width:100%;
     cursor:pointer;
 	}
-#quitimuserstream #profileblock li.entity_subscribe a.entity_remote_subscribe,
 #quitimuserstream #profileblock > .profile_subscribe form.form_user_unsubscribe fieldset input {
 	background:green;
 	color:#fff;
 	}
+#quitimuserstream #profileblock li.entity_subscribe a.entity_remote_subscribe,
 #quitimuserstream #profileblock > .profile_subscribe form.form_user_subscribe fieldset input {
-	background:#0084B4;
-	color:#fff;
+    background-color: #fff;
+    border: 1.5px solid #0084b4;
+    color: #0084b4;
 	}
+#quitimuserstream #profileblock li.entity_subscribe a.entity_remote_subscribe::before {
+	content:'+ ';
+	font-size:20px;
+	line-height:26px;
+	}
+
+
 
 #quitimuserstream #profileblock .avatar.u-photo {
 	margin:20px 15px 15px;
@@ -696,6 +883,7 @@ body#quitimfavorited #form_login #submit,
 	left:auto;
 	}
 
+
 .noticestream.threaded-view .threaded-replies {
 	margin:0;
 	}
@@ -722,6 +910,7 @@ body#quitimfavorited #form_login #submit,
 .noticestream .first-comment .quitim-notice {
 	display:none;
 }
+
 
 .noticestream.threaded-view .threaded-notices > .notice > article > .first-comment > .p-author,
 .noticestream.threaded-view .threaded-notices > .notice > article > .first-comment > .quitim-notice-text {
@@ -756,7 +945,7 @@ body#quitimfavorited #form_login #submit,
 	}
 
 .noticestream.threaded-view .notice-faves {
-    background-position: -5px -253px;
+    background-position: -5px -252px;
     background-repeat: no-repeat;
     font-size: 13px;
     line-height: 30px;

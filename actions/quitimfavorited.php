@@ -41,7 +41,7 @@ class QuitimFavoritedAction extends FormAction
     	if(!$current_user) {
             return _('Welcome!');
         } else {
-            return _('Popular notices');
+            return _('Quitim moments');
         }
 
 
@@ -149,7 +149,7 @@ class QuitimFavoritedAction extends FormAction
         $this->elementStart('div', array('id' => 'header'));
 		$this->elementStart('a', array('href' => '#top'));
 		$this->elementStart('h1');
-        $this->raw(_('Popular notices'));
+        $this->raw(_('Quitim moments'));
 		$this->elementEnd('h1');
         $this->elementEnd('a');
 

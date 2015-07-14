@@ -67,10 +67,6 @@ class QuitimUserStreamAction extends ShowstreamAction
         $this->raw($this->target->getNickname());
 		$this->elementEnd('h1');
         $this->elementEnd('a');
-
-		$this->elementStart('div', array('id' => 'topright'));
-		$this->elementEnd('div');
-
         $this->elementEnd('div');
 
         $this->elementStart('div', array('id' => 'core'));
@@ -96,13 +92,13 @@ class QuitimUserStreamAction extends ShowstreamAction
 			$this->elementStart('div', 'profile_subscribe');
 
 			if ($current_user->isSubscribed($this->target)) {
-				$usff = new UnsubscribeForm($this, $this->target);
+				$usff = new QuitimUnsubscribeForm($this, $this->target);
 				$usff->show();
 			} else if ($current_user->hasPendingSubscription($this->target)) {
 				$sff = new CancelSubscriptionForm($this, $this->target);
 				$sff->show();
 			} else {
-				$sff = new SubscribeForm($this, $this->target);
+				$sff = new QuitimSubscribeForm($this, $this->target);
 				$sff->show();
 			}
 			$this->elementEnd('div');
@@ -123,14 +119,14 @@ class QuitimUserStreamAction extends ShowstreamAction
 
 		$this->elementStart('h2', array('id'=>'subscriberscountlink'));
 		// TRANS: H2 text for user subscriber statistics.
-        $this->element('a', array('href' => common_local_url('subscribers', array('nickname' => $this->target->getNickname())),'class' => ''), _('Followers'));
+        $this->element('a', array('href' => common_local_url('quitimfollowers', array('nickname' => $this->target->getNickname())),'class' => ''), _('Followers'));
 		$this->text(' ');
 		$this->text($this->target->subscriberCount());
 		$this->elementEnd('h2');
 
 		$this->elementStart('h2', array('id'=>'subscriptionscountlink'));
 		// TRANS: H2 text for user subscription statistics.
-		$this->element('a', array('href' => common_local_url('subscriptions', array('nickname' => $this->target->getNickname())),'class' => ''), _('Following'));
+		$this->element('a', array('href' => common_local_url('quitimfollowing', array('nickname' => $this->target->getNickname())),'class' => ''), _('Following'));
 		$this->text(' ');
 		$this->text($this->target->subscriptionCount());
 		$this->elementEnd('h2');
@@ -207,7 +203,7 @@ class QuitimUserStreamAction extends ShowstreamAction
         return array(new Feed(Feed::JSON,
                               common_local_url('ApiTimelineUser',
                                                array(
-                                                    'id' => $this->user->getID(),
+                                                    'id' => $this->target->getID(),
                                                     'format' => 'as')),
                               // TRANS: Title for link to notice feed.
                               // TRANS: %s is a user nickname.
@@ -232,7 +228,7 @@ class QuitimUserStreamAction extends ShowstreamAction
                      new Feed(Feed::ATOM,
                               common_local_url('ApiTimelineUser',
                                                array(
-                                                    'id' => $this->user->getID(),
+                                                    'id' => $this->target->getID(),
                                                     'format' => 'atom')),
                               // TRANS: Title for link to notice feed.
                               // TRANS: %s is a user nickname.

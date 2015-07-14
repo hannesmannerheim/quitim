@@ -25,9 +25,17 @@ class QuitimPlugin extends Plugin {
         $m->connect('favorited',array('action' => 'quitimfavorited'));
         $m->connect('favorited/',array('action' => 'quitimfavorited'));
         $m->connect('main/popular',array('action' => 'quitimfavorited'));
+        $m->connect('main/subscribe',array('action' => 'quitimsubscribe'));
+        $m->connect('main/unsubscribe',array('action' => 'quitimunsubscribe'));
         $m->connect('notice/new', array('action' => 'quitimnewnotice'));
         $m->connect(':nickname/notifications', array('action' => 'quitimnotifications'),
                                 array('nickname' => Nickname::DISPLAY_FMT));
+        $m->connect(':nickname/followers', array('action' => 'quitimfollowers'),
+                                array('nickname' => Nickname::DISPLAY_FMT));
+        $m->connect(':nickname/following', array('action' => 'quitimfollowing'),
+                                array('nickname' => Nickname::DISPLAY_FMT));
+        $m->connect('notice/:notice/likers', array('action' => 'quitimlikers'),
+                                array('notice' => '[0-9]+'));
 		$m->connect('api/quitim/notifications.json',
 					array('action' => 'ApiNewNotifications'));
         URLMapperOverwrite::overwrite_variable($m, ':nickname',
