@@ -42,7 +42,8 @@ class QuitimNoticeListItem extends NoticeListItem
             }
             $id_prefix = (strlen($this->id_prefix) ? $this->id_prefix . '-' : '');
             $this->out->elementStart($this->item_tag, array('class' => $class,
-                                                 'id' => "${id_prefix}notice-${id}"));
+                                                 'id' => "${id_prefix}notice-${id}",
+                                                 'data-local-permalink' => $this->notice->getLocalUrl()));
             Event::handle('EndOpenNoticeListItemElement', array($this));
         }
     }
@@ -71,6 +72,7 @@ class QuitimNoticeListItem extends NoticeListItem
 
         $attachments = $this->notice->attachments();
 
+		$image_attachments_num = 0;
  		foreach($attachments as $attachment) {
  			$attachment_type = substr($attachment->mimetype, 0, strpos($attachment->mimetype,'/'));
 
@@ -87,7 +89,13 @@ class QuitimNoticeListItem extends NoticeListItem
                     $thumb_url = $thumb->url;
                 }
                 $this->out->raw('<div class="quitim-notice"><a class="link" href="'.$this->notice->getUrl().'"><img src="'.$thumb_url.'" /></a><img class="no-link" src="'.$thumb_url.'" /></div>');
+				$image_attachments_num++;
 			}
+		}
+	
+		// if this is a root notice but without image, we show the text
+		if(empty($this->notice->reply_to) && $image_attachments_num==0) {
+			$this->out->raw('<div class="quitim-notice-text-only">'.$this->notice->rendered.'</div>');			
 		}
 
         // don't know why i had to do this, but when QuitimNoticeListItem is used from quitimnewnotice.php it can't find this clas...

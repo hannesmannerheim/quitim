@@ -407,7 +407,7 @@ body#quitimfavorited #form_login #submit,
     color: #0084b4;
 	text-transform: uppercase;
 	height:27px;
-	margin-top: 7px !important;
+	margin: 7px 0 !important;
 	line-height: 24px;
 	padding: 0	10px !important;
 	min-width:120px;
@@ -911,6 +911,23 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 	display:none;
 }
 
+/* enlarge text if there's no image, i.e. if we follow someone on a regular gnusocial instance */
+.quitim-notice-text-only {
+	display:none;
+	}
+#notices_primary > .threaded-notices .quitim-notice-text-only {
+    background: #f5f5f5 none repeat scroll 0 0;
+    display: block;
+    color:#333;
+    font-family: courier;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 42px;
+    margin: 0 10px 10px 10px;
+    padding: 60px;
+    text-align: center;
+}
+
 
 .noticestream.threaded-view .threaded-notices > .notice > article > .first-comment > .p-author,
 .noticestream.threaded-view .threaded-notices > .notice > article > .first-comment > .quitim-notice-text {
@@ -934,7 +951,9 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 .noticestream.threaded-view .threaded-replies .notice.conversation-starter.empty-text {
 	display:none;
 	}
+.noticestream.threaded-view .threaded-notices > .notice.no-images > article > .first-comment > .p-author,
 .noticestream.threaded-view .threaded-notices > .notice.empty-text > article > .first-comment > .p-author,
+.noticestream.threaded-view .threaded-notices > .notice.no-images > article > .first-comment > .quitim-notice-text,
 .noticestream.threaded-view .threaded-notices > .notice.empty-text > article > .first-comment > .quitim-notice-text,
 .noticestream.threaded-view  .threaded-notices > .notice > article > .first-comment > .quitim-notice-text .attachment {
 	display:none;
@@ -1029,11 +1048,181 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 	top:0;
 	margin:0 auto;
 	width:100%;
-	max-width:1000px;
+	max-width:800px;
 	background:#fff;
 	height:100%;
 	}
+	
+.noticestream.threaded-view .threaded-replies .notice-reply #notice_action-submit {
+	background-color: #00aa00;
+    border: 0 none;
+    bottom: 0;
+    color: #f5f5f5;
+    font-size: 20px;
+    height: 70px;
+    left: 0;
+    letter-spacing: 2px;
+    position: absolute;
+    text-transform: uppercase;
+    width: 100%;
+    cursor:pointer;
+	}
+.noticestream.threaded-view .threaded-replies .notice-reply #notice_action-submit[disabled] {
+	background-color:#aaa;
+	color:#aaa;
+	cursor:default;
+	}
+.noticestream.threaded-view .threaded-replies .notice-reply form,
+.noticestream.threaded-view .threaded-replies .notice-reply fieldset {
+	border:0 none;
+	padding:0;
+	margin:0;
+	}
+.noticestream.threaded-view .threaded-replies .notice-reply label {
+	display:none;
+	}
+.noticestream.threaded-view .threaded-replies .notice-reply legend {
+    background-color: #0084b4;
+    color: #0084b4;
+    display: block;
+    height: 70px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    width: 100%;
+	}	
+.noticestream.threaded-view .threaded-replies .notice-reply legend::before {
+	content:"\f104";
+	box-sizing: border-box;
+    color: #f5f5f5;
+    display: block;
+    font-family: "FontAwesome";
+    font-size: 70px;
+    line-height: 66px;
+    padding-left: 10px;
+    position: absolute;
+	}	
 
+.noticestream.threaded-view .threaded-replies .notice-reply .count {
+	color: #f5f5f5;
+    display: block;
+    font-size: 20px;
+    height: 70px;
+    letter-spacing: 4px;
+    line-height: 70px;
+    margin: 0;
+    padding: 0 10px 0 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+	}
+
+.noticestream.threaded-view .threaded-replies .notice-reply form textarea {
+	border: 0 none;
+    box-sizing: border-box;
+    display: block;
+    font-size: 30px;
+    height: calc(100% - 140px);
+    margin: 0;
+    padding: 20px;
+    position: absolute;
+    top: 70px;
+    width: 100%;
+	}	
+.noticestream.threaded-view .threaded-replies .notice-reply form.ajax-notice.processing textarea {
+	color:#aaa;
+	}
+.noticestream.threaded-view .threaded-replies .notice-reply form.ajax-notice.processing legend {
+	color:#aaa;
+	background-color:#aaa;
+	}	
+.noticestream.threaded-view .threaded-replies .notice-reply form.ajax-notice.processing legend::before {
+	content: "POSTING...";
+    font-family: "Helvetica Neue",Arial,sans-serif;
+    font-size:30px;
+    letter-spacing:3px;
+	}	
+	
+
+.ui-dialog {
+	background-color: #fff;
+    display: block !important;
+    height: 100% !important;
+    left: -400px !important;
+    margin-left: 50%;
+    position: fixed !important;
+    top: 0 !important;
+    width: 800px !important;
+    z-index: 1000;
+    padding-top:90px;
+	}
+.ui-dialog form,
+.ui-dialog form fieldset {
+	margin:0;
+	padding:0;
+	border:0;
+	}	
+.ui-dialog legend {	
+    background-color: #0084b4;
+    box-sizing: border-box;
+    color: #f5f5f5;
+    display: block;
+    font-size: 24px;
+    height: 70px;
+    letter-spacing: 1px;
+    line-height: 70px;
+    margin: 0;
+    padding: 0 0 0 54px;
+    position: absolute;
+    text-transform: uppercase;
+    top: 0;
+    width: 100%;
+	}
+.ui-dialog legend::before {
+	content:"\f104";
+	box-sizing: border-box;
+    color: #f5f5f5;
+    display: block;
+    font-family: "FontAwesome";
+    font-size: 70px;
+    line-height: 66px;
+    padding-left: 10px;
+    position: absolute;
+    left:0;
+    cursor:pointer;
+	}		
+.ui-dialog fieldset p {	
+	text-align:center;
+	margin:40px 0;
+	}
+.ui-dialog input {	
+    background-color: #0084b4;
+    color: #f5f5f5;
+    display: block;
+    height: 70px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 80%;	
+    margin-left:10%;
+    border:0 none;
+    border-radius:5px;
+    margin-bottom:5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 18px;        
+	}
+.ui-dialog input:focus {
+	outline: none;
+	}
+.ui-dialog input#form_action-no	{
+	background-color:red;
+	}
+.ui-dialog input#form_action-yes	{
+	background-color:#00aa00;
+	}	
+	
 #infscr-loading {
 	display:none !important;
 	}

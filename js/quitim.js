@@ -184,13 +184,23 @@ $('#refresh').on('click', function(){
 // if a notice is liked we update the fave list
 $('body').on('DOMNodeInserted', '.notice-options', function(e) {
 	if ($(e.target).attr('class') === 'form_disfavor ajax' || $(e.target).attr('class') === 'form_favor ajax') {
-		var notice_URL = $(e.target).closest('.notice').find('.permalink').attr('href');
+		var notice_URL = $(e.target).closest('.notice').data('local-permalink') + '?ajax=1';
 		var dom_path_to_fav_element = '#' + $(e.target).closest('.notice').attr('id') + ' > article > .notice-faves';
 		$(e.target).closest('.notice').children('article').children('.notice-faves').load(notice_URL + ' ' + dom_path_to_fav_element, function(){
 			$(this).children(':first').unwrap(); // we want to replace fav-container, not load into it
 			});
 		}
 	});
+	
+// hide comment form when clicking back icon
+$('body').on('click','.notice-reply legend', function(){
+	$(this).closest('.notice-reply').css('display','none');
+	});
+// hide comment form when clicking back icon
+$('body').on('click','.ui-dialog legend', function(){
+	$(this).closest('.ui-dialog').remove();
+	});	
+
 
 // like on doubletap
 window.lastClick = new Object();
@@ -582,14 +592,14 @@ Filtrr2.fx('punkExposureContrast', function(p) {
 Filtrr2.fx('solanas', function(p) {
     this
     .saturate(-30)
-    .contrast(60)
+    // .contrast(60)
     .expose(-10)
     .render();
 	});
 Filtrr2.fx('solanasExposureContrast', function(p) {
     this.contrast(20).curves({x: 0, y: 0}, {x: 70, y: 150}, {x: 128, y: 150}, {x: 255, y: 255})
     .saturate(-30)
-    .contrast(60)
+    // .contrast(60)
     .expose(-10)
     .render();
 	});
@@ -612,7 +622,7 @@ Filtrr2.fx('redstarExposureContrast', function(p) {
 Filtrr2.fx('bourgeoisie', function(p) {
     this
     .saturate(-35)
-    .sharpen()
+    // .sharpen()
 	.adjust(-0.1,-0.05,0)
 	.curves({x: 0, y: 0}, {x: 120, y: 100}, {x: 128, y: 140}, {x: 255, y: 255})
     .render();
@@ -620,7 +630,7 @@ Filtrr2.fx('bourgeoisie', function(p) {
 Filtrr2.fx('bourgeoisieExposureContrast', function(p) {
     this.contrast(20).curves({x: 0, y: 0}, {x: 70, y: 150}, {x: 128, y: 150}, {x: 255, y: 255})
     .saturate(-35)
-    .sharpen()
+    // .sharpen()
 	.adjust(-0.1,-0.05,0)
 	.curves({x: 0, y: 0}, {x: 120, y: 100}, {x: 128, y: 140}, {x: 255, y: 255})
     .render();
@@ -628,14 +638,14 @@ Filtrr2.fx('bourgeoisieExposureContrast', function(p) {
 Filtrr2.fx('blackcat', function(p) {
     this
     .saturate(-100)
-    .contrast(20)
+    // .contrast(20)
 	.curves({x: 0, y: 0}, {x: 120, y: 100}, {x: 128, y: 140}, {x: 255, y: 255})
     .render();
 	});
 Filtrr2.fx('blackcatExposureContrast', function(p) {
     this.contrast(20).curves({x: 0, y: 0}, {x: 70, y: 150}, {x: 128, y: 150}, {x: 255, y: 255})
     .saturate(-100)
-    .contrast(20)
+    // .contrast(20)
 	.curves({x: 0, y: 0}, {x: 120, y: 100}, {x: 128, y: 140}, {x: 255, y: 255})
     .render();
 	});
@@ -681,7 +691,7 @@ Filtrr2.fx('postcolonial', function(p) {
     var dup = this.dup().fill(244,150,0).saturate(-40);
     this
     .gamma(0.8)
-    .contrast(30)
+    // .contrast(30)
     .layer("softLight", dup)
 	.curves({x: 0, y: 0}, {x: 80, y: 50}, {x: 128, y: 230}, {x: 255, y: 255})
     .render();
@@ -690,7 +700,7 @@ Filtrr2.fx('postcolonialExposureContrast', function(p) {
     var dup = this.dup().fill(244,150,0).saturate(-40);
     this.contrast(20).curves({x: 0, y: 0}, {x: 70, y: 150}, {x: 128, y: 150}, {x: 255, y: 255})
     .gamma(0.8)
-    .contrast(30)
+    // .contrast(30)
     .layer("softLight", dup)
 	.curves({x: 0, y: 0}, {x: 80, y: 50}, {x: 128, y: 230}, {x: 255, y: 255})
     .render();
@@ -729,7 +739,7 @@ Filtrr2.fx('lazydays', function(p) {
     var dup = this.dup().saturate(-100).sepia();
     this
     .saturate(-70)
-    .contrast(15)
+    // .contrast(15)
     .expose(10)
 	.adjust(-0.05,-0.05,0)
 	.blur('gaussian')
@@ -741,7 +751,7 @@ Filtrr2.fx('lazydaysExposureContrast', function(p) {
     var dup = this.dup().saturate(-100).sepia();
     this.contrast(20).curves({x: 0, y: 0}, {x: 70, y: 150}, {x: 128, y: 150}, {x: 255, y: 255})
     .saturate(-70)
-    .contrast(15)
+    // .contrast(15)
     .expose(10)
 	.adjust(-0.05,-0.05,0)
 	.blur('gaussian')
@@ -771,7 +781,7 @@ Filtrr2.fx('buddha', function(p) {
     var dup = this.dup().sharpen().saturate(-50).adjust(0.1,0,0);
     this
     .sharpen()
-	.contrast(30)
+	// .contrast(30)
 	.expose(10)
 	.adjust(0,0,0.2)
     .layer("multiply", dup)
@@ -783,7 +793,7 @@ Filtrr2.fx('buddhaExposureContrast', function(p) {
     var dup = this.dup().sharpen().saturate(-50).adjust(0.1,0,0);
     this
     .sharpen()
-	.contrast(30)
+	// .contrast(30)
 	.expose(10)
 	.adjust(0,0,0.2)
     .layer("multiply", dup)
