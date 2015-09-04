@@ -953,8 +953,10 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 	}
 .noticestream.threaded-view .threaded-notices > .notice.no-images > article > .first-comment > .p-author,
 .noticestream.threaded-view .threaded-notices > .notice.empty-text > article > .first-comment > .p-author,
+.noticestream.threaded-view .threaded-notices > .notice.old-quitim-notice > article > .first-comment > .p-author,
 .noticestream.threaded-view .threaded-notices > .notice.no-images > article > .first-comment > .quitim-notice-text,
 .noticestream.threaded-view .threaded-notices > .notice.empty-text > article > .first-comment > .quitim-notice-text,
+.noticestream.threaded-view .threaded-notices > .notice.old-quitim-noticet > article > .first-comment > .quitim-notice-text,
 .noticestream.threaded-view  .threaded-notices > .notice > article > .first-comment > .quitim-notice-text .attachment {
 	display:none;
 	}

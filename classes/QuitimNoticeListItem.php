@@ -6,6 +6,15 @@ class QuitimNoticeListItem extends NoticeListItem
 {
     // Add changes that might be necessary later on or just keep this as an empty intermediate class
 
+    function showNoticeFooter()
+    {
+        $this->elementStart('footer');
+        $this->showNoticeInfo();
+        if ($this->options) { $this->showNoticeOptions(); }
+//         if ($this->attachments) { $this->showNoticeAttachments(); }
+        $this->elementEnd('footer');
+    }
+
     function showStart()
     {
 
@@ -34,6 +43,9 @@ class QuitimNoticeListItem extends NoticeListItem
             if($content_stripped_of_attachments == '') {
                 $class .= ' empty-text';
             }
+            if(substr($this->notice->rendered,0,27) == '<div class="quitim-notice">') {
+                $class .= ' old-quitim-notice';
+            }            
             if(isset($this->notice->is_conversation_starter)) {
                 $class .= ' conversation-starter';
             }

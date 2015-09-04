@@ -47,3 +47,7 @@ Setup
 		define('AVATAR_PROFILE_SIZE', 192);
 		define('AVATAR_STREAM_SIZE', 96);
 		define('AVATAR_MINI_SIZE', 48);
+
+6. In lib/default.php, change the thumbnail maxsize to something high, like 4000
+
+		

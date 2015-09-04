@@ -213,7 +213,7 @@ $('body').on('click touchend','.quitim-notice img',function(){
 	var scrollSinceLastClick = Math.abs(scrollPosNow-window.lastClick.scrollPos);
 	if(timeSinceLastClick<400 && scrollSinceLastClick<5) {
 		$(this).parent().append('<div class="double-tap-heart"></div>');
-		$(this).closest('.notice').children('footer').children('.notice-options').find('input[value="Favor"]').trigger('click');
+		$(this).closest('.notice').children('footer').children('.notice-options').find('form.form_favor').find('input.submit').trigger('click');
 		setTimeout(function(){
 			$('.double-tap-heart').fadeOut(500,function(){
 				$('.double-tap-heart').remove();
