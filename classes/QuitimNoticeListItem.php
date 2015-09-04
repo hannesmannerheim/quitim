@@ -84,12 +84,14 @@ class QuitimNoticeListItem extends NoticeListItem
 
         $attachments = $this->notice->attachments();
 
+		$is_conversation_root = ($this->notice->id == $this->notice->conversation);
+
 		$image_attachments_num = 0;
  		foreach($attachments as $attachment) {
  			$attachment_type = substr($attachment->mimetype, 0, strpos($attachment->mimetype,'/'));
-
+			
  			// we only show conversation starting images
- 			if(empty($this->notice->reply_to) && $attachment_type == 'image' && $attachment instanceof File) {
+ 			if($is_conversation_root && $attachment_type == 'image' && $attachment instanceof File) {
 
  				// show full image if small
  				if($attachment->width < 1000) {
@@ -106,7 +108,7 @@ class QuitimNoticeListItem extends NoticeListItem
 		}
 	
 		// if this is a root notice but without image, we show the text
-		if(empty($this->notice->reply_to) && $image_attachments_num==0) {
+		if($is_conversation_root && $image_attachments_num==0) {
 			$this->out->raw('<div class="quitim-notice-text-only">'.$this->notice->rendered.'</div>');			
 		}
 
