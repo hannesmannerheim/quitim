@@ -24,7 +24,7 @@ class QuitimPlugin extends Plugin {
         $m->connect('main/register', array('action' => 'quitimfavorited'));  // only ajax to fight spam
         $m->connect('favorited',array('action' => 'quitimfavorited'));
         $m->connect('favorited/',array('action' => 'quitimfavorited'));
-        $m->connect('main/popular',array('action' => 'quitimfavorited'));
+        $m->connect('main/popular',array('action' => 'quitimpopular'));
         $m->connect('main/subscribe',array('action' => 'quitimsubscribe'));
         $m->connect('main/unsubscribe',array('action' => 'quitimunsubscribe'));
         $m->connect('notice/new', array('action' => 'quitimnewnotice'));

@@ -1124,7 +1124,7 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 	border: 0 none;
     box-sizing: border-box;
     display: block;
-    font-size: 30px;
+    font-size: 20px;
     height: calc(100% - 140px);
     margin: 0;
     padding: 20px;
@@ -1232,7 +1232,8 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 	opacity:0;
 	}
 
-#quitimfavorited #thumb-thread {
+#quitimfavorited #thumb-thread,
+#quitimpopular #thumb-thread {
     margin-top: 0px;
     border-top:0 none;
     }

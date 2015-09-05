@@ -40,7 +40,8 @@ $(document).ready(function($){
     nextSelector    : 'body#quitimall li.nav_next a,'+
                       'body#quitimuserstream li.nav_next a,'+
                       'body#quitimnotifications li.nav_next a,'+
-                      'body#quitimfavorited li.nav_next a',
+                      'body#quitimfavorited li.nav_next a,'+
+                      'body#quitimpopular li.nav_next a',
     loadingImg      : ajax_loader_url,
     text            : "<em>Loading the next set of posts...</em>",
     donetext        : "<em>Congratulations, you\'ve reached the end of the Internet.</em>",
@@ -202,11 +203,17 @@ $('body').on('click','.ui-dialog legend', function(){
 	});	
 
 
-// like on doubletap
+// like on doubleclick
 window.lastClick = new Object();
 window.lastClick.time = 0;
 window.lastClick.scrollPos = 0;
-$('body').on('click touchend','.quitim-notice img',function(){
+$('body').on('click','.quitim-notice img',function(e){
+
+	// not if we're in thumbnail mode
+	if($(this).closest('.noticestream').hasClass('thumbnail-view')) {
+		return true;
+		}
+
 	var timeNow = Date.now();
 	var scrollPosNow = $(window).scrollTop();
 	var timeSinceLastClick = timeNow - window.lastClick.time;
@@ -225,6 +232,37 @@ $('body').on('click touchend','.quitim-notice img',function(){
 		window.lastClick.scrollPos = scrollPosNow;
 		}
 	});
+
+// like on doubletap
+window.lastTouchEnd = new Object();
+window.lastTouchEnd.time = 0;
+window.lastTouchEnd.scrollPos = 0;
+$('body').on('touchend','.quitim-notice img',function(e){
+	
+	// not if we're in thumbnail mode
+	if($(this).closest('.noticestream').hasClass('thumbnail-view')) {
+		return true;
+		}
+	
+	var timeNow = Date.now();
+	var scrollPosNow = $(window).scrollTop();
+	var timeSinceLastTouchEnd = timeNow - window.lastTouchEnd.time;
+	var scrollSinceLastTouchEnd = Math.abs(scrollPosNow-window.lastTouchEnd.scrollPos);
+	if(timeSinceLastTouchEnd<400 && scrollSinceLastTouchEnd<5) {
+		$(this).parent().append('<div class="double-tap-heart"></div>');
+		$(this).closest('.notice').children('footer').children('.notice-options').find('form.form_favor').find('input.submit').trigger('click');
+		setTimeout(function(){
+			$('.double-tap-heart').fadeOut(500,function(){
+				$('.double-tap-heart').remove();
+				});
+			},200);
+		}
+	else {
+		window.lastTouchEnd.time = timeNow;
+		window.lastTouchEnd.scrollPos = scrollPosNow;
+		}
+	});
+
 
 // check for new notifications
 checkForNewNotifications();

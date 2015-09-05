@@ -82,16 +82,7 @@ class QuitimFavoritedAction extends FormAction
             common_rememberme($user);
         }
 
-        $url = common_get_returnto();
-
-        if ($url) {
-            // We don't have to return to it again
-            common_set_returnto(null);
-            $url = common_inject_session($url);
-        } else {
-            $url = common_local_url('all',
-                                    array('nickname' => $this->scoped->nickname));
-        }
+		$url = common_local_url('all', array('nickname' => $this->scoped->nickname));
 
         common_redirect($url, 303);
     }
@@ -248,7 +239,7 @@ class QuitimFavoritedAction extends FormAction
             $this->elementEnd('div');
 
             $this->elementStart('div',array('id'=>'what-is-quitim'));
-            $this->raw('<h2>Welcome to Quitim!</h2>We are a federated, open source, non-profit, non-commercial, mobile image sharing community.<br><br>When you <a class="register-link" href="'.common_local_url('register').'">sign up</a> here you become an activist in the online anti-capitalist struggle, a part in building an open and non-commercial space where we can interact and organize without profit driven corporations interfering and sabotaging our communications. <br><br>★ Quitim is not a service and you are not a customer here – we\'re doing this together.<br><br>★ For-profit businesses are not allowed to register. Users who harass others or propagate discriminatory political views – such as racism, sexism, ableism, homo- and transphobia – will be removed. Quitim users are expected to participate in making the network a respectful and kind place where everyone feels safe.<br><br>★ Quitim is part of the <a href="http://gnu.io/">GNU social</a> network, which means that you don\'t have to sign up to Quitim to talk to your Quitim friends – you can join any GNU social server and follow them from there. <br><br> ★ All your images on Quitim are licensed under Creative Commons BY-NC, which means no one can use your content for advertising.');
+            $this->raw('<h2>Welcome to Quitim!</h2>We are a federated, open source, non-profit, non-commercial, mobile image sharing community. Confused? Check out the recent <a href="http://quit.im/main/popular">popular images</a>.<br><br>When you <a class="register-link" href="'.common_local_url('register').'">sign up</a> here you become an activist in the online anti-capitalist struggle, a part in building an open and non-commercial space where we can interact and organize without profit driven corporations interfering and sabotaging our communications. <br><br>★ Quitim is not a service and you are not a customer here – we\'re doing this together.<br><br>★ For-profit businesses are not allowed to register. Users who harass others or propagate discriminatory political views – such as racism, sexism, ableism, homo- and transphobia – will be removed. Quitim users are expected to participate in making the network a respectful and kind place where everyone feels safe.<br><br>★ Quitim is part of the <a href="http://gnu.io/">GNU social</a> network, which means that you don\'t have to sign up to Quitim to talk to your Quitim friends – you can join any GNU social server and follow them from there. <br><br> ★ All your images on Quitim are licensed under Creative Commons BY-NC, which means no one can use your content for advertising.');
             $this->elementStart('a',array('id'=>'quitim-sign-up', 'href'=>common_local_url('register'), 'class'=>'register-link'));
             $this->raw('Sign up!');
             $this->elementEnd('a');
