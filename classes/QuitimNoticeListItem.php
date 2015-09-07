@@ -26,7 +26,10 @@ class QuitimNoticeListItem extends NoticeListItem
  			$attachment_type = substr($attachment->mimetype, 0, strpos($attachment->mimetype,'/'));
  			if(empty($this->notice->reply_to) && $attachment_type == 'image' && $attachment instanceof File) {
                 $image_attachments_num++;
-                $content_stripped_of_attachments = trim(str_replace(File_redirection::getKV('file_id',$attachment->id)->url,'',$content_stripped_of_attachments));
+                $redirection_aliases = File_redirection::multiGet('file_id',array($attachment->id));
+			    while ($redirection_aliases->fetch()) {
+	                $content_stripped_of_attachments = trim(str_replace($redirection_aliases->url,'',$content_stripped_of_attachments));	
+                }            
             }
 		}
 
@@ -90,8 +93,8 @@ class QuitimNoticeListItem extends NoticeListItem
  		foreach($attachments as $attachment) {
  			$attachment_type = substr($attachment->mimetype, 0, strpos($attachment->mimetype,'/'));
 			
- 			// we only show conversation starting images
- 			if($is_conversation_root && $attachment_type == 'image' && $attachment instanceof File) {
+ 			// we only show conversation starting images and local attachments
+ 			if($is_conversation_root && $attachment_type == 'image' && $attachment instanceof File && $attachment->filename !== null) {
 
  				// show full image if small
  				if($attachment->width < 1000) {
