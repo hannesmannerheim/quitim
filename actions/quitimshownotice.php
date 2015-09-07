@@ -185,7 +185,7 @@ class QuitimShownoticeAction extends Action
                     $target = false;
                 }
                 if ($target && $target != $this->selfUrl()) {
-                    common_redirect($target, 301);
+//                     common_redirect($target, 301);
                 }
             }
             $this->showPage();
