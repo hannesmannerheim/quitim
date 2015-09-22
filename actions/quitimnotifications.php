@@ -291,10 +291,10 @@ class QuitimNotificationsAction extends Action
 
 	function showThumb($first_notice_id_in_conversation) {
 		$att = $first_notice_id_in_conversation->attachments();
-		foreach ($att as $attachment) {
-			$thumbnail = File_thumbnail::getKV('file_id', $attachment->id);
+        foreach ($att as $attachment) {
+            $thumbnail = $attachment->getThumbnail();
 			if ($thumbnail) {
-				$this->elementStart('a', array('class' => 'thumb', 'href' => $first_notice_id_in_conversation->uri));
+				$this->elementStart('a', array('class' => 'thumb', 'href' => $first_notice_id_in_conversation->getUrl()));
 				$this->element('img', array('alt' => '', 'src' => $thumbnail->url, 'width' => $thumbnail->width, 'height' => $thumbnail->height));
 				$this->elementEnd('a');
 				break;
