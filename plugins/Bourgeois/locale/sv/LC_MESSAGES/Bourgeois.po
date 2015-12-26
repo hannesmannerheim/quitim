@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: GNU social\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-02 17:47+0100\n"
-"PO-Revision-Date: 2015-02-06 16:42+0000\n"
+"PO-Revision-Date: 2015-12-26 16:42+0000\n"
 "Last-Translator: Hannes Mannerheim <h@nnesmannerhe.im>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,16 +18,30 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. TRANS: Button text for adding the favourite status to a notice.
-#: forms/markbourgeois.php:122
+#: forms/markbourgeois.php:124
 msgctxt "BUTTON"
 msgid "Mark as bourgeois"
 msgstr "Markera som borgerligt"
 
+#. TRANS: Button text for adding the favourite status to a notice.
+#: forms/markbourgeois.php:128
+msgctxt "BUTTON"
+msgid "Add this notice to your list of bourgeois notices."
+msgstr "Markera som borgerligt"
+
+
 #. TRANS: Button text for removing the favourite status for a favourite
 #. notice.
-#: forms/unmarkbourgeois.php:123
+#: forms/unmarkbourgeois.php:125
 msgctxt "BUTTON"
 msgid "Unmark as bourgeois"
+msgstr "Avmarkera som borgerligt"
+
+#. TRANS: Button text for removing the favourite status for a favourite
+#. notice.
+#: forms/unmarkbourgeois.php:129
+msgctxt "BUTTON"
+msgid "Remove this notice from your list of bourgeois notices."
 msgstr "Avmarkera som borgerligt"
 
 #. TRANS: Menu item in personal group navigation menu.
