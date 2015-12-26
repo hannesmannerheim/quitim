@@ -182,7 +182,7 @@ $('#refresh').on('click', function(){
 		});
 	});
 
-// if a notice is liked we update the fave list
+// if a notice is liked or marked as bourgeois we update the fave and bourgeois list
 $('body').on('DOMNodeInserted', '.notice-options', function(e) {
 	if ($(e.target).attr('class') === 'form_disfavor ajax' || $(e.target).attr('class') === 'form_favor ajax') {
 		var notice_URL = $(e.target).closest('.notice').data('local-permalink') + '?ajax=1';
@@ -191,8 +191,15 @@ $('body').on('DOMNodeInserted', '.notice-options', function(e) {
 			$(this).children(':first').unwrap(); // we want to replace fav-container, not load into it
 			});
 		}
+	else if ($(e.target).attr('class') === 'form_unmarkbourgeois ajax' || $(e.target).attr('class') === 'form_markbourgeois ajax') {
+		var notice_URL = $(e.target).closest('.notice').data('local-permalink') + '?ajax=1';
+		var dom_path_to_fav_element = '#' + $(e.target).closest('.notice').attr('id') + ' > article > .notice-bourgeois';
+		$(e.target).closest('.notice').children('article').children('.notice-bourgeois').load(notice_URL + ' ' + dom_path_to_fav_element, function(){
+			$(this).children(':first').unwrap(); // we want to replace bourgeois-container, not load into it
+			});
+		}
 	});
-	
+
 // hide comment form when clicking back icon
 $('body').on('click','.notice-reply legend', function(){
 	$(this).closest('.notice-reply').css('display','none');
@@ -200,7 +207,7 @@ $('body').on('click','.notice-reply legend', function(){
 // hide comment form when clicking back icon
 $('body').on('click','.ui-dialog legend', function(){
 	$(this).closest('.ui-dialog').remove();
-	});	
+	});
 
 
 // like on doubleclick
@@ -238,12 +245,12 @@ window.lastTouchEnd = new Object();
 window.lastTouchEnd.time = 0;
 window.lastTouchEnd.scrollPos = 0;
 $('body').on('touchend','.quitim-notice img',function(e){
-	
+
 	// not if we're in thumbnail mode
 	if($(this).closest('.noticestream').hasClass('thumbnail-view')) {
 		return true;
 		}
-	
+
 	var timeNow = Date.now();
 	var scrollPosNow = $(window).scrollTop();
 	var timeSinceLastTouchEnd = timeNow - window.lastTouchEnd.time;
@@ -304,6 +311,9 @@ function checkForNewNotifications() {
 							}
 						if(typeof data.follow != 'undefined') {
 							bubbleContent = bubbleContent + '<div id="noti-follow">' + parseInt(data.follow,10) + '</div>';
+							}
+						if(typeof data.bourg != 'undefined') {
+							bubbleContent = bubbleContent + '<div id="noti-bourgeois">' + parseInt(data.bourg,10) + '</div>';
 							}
 						$('#notifications-bubble').html(bubbleContent);
 						}

@@ -34,7 +34,7 @@ class QuitimNoticeListItem extends NoticeListItem
 		}
 
 
-        if (Event::handle('StartOpenNoticeListItemElement', array($this))) {
+//         if (Event::handle('StartOpenNoticeListItemElement', array($this))) {
             $id = (empty($this->repeat)) ? $this->notice->id : $this->repeat->id;
             $class = 'h-entry notice';
             if ($this->notice->scope != 0 && $this->notice->scope != 1) {
@@ -60,7 +60,7 @@ class QuitimNoticeListItem extends NoticeListItem
                                                  'id' => "${id_prefix}notice-${id}",
                                                  'data-local-permalink' => $this->notice->getLocalUrl()));
             Event::handle('EndOpenNoticeListItemElement', array($this));
-        }
+//         }
     }
 
 
@@ -123,11 +123,24 @@ class QuitimNoticeListItem extends NoticeListItem
         } else {
             $hasFaves = false;
         }
+        
+        // don't know why i had to do this, but when QuitimNoticeListItem is used from quitimnewnotice.php it can't find this clas...
+        // but we don't need it then, since it's always the question about getting a comment with ajax then.
+        if(class_exists('QuitimThreadedNoticeListBourgeoisItem')) {
+            $item = new QuitimThreadedNoticeListBourgeoisItem($this->notice, $this->out);
+            $hasBourgeois = $item->show();
+        } else {
+            $hasBourgeois = false;
+        }        
 
         // add a fav container even if no faves, to load into with ajax when faving
         if(!isset($hasFaves) || !$hasFaves) {
         	$this->element('div',array('class' => 'notice-data notice-faves'));
         	}
+        // add a bourgeois container even if no bourgeois
+        if(!isset($hasBourgeois) || !$hasBourgeois) {
+        	$this->element('div',array('class' => 'notice-data notice-bourgeois'));
+        	}        	
 
         $this->out->elementStart('div', 'first-comment');
         $this->showAuthor();

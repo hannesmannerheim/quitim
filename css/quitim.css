@@ -55,6 +55,8 @@ body.quitim {
 
 .quitim address a,
 #quitimuserstream #topright,
+.noticestream.threaded-view .notice > footer > .notice-options .form_markbourgeois fieldset input,
+.noticestream.threaded-view .notice > footer > .notice-options .form_unmarkbourgeois fieldset input,
 .noticestream.threaded-view .notice > footer > .notice-options .form_favor fieldset input,
 .noticestream.threaded-view .notice > footer > .notice-options .form_disfavor fieldset input,
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_reply,
@@ -62,6 +64,7 @@ body.quitim {
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_delete,
 .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .notice_delete,
 .noticestream.threaded-view .notice-faves,
+.noticestream.threaded-view .notice-bourgeois,
 .noticestream.threaded-view .threaded-replies .notice-reply-comments a,
 #set-thumbnail-view,
 #set-threaded-view,
@@ -75,7 +78,7 @@ body#quitimfavorited #form_login #submit,
 #image-preview #image-nav #submit-image,
 #image-preview .toolbar-button-extra,
 .double-tap-heart {
-	background-image: url("../img/sprite.png?v=7");
+	background-image: url("../img/sprite.png?v=9");
 	background-size: 500px 2000px;
 	background-repeat:no-repeat;
 	}
@@ -831,14 +834,22 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_favor legend,
 .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_disfavor legend,
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_favor legend,
-.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_disfavor legend {
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_disfavor legend,
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_markbourgeois legend,
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_unmarkbourgeois legend,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_markbourgeois legend,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_unmarkbourgeois legend {
 	display:none;
 	}
 
 #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_favor fieldset,
 #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_disfavor fieldset,
 #notices_primary > .notices > .notice > footer > .notice-options .form_favor fieldset,
-#notices_primary > .notices > .notice > footer > .notice-options .form_disfavor fieldset {
+#notices_primary > .notices > .notice > footer > .notice-options .form_disfavor fieldset,
+#notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_markbourgeois fieldset,
+#notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_unmarkbourgeois fieldset,
+#notices_primary > .notices > .notice > footer > .notice-options .form_markbourgeois fieldset,
+#notices_primary > .notices > .notice > footer > .notice-options .form_unmarkbourgeois fieldset {
 	border:0 none; padding:0;margin:0;
 	width:40px;
 	height:40px;
@@ -848,10 +859,14 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .notice_delete,
 .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_favor fieldset input,
 .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_disfavor fieldset input,
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_markbourgeois fieldset input,
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_unmarkbourgeois fieldset input,
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_reply,
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_delete,
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_favor fieldset input,
-.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_disfavor fieldset input {
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_disfavor fieldset input,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_markbourgeois fieldset input,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_unmarkbourgeois fieldset input {
 	border:0 none; padding:0;margin:0;
 	width:40px;
 	height:40px;
@@ -871,10 +886,23 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 	background-position:-46px -196px;
 	}
 
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_markbourgeois fieldset input,
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_unmarkbourgeois fieldset input,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_markbourgeois fieldset input,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_unmarkbourgeois fieldset input {
+	background-position:-315px -196px;
+    left:80px;
+    }
+
+.noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .form_markbourgeois fieldset input,
+.noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .form_markbourgeois fieldset input {
+	background-position:-359px -196px;
+    }
+
 .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .notice_reply,
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_reply {
 	background-position:-100px -196px;
-	left:80px;
+	left:160px;
 	}
 .noticestream.threaded-view #notices_primary > .notices > .infscr-pages > .notice > footer > .notice-options .notice_delete,
 .noticestream.threaded-view #notices_primary > .notices > .notice > footer > .notice-options .notice_delete {
@@ -965,7 +993,8 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 	display: none;
 	}
 
-.noticestream.threaded-view .notice-faves {
+.noticestream.threaded-view .notice-faves,
+.noticestream.threaded-view .notice-bourgeois {
     background-position: -5px -252px;
     background-repeat: no-repeat;
     font-size: 13px;
@@ -973,10 +1002,15 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
     margin-bottom: 0;
     padding-left: 35px;
 	}
-.noticestream.threaded-view .notice-faves a {
+.noticestream.threaded-view .notice-bourgeois {
+    background-position: -5px -154px;
+    }
+.noticestream.threaded-view .notice-faves a,
+.noticestream.threaded-view .notice-bourgeois a {
 	font-weight:bold;
 	}
-.noticestream.threaded-view .threaded-replies .notice-faves {
+.noticestream.threaded-view .threaded-replies .notice-faves,
+.noticestream.threaded-view .threaded-replies .notice-bourgeois {
 	display:none;
 	}
 
@@ -1054,7 +1088,7 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 	background:#fff;
 	height:100%;
 	}
-	
+
 .noticestream.threaded-view .threaded-replies .notice-reply #notice_action-submit {
 	background-color: #00aa00;
     border: 0 none;
@@ -1092,7 +1126,7 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
     padding: 0;
     position: absolute;
     width: 100%;
-	}	
+	}
 .noticestream.threaded-view .threaded-replies .notice-reply legend::before {
 	content:"\f104";
 	box-sizing: border-box;
@@ -1103,7 +1137,7 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
     line-height: 66px;
     padding-left: 10px;
     position: absolute;
-	}	
+	}
 
 .noticestream.threaded-view .threaded-replies .notice-reply .count {
 	color: #f5f5f5;
@@ -1131,21 +1165,21 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
     position: absolute;
     top: 70px;
     width: 100%;
-	}	
+	}
 .noticestream.threaded-view .threaded-replies .notice-reply form.ajax-notice.processing textarea {
 	color:#aaa;
 	}
 .noticestream.threaded-view .threaded-replies .notice-reply form.ajax-notice.processing legend {
 	color:#aaa;
 	background-color:#aaa;
-	}	
+	}
 .noticestream.threaded-view .threaded-replies .notice-reply form.ajax-notice.processing legend::before {
 	content: "POSTING...";
     font-family: "Helvetica Neue",Arial,sans-serif;
     font-size:30px;
     letter-spacing:3px;
-	}	
-	
+	}
+
 
 .ui-dialog {
 	background-color: #fff;
@@ -1164,8 +1198,8 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 	margin:0;
 	padding:0;
 	border:0;
-	}	
-.ui-dialog legend {	
+	}
+.ui-dialog legend {
     background-color: #0084b4;
     box-sizing: border-box;
     color: #f5f5f5;
@@ -1193,12 +1227,12 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
     position: absolute;
     left:0;
     cursor:pointer;
-	}		
-.ui-dialog fieldset p {	
+	}
+.ui-dialog fieldset p {
 	text-align:center;
 	margin:40px 0;
 	}
-.ui-dialog input {	
+.ui-dialog input {
     background-color: #0084b4;
     color: #f5f5f5;
     display: block;
@@ -1206,14 +1240,14 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
     margin: 0;
     padding: 0;
     position: relative;
-    width: 80%;	
+    width: 80%;
     margin-left:10%;
     border:0 none;
     border-radius:5px;
     margin-bottom:5px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    font-size: 18px;        
+    font-size: 18px;
 	}
 .ui-dialog input:focus {
 	outline: none;
@@ -1223,8 +1257,8 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 	}
 .ui-dialog input#form_action-yes	{
 	background-color:#00aa00;
-	}	
-	
+	}
+
 #infscr-loading {
 	display:none !important;
 	}
@@ -1380,6 +1414,9 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 	}
 .quitim #fixed-footer a#notifications div#notifications-bubble div#noti-follow {
 	background-position:-193px -749px;
+	}
+.quitim #fixed-footer a#notifications div#notifications-bubble div#noti-bourgeois {
+	background-position:-291px -749px;
 	}
 .quitim #fixed-footer a#notifications div#notifications-bubble div:first-child {
 	border-top-left-radius:5px;

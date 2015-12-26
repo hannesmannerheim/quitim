@@ -177,6 +177,10 @@ class QuitimNotificationsAction extends Action
 					$this->showThumb($first_notice_id_in_conversation);
 					$this->showAuthorAndNotificationText($notification, $from_profile, _("likes your image"));
 					}
+				elseif($notification->ntype == "bourg") {
+					$this->showThumb($first_notice_id_in_conversation);
+					$this->showAuthorAndNotificationText($notification, $from_profile, _("thinks your image is bourgois"));
+					}					
 				elseif($notification->ntype == "reply") {
 					$this->showThumb($first_notice_id_in_conversation);
 					$comment = Notice::getKV($notification->notice_id);

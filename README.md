@@ -39,15 +39,22 @@ Setup
 
 3. Put all files in local/plugins/Quitim
 
-4. Add `addPlugin('Quitim');` and  `addPlugin('InfiniteScroll');` to your
-/config.php file.
+4. Move local/plugins/Quitim/Bourgoeis to local/plugins/Bourgoeis
+
+4. Add this to your /config.php file.
+````
+addPlugin('Quitim');
+addPlugin('ActivityVerb');
+addPlugin('Bourgeois');
+addPlugin('InfiniteScroll');
+````
 
 5. In lib/framework.php, set these constants like this:
-
-		define('AVATAR_PROFILE_SIZE', 192);
-		define('AVATAR_STREAM_SIZE', 96);
-		define('AVATAR_MINI_SIZE', 48);
-
+````
+define('AVATAR_PROFILE_SIZE', 192);
+define('AVATAR_STREAM_SIZE', 96);
+define('AVATAR_MINI_SIZE', 48);
+````
 6. In lib/default.php, change the thumbnail maxsize to something high, like 4000
 
 		

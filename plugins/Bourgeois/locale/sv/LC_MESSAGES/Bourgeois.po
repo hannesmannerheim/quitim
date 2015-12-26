@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Hannes Mannerheim <h@nnesmannerhe.im>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: GNU social\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-02 17:47+0100\n"
+"PO-Revision-Date: 2015-02-06 16:42+0000\n"
+"Last-Translator: Hannes Mannerheim <h@nnesmannerhe.im>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. TRANS: Button text for adding the favourite status to a notice.
+#: forms/markbourgeois.php:122
+msgctxt "BUTTON"
+msgid "Mark as bourgeois"
+msgstr "Markera som borgerligt"
+
+#. TRANS: Button text for removing the favourite status for a favourite
+#. notice.
+#: forms/unmarkbourgeois.php:123
+msgctxt "BUTTON"
+msgid "Unmark as bourgeois"
+msgstr "Avmarkera som borgerligt"
+
+#. TRANS: Menu item in personal group navigation menu.
+#: BourgeoisPlugin.php:469
+msgctxt "MENU"
+msgid "Bourgeois"
+msgstr "Borgerligt"
+
+#. TRANS: Menu item in search group navigation panel.
+#: BourgeoisPlugin.php:482
+msgctxt "MENU"
+msgid "Bourgeois notices"
+msgstr "Borgerliga notiser"
+
+#. TRANS: List message for notice favoured by logged in user.
+#: lib/threadednoticelistbourgeoisitem.php:51
+msgctxt "FAVELIST"
+msgid "You think this is bourgeois."
+msgstr "Du tycker att det här är borgerligt"
+
+#. TRANS: List message for when more than 4 people like something.
+#. TRANS: %%s is a list of users liking a notice, %d is the number over 4 that
+#. like the notice.
+#. TRANS: Plural is decided on the total number of users liking the notice
+#. (count of %%s + %d).
+#: lib/threadednoticelistbourgeoisitem.php:56
+#, php-format
+msgid "%%s and %d others think this is bourgeois."
+msgid_plural "%%s and %d others think this is bourgeois."
+msgstr[0] ""
+msgstr[1] ""
+
+#. TRANS: List message for favoured notices.
+#. TRANS: %%s is a list of users liking a notice.
+#. TRANS: Plural is based on the number of of users that have favoured a
+#. notice.
+#: lib/threadednoticelistfavesitem.php:64
+#, php-format
+msgid "%%s thinks this is bourgeois."
+msgid_plural "%%s think this is bourgeois."
+msgstr[0] ""
+msgstr[1] ""

@@ -508,7 +508,7 @@ class QuitimThreadedNoticeListFavesItem extends QuitimNoticeListActorsItem
 
     function getListMessage($count, $you)
     {
-        if ($count > 9) {
+        if ($count > 5) {
             // TRANS: List message for when more than 4 people like something.
             // TRANS: %%s is a list of users liking a notice, %d is the number over 4 that like the notice.
             // TRANS: Plural is decided on the total number of users liking the notice (count of %%s + %d).
@@ -544,6 +544,72 @@ class QuitimThreadedNoticeListInlineFavesItem extends QuitimThreadedNoticeListFa
     function showStart()
     {
         $this->out->elementStart('div', array('class' => 'entry-content notice-faves'));
+    }
+
+    function showEnd()
+    {
+        $this->out->elementEnd('div');
+    }
+}
+
+/**
+ * Placeholder for showing faves...
+ */
+class QuitimThreadedNoticeListBourgeoisItem extends QuitimNoticeListActorsItem
+{
+    function getProfiles()
+    {
+        $bourgeois = Bourgeois::byNotice($this->notice);
+        $profiles = array();
+        foreach ($bourgeois as $b) {
+            $profiles[] = $b->user_id;
+        }
+        return $profiles;
+    }
+
+    function magicList($items)
+    {
+        return parent::magicList($items);
+    }
+
+    function getListMessage($count, $you)
+    {
+        if ($count > 5) {
+            // TRANS: List message for when more than 4 people like something.
+            // TRANS: %%s is a list of users liking a notice, %d is the number over 4 that like the notice.
+            // TRANS: Plural is decided on the total number of users liking the notice (count of %%s + %d).
+            return sprintf(_m('<a href="'.$this->notice->getUrl().'/markedasbourgeoisby">%d thinks this is bourgeois</a>',
+                              '<a href="'.$this->notice->getUrl().'/markedasbourgeoisby">%d thinks this is bourgeois</a>',
+                              $count),
+                           $count);
+        } else {
+            // TRANS: List message for favoured notices.
+            // TRANS: %%s is a list of users liking a notice.
+            // TRANS: Plural is based on the number of of users that have favoured a notice.
+            return sprintf(_m('%%s',
+                              '%%s',
+                              $count),
+                           $count);
+        }
+    }
+
+    function showStart()
+    {
+        $this->out->elementStart('div', array('class' => 'notice-data notice-bourgeois'));
+    }
+
+    function showEnd()
+    {
+        $this->out->elementEnd('div');
+    }
+}
+
+// @todo FIXME: needs documentation.
+class QuitimThreadedNoticeListInlineBourgeoisItem extends QuitimThreadedNoticeListBourgeoisItem
+{
+    function showStart()
+    {
+        $this->out->elementStart('div', array('class' => 'entry-content notice-bourgeois'));
     }
 
     function showEnd()

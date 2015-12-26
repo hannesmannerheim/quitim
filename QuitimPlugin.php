@@ -146,6 +146,33 @@ class QuitimPlugin extends Plugin {
 		$notif->delete();
         return true;
     }
+    
+
+    /**
+     * Insert likes in notification table
+     */
+    public function onEndMarkBourgeoisNotice($profile, $notice)
+    {
+		// only mark as bourgeois for conversation-starters/images in notifications
+ 		if(empty($notice->reply_to)) {
+            $this->insertNotification($notice->profile_id, $profile->id, 'bourg', $notice->id, $notice->id);
+ 			}
+    }
+
+
+    /**
+     * Remove bourgeois markings in notification table on unmark bourgeois
+     */
+    public function onEndUnmarkBourgeoisNotice($profile, $notice)
+    {
+		$notif = new QuitimNotification();
+		$notif->from_profile_id = $profile->id;
+		$notif->notice_id = $notice->id;
+		$notif->ntype = 'bourg';
+		$notif->delete();
+        return true;
+    }
+    
 
 
 
