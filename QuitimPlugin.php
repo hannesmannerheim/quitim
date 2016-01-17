@@ -146,7 +146,7 @@ class QuitimPlugin extends Plugin {
 		$notif->delete();
         return true;
     }
-    
+
 
     /**
      * Insert likes in notification table
@@ -172,7 +172,7 @@ class QuitimPlugin extends Plugin {
 		$notif->delete();
         return true;
     }
-    
+
 
 
 
@@ -508,82 +508,6 @@ class QuitimPlugin extends Plugin {
 		Event::handle('EndShowNoticeFormData', array($action));
         return false;
     	}
-
-
-    /**
-     *  Maybe download remote attachments
-     *
-     * @return boolean hook flag
-     */
-
-    public function onEndHandleFeedEntryWithProfile($activity,$ostatus_profile, $notice) {
-
-        if(count($activity->enclosures)>0) {
-
-            foreach($activity->enclosures as $enclosure) {
-
-                // only proceed if this enclosure exists in a title-attribute in the content-field,
-                // that's how we know it's probably an image attachment
-                $enclosure_in_title_attr_pos = strpos($activity->content,'title="'.$enclosure.'"');
-                if($enclosure_in_title_attr_pos) {
-                    $link_text_start = strpos($activity->content,'>',$enclosure_in_title_attr_pos)+1;
-                    $link_text_end = strpos($activity->content,'</a>',$enclosure_in_title_attr_pos);
-                    $link_text = substr($activity->content,$link_text_start,$link_text_end-$link_text_start);
-
-                    $extension = pathinfo(parse_url($enclosure, PHP_URL_PATH),PATHINFO_EXTENSION);
-                    if(count($link_text)>0 && ($extension == 'png' || $extension == 'jpg' || $extension == 'gif' || $extension == 'jpeg')) {
-
-                        // First we download the file to memory and test whether it's actually an image file
-                        $client = new HTTPClient();
-                        $response = $client->get($enclosure);
-                        if (!$response->isOk()) {
-                            common_debug(sprintf(_m('Could not GET URL %s.'), $enclosure), $response->getStatus());
-                        }
-                        $imgData = $response->getBody();
-
-                        $info = @getimagesizefromstring($imgData);
-                        if ($info === false || !$info[0] || !$info[1]) {
-                            common_debug(sprintf('The remote file was not a valid image file, URL: %s', $enclosure));
-                        }
-
-                        $filehash = hash('sha256', $imgData);
-
-                        $file = new File();
-                        $file->filehash = strtolower($filehash);
-
-                        // file already exist
-                        if ($file->find(true)) {
-                            $filename = $file->filename;
-                            $mimetype = $file->mimetype;
-
-                        // file doesn't exist
-                        } else {
-
-                            $mimetype = $info['mime'];
-                            $filename = strtolower($filehash) . '.' . File::guessMimeExtension($mimetype);
-                            $filepath = File::path($filename);
-
-                            if (!file_exists($filepath) && file_put_contents($filepath, $imgData) === false) {
-                                common_debug(sprintf('Could not write downloaded file to disk, URL: %s', $enclosure));
-                            } else {
-                                $profile = Profile::getKV('uri',$activity->actor->id);
-                                $mediafile = new MediaFile($profile, $filename, $mimetype, $filehash);
-                                $mediafile->attachToNotice($notice);
-
-                                $file_redir = new File_redirection;
-                                $file_redir->urlhash = File::hashurl($link_text);
-                                $file_redir->url = $link_text;
-                                $file_redir->file_id = $mediafile->fileRecord->id;
-                                $result = $file_redir->insert();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-    	return true;
-    }
 
 }
 
