@@ -165,7 +165,13 @@ class QuitimNotificationsAction extends Action
 					}
 
 				$from_profile = Profile::getKV($notification->from_profile_id);
-				$first_notice_id_in_conversation = Notice::getKV($notification->first_notice_id_in_conversation);
+
+				// profiles can be deleted or missing or something
+				if(!$from_profile instanceof Profile) {
+					continue;
+				}
+				
+				$first_notice_in_conversation = Notice::getKV('id',$notification->first_notice_id_in_conversation);
 
 				$this->elementStart('li', array('id' => 'notice-'.$notification->id, 'class' => 'notice notification '.$new_notice_class.$first_seen_class));
 		        $this->elementStart('div', array('class' => 'entry-title'));
@@ -174,20 +180,20 @@ class QuitimNotificationsAction extends Action
 					$this->showAuthorAndNotificationText($notification, $from_profile, _("is following you"));
 					}
 				elseif($notification->ntype == "like") {
-					$this->showThumb($first_notice_id_in_conversation);
+					$this->showThumb($first_notice_in_conversation);
 					$this->showAuthorAndNotificationText($notification, $from_profile, _("likes your image"));
 					}
 				elseif($notification->ntype == "bourg") {
-					$this->showThumb($first_notice_id_in_conversation);
+					$this->showThumb($first_notice_in_conversation);
 					$this->showAuthorAndNotificationText($notification, $from_profile, _("thinks your image is bourgois"));
 					}					
 				elseif($notification->ntype == "reply") {
-					$this->showThumb($first_notice_id_in_conversation);
+					$this->showThumb($first_notice_in_conversation);
 					$comment = Notice::getKV($notification->notice_id);
 					$this->showAuthorAndNotificationText($notification, $from_profile, _("has commented on your image: ").$comment->rendered);
 					}
 				elseif($notification->ntype == "mention") {
-					$this->showThumb($first_notice_id_in_conversation);
+					$this->showThumb($first_notice_in_conversation);
 					$comment = Notice::getKV($notification->notice_id);
 					$this->showAuthorAndNotificationText($notification, $from_profile, _("has mentioned you in a comment: ").$comment->rendered);
 					}
@@ -293,21 +299,21 @@ class QuitimNotificationsAction extends Action
                                          $profile->nickname));
     }
 
-	function showThumb($first_notice_id_in_conversation) {
-		$att = $first_notice_id_in_conversation->attachments();
+	function showThumb($first_notice_in_conversation) {
+		$att = $first_notice_in_conversation->attachments();
         foreach ($att as $attachment) {
             try {
-            	$thumbnail = $attachment->getThumbnail();
+            	$thumbnail = $attachment->getThumbnail();            	
             } catch (Exception $e) {
             	continue;
             }
 			if ($thumbnail) {
-				$this->elementStart('a', array('class' => 'thumb', 'href' => $first_notice_id_in_conversation->getUrl()));
-				$this->element('img', array('alt' => '', 'src' => $thumbnail->url, 'width' => $thumbnail->width, 'height' => $thumbnail->height));
-				$this->elementEnd('a');
+				$this->elementStart('a', array('class' => 'thumb', 'href' => common_path('notice/'.$first_notice_in_conversation->id)));
+				$this->element('img', array('src' => $thumbnail->getUrl(), 'width' => $thumbnail->width, 'height' => $thumbnail->height));				
+				$this->elementEnd('a');				
 				break;
 				}
 			}
-		}
+		}	
 
 }

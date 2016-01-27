@@ -96,7 +96,7 @@ class QuitimNewnoticeAction extends FormAction
         assert($this->scoped instanceof Profile); // XXX: maybe an error instead...
         $user = $this->scoped->getUser();
         $content = $this->trimmed('status_textarea');
-        $options = array();
+        $options = array('source' => 'quitim');
         Event::handle('StartSaveNewNoticeWeb', array($this, $user, &$content, &$options));
 
         if (empty($content)) {

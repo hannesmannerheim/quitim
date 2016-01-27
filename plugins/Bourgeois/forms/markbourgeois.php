@@ -125,7 +125,7 @@ class MarkBourgeoisForm extends Form
                            'submit',
                            null,
                            // TRANS: Button title for adding the favourite status to a notice.
-                           _('Add this notice to your list of bourgeois notices.'));
+                           _('Borgerligt!'));
     }
 
     /**

@@ -84,6 +84,11 @@ class QuitimThreadedNoticeList extends NoticeList
         $conversations = array();
 
         foreach ($notices as $notice) {
+			
+			// only posts
+			if($notice->verb != ActivityVerb::POST) {
+				continue;
+			}
 
             // Collapse repeats into their originals...
 

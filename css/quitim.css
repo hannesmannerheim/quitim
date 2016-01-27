@@ -920,7 +920,8 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 	display: none;
 }
 
-.noticestream.thumbnail-view .notice-faves {
+.noticestream.thumbnail-view .notice-faves,
+.noticestream.thumbnail-view .notice-bourgeois {
 	display: none;
 }
 
@@ -943,7 +944,7 @@ body#quitimuserstream .form_user_unsubscribe button[value="Unsubscribe"] {
 .quitim-notice-text-only {
 	display:none;
 	}
-#notices_primary > .threaded-notices .quitim-notice-text-only {
+.noticestream.threaded-view #notices_primary > .threaded-notices .quitim-notice-text-only {
     background: #f5f5f5 none repeat scroll 0 0;
     display: block;
     color:#333;

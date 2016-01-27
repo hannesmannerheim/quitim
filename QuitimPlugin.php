@@ -100,8 +100,10 @@ class QuitimPlugin extends Plugin {
 			// get first notice in conversation if we don't know it
 			if($notice_id && !$first_notice_id_in_conversation) {
 				$this_notice = Notice::getKV('id', $notice_id);
-				$root_notice = $this_notice->conversationRoot();
-				$first_notice_id_in_conversation = $root_notice->id;
+				if($this_notice instanceof Notice) {
+					$root_notice = $this_notice->conversationRoot();
+					$first_notice_id_in_conversation = $root_notice->id;
+					}
 				}
 
 			// insert
@@ -183,44 +185,48 @@ class QuitimPlugin extends Plugin {
      */
     function onStartNoticeDistribute($notice) {
 
-        // not for activity notices
-        if($notice->object_type == 'activity') {
+        // only for posts (not activity-notices etc)
+        if($notice->verb != ActivityVerb::POST) {
             return true;
         }
 
         // check for reply to insert in notifications
         if($notice->reply_to) {
-            $replyparent = $notice->getParent();
-            $replyauthor = $replyparent->getProfile();
-            if ($replyauthor instanceof Profile) {
-                $reply_notification_to = $replyauthor->id;
-	            $root_notice = $notice->conversationRoot();
-	            $this->insertNotification($replyauthor->id, $notice->profile_id, 'reply', $notice->id, $root_notice->id);
+            try {
+	            $replyparent = $notice->getParent();
+				$replyauthor = $replyparent->getProfile();
+				if ($replyauthor instanceof Profile) {
+					$reply_notification_to = $replyauthor->id;
+					$root_notice = $notice->conversationRoot();
+					$this->insertNotification($replyauthor->id, $notice->profile_id, 'reply', $notice->id, $root_notice->id);
 
-            	// if reply is not to root notice, also notify root notice's profile
-            	if($notice->getParent()->id != $root_notice->id) {
-		            $rootauthor = $root_notice->getProfile();
-		            // if we have not already notified this profile
-		            if($rootauthor->id != $replyauthor->id) {
-		                $root_reply_notification_to = $rootauthor->id;
-			            $this->insertNotification($rootauthor->id, $notice->profile_id, 'reply', $notice->id, $root_notice->id);
-			            }
-            		}
-            	}
-            }
+					// if reply is not to root notice, also notify root notice's profile
+					if($notice->getParent()->id != $root_notice->id) {
+						$rootauthor = $root_notice->getProfile();
+						// if we have not already notified this profile
+						if($rootauthor->id != $replyauthor->id) {
+							$root_reply_notification_to = $rootauthor->id;
+							$this->insertNotification($rootauthor->id, $notice->profile_id, 'reply', $notice->id, $root_notice->id);
+							}
+						}
+					}
+	        } catch(NoParentNoticeException $e) {
+	        	// no notification if reply_to notice doesn't exist	
+                common_log(LOG_ERR, 'Could not get parent for notice id='.$notice->id);									
+	        }
+        }
 
         // check for mentions to insert in notifications
-        $mentions = common_find_mentions($notice->content, $notice);
         $sender = Profile::getKV($notice->profile_id);
-        foreach ($mentions as $mention) {
+        $mentions = common_find_mentions($notice->content, $sender);
+								
+        foreach ($mentions as $mention) {	        
             foreach ($mention['mentioned'] as $mentioned) {
-
                 // Not from blocked profile
                 $mentioned_user = User::getKV('id', $mentioned->id);
                 if ($mentioned_user instanceof User && $mentioned_user->hasBlocked($sender)) {
                     continue;
 	                }
-
                 // only notify if mentioned user is not already notified for reply
                 if($reply_notification_to != $mentioned->id && $root_reply_notification_to != $mentioned->id) {
 		            $this->insertNotification($mentioned->id, $notice->profile_id, 'mention', $notice->id);
@@ -392,6 +398,7 @@ class QuitimPlugin extends Plugin {
 					// convert to jpg!!
 					$base64img_mime = 'image/png';
 					}
+					
 				$base64img = str_replace('data:image/jpeg;base64,', '', $base64img);
 				$base64img = str_replace('data:image/png;base64,', '', $base64img);
 				$base64img = str_replace(' ', '+', $base64img);
@@ -401,12 +408,17 @@ class QuitimPlugin extends Plugin {
 				$base64img_filename = File::filename($profile, $base64img_basename, $base64img_mime);
 				$base64img_path = File::path($base64img_filename);
 				$base64img_success = file_put_contents($base64img_path, $base64img);
-				$base64img_mimetype = MediaFile::getUploadedMimeType($base64img_path, $base64img_filename);
-				$quitim_upload = new MediaFile($profile, $base64img_filename, $base64img_mimetype);
-				$content .= ' ' . $quitim_upload->shortUrl();
+				try {
+					$base64img_mimetype = MediaFile::getUploadedMimeType($base64img_path, $base64img_filename);
+					$quitim_upload = new MediaFile($profile, $base64img_filename, $base64img_mimetype);
+					$content .= ' ' . $quitim_upload->shortUrl();
+				} catch (ClientException $e) {
+					// no attachment if we can't get the mimetype
+	                common_log(LOG_ERR, 'Could not get mimetype for upload, ignoring...');									
 				}
-
 			}
+
+		}
 		// replies
 		else {
 			if (!isset($action->args['attach'])) {

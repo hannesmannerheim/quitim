@@ -79,6 +79,20 @@ class QuitimNoticeListItem extends NoticeListItem
         }
     }
 
+    
+    function showNoticeLink()
+    {
+        $this->out->elementStart('a', array('rel' => 'bookmark',
+                                            'class' => 'timestamp',
+                                            'href' => common_path('notice/'.$this->notice->id)));
+        $this->out->element('time', array('class' => 'dt-published',
+                                          'datetime' => common_date_iso8601($this->notice->created),
+                                          'title' => common_exact_date($this->notice->created)),
+                            common_date_string($this->notice->created));
+        $this->out->elementEnd('a');
+    }    
+
+
 
     function showContent()
     {
@@ -87,13 +101,14 @@ class QuitimNoticeListItem extends NoticeListItem
 
         $attachments = $this->notice->attachments();
 
-		$is_conversation_root = ($this->notice->id == $this->notice->conversation);
+		$conversation_root = $this->notice->conversationRoot();
+		$is_conversation_root = ($this->notice->id == $conversation_root->id);
 
 		$image_attachments_num = 0;
  		foreach($attachments as $attachment) {
  			$attachment_type = substr($attachment->mimetype, 0, strpos($attachment->mimetype,'/'));
 			
- 			// we only show conversation starting images and local attachments
+ 			// we only show conversation starting images and local attachments 			
  			if($is_conversation_root && $attachment_type == 'image' && $attachment instanceof File && $attachment->filename !== null) {
 
  				// show full image if small
