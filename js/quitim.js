@@ -515,8 +515,6 @@ $('#camera').on('click',function(){
 // load image from file input
 function renderFileInput2(e) {
 
-	window.filterCache = new Object();
-
 	// show container
 	$('body').prepend('<div id="image-preview"></div>');
 	$('#image-preview').show();
@@ -533,8 +531,8 @@ function renderFileInput2(e) {
 		// create one 1000px wide canvas image
 		loadImage(e.target.files[0],
 				function (img) {
-					var appendedImg = document.getElementById('image-preview').appendChild(img);
-					appendedImg.setAttribute('id','hires_image');
+					window.appendedHiResImg = document.getElementById('image-preview').appendChild(img);
+					window.appendedHiResImg.setAttribute('id','hires_image');
 					},
 				{ maxWidth: 800,
 				  maxHeight: 800,
@@ -546,9 +544,9 @@ function renderFileInput2(e) {
 		loadImage(e.target.files[0],
 				function (img) {
 
-					var appendedImg = document.getElementById('image-preview').appendChild(img);
-					appendedImg.className = 'filtered-image';
-					appendedImg.setAttribute('id','image-normal');
+					window.appendedImg = document.getElementById('image-preview').appendChild(img);
+					window.appendedImg.className = 'filtered-image';
+					window.appendedImg.setAttribute('id','image-normal');
 
 					// show toolbar
 					$('#image-preview').append('<div id="image-nav"><div id="close-image">close</div><div id="submit-image">submit</div></div>\
@@ -937,6 +935,8 @@ $('body').on('doubletap','.filtered-image',function(){
 // close
 $('body').on('click','#close-image',function(){
 	window.imageNumber = window.imageNumber+1;
+	window.appendedHiResImg = null;
+	window.appendedHiResImg = null;	
 	$('#image-preview').remove();
 	$('input:file').unbind('click');
 	});
