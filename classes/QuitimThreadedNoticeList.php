@@ -376,11 +376,11 @@ class QuitimThreadedNoticeListMoreItem
 
     function showMoreItemMiniForm()
     {
-        $id = $this->notice->conversation;
+        $id = $this->notice->conversationRoot()->id;
         $url = common_local_url('quitimshownotice', array('id' => $id));
 
         //
-        $n = Conversation::noticeCount($id) - 1;
+        $n = Conversation::noticeCount($this->notice->conversation) - 1;
         //
         // // TRANS: Link to show replies for a notice.
         // // TRANS: %d is the number of replies to a notice and used for plural.
