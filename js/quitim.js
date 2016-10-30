@@ -499,16 +499,7 @@ $('#camera').on('click',function(){
 		renderFileInput2(e);
 		})});
 
-	// trigger click for firefox
-	if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-		$('#input_form_status .notice_data-attach').trigger('click');
-		}
-	// other browsers
-	else {
-		var evt = document.createEvent("HTMLEvents");
-		evt.initEvent("click", true, true);
-		$('#input_form_status .notice_data-attach')[0].dispatchEvent(evt);
-		}
+	triggerClickOnInputFile($('#input_form_status .notice_data-attach'));
 	});
 
 
@@ -936,7 +927,7 @@ $('body').on('doubletap','.filtered-image',function(){
 $('body').on('click','#close-image',function(){
 	window.imageNumber = window.imageNumber+1;
 	window.appendedHiResImg = null;
-	window.appendedHiResImg = null;	
+	window.appendedHiResImg = null;
 	$('#image-preview').remove();
 	$('input:file').unbind('click');
 	});
@@ -1004,8 +995,35 @@ $('body').on('click','#submit-image',function(){
 	});
 
 SN.U.addCallback('notice_posted', function (userdata) {
+	window.appendedHiResImg = null;
+	window.appendedHiResImg = null;
 	// reload if this is not a reply
 	if(!$('#' + userdata.notice.id).parent().hasClass('threaded-replies')) {
 		location.reload(true);
 	}
 });
+
+
+// Trigger click on <input type="file"> elements
+function triggerClickOnInputFile(inputFile) {
+	if(typeof bowser != 'undefined') {
+		var bowserIntVersion = parseInt(bowser.version,10);
+		if(typeof bowser.chrome != 'undefined' && bowser.chrome === true && bowserIntVersion < 53
+		|| typeof bowser.opera != 'undefined' && bowser.opera === true && bowserIntVersion < 39
+		|| typeof bowser.safari != 'undefined' && bowser.safari === true && bowserIntVersion < 9) {
+			var evt = document.createEvent("HTMLEvents");
+			evt.initEvent("click", true, true);
+			inputFile[0].dispatchEvent(evt);
+			console.log('triggering click on on input file element with the old trigger hack for older browsers...');
+			}
+		else {
+			inputFile.trigger('click');
+			console.log('regular click triggered on input file element');
+			}
+		}
+	else {
+		inputFile.trigger('click');
+		console.log('no bowser object found: regular click triggered on input file element');
+		}
+	console.log(bowser);
+	}

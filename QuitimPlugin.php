@@ -211,16 +211,16 @@ class QuitimPlugin extends Plugin {
 						}
 					}
 	        } catch(NoParentNoticeException $e) {
-	        	// no notification if reply_to notice doesn't exist	
-                common_log(LOG_ERR, 'Could not get parent for notice id='.$notice->id);									
+	        	// no notification if reply_to notice doesn't exist
+                common_log(LOG_ERR, 'Could not get parent for notice id='.$notice->id);
 	        }
         }
 
         // check for mentions to insert in notifications
         $sender = Profile::getKV($notice->profile_id);
         $mentions = common_find_mentions($notice->content, $sender);
-								
-        foreach ($mentions as $mention) {	        
+
+        foreach ($mentions as $mention) {
             foreach ($mention['mentioned'] as $mentioned) {
                 // Not from blocked profile
                 $mentioned_user = User::getKV('id', $mentioned->id);
@@ -302,6 +302,7 @@ class QuitimPlugin extends Plugin {
         $action->script($this->path('js/jquery.vintage.min.js') . '?changed='.date('YmdHis',filemtime(QUITIMDIR.'/js/jquery.vintage.min.js')));
         $action->script($this->path('js/jquery.mobile-events.min.js') . '?changed='.date('YmdHis',filemtime(QUITIMDIR.'/js/jquery.mobile-events.min.js')));
         $action->script($this->path('js/jpeg_encoder_basic.js') . '?changed='.date('YmdHis',filemtime(QUITIMDIR.'/js/jpeg_encoder_basic.js')));
+        $action->script($this->path('js/bowser.min.js') . '?changed='.date('YmdHis',filemtime(QUITIMDIR.'/js/bowser.min.js')));
         $action->script($this->path('js/quitim.js') . '?changed='.date('YmdHis',filemtime(QUITIMDIR.'/js/quitim.js')));
         return true;
     }
@@ -398,7 +399,7 @@ class QuitimPlugin extends Plugin {
 					// convert to jpg!!
 					$base64img_mime = 'image/png';
 					}
-					
+
 				$base64img = str_replace('data:image/jpeg;base64,', '', $base64img);
 				$base64img = str_replace('data:image/png;base64,', '', $base64img);
 				$base64img = str_replace(' ', '+', $base64img);
@@ -414,7 +415,7 @@ class QuitimPlugin extends Plugin {
 					$content .= ' ' . $quitim_upload->shortUrl();
 				} catch (ClientException $e) {
 					// no attachment if we can't get the mimetype
-	                common_log(LOG_ERR, 'Could not get mimetype for upload, ignoring...');									
+	                common_log(LOG_ERR, 'Could not get mimetype for upload, ignoring...');
 				}
 			}
 
@@ -531,12 +532,12 @@ class QuitimPlugin extends Plugin {
  */
 class URLMapperOverwrite extends URLMapper
 {
-    function overwrite_variable($m, $path, $args, $paramPatterns, $newaction)
+    static function overwrite_variable($m, $path, $args, $paramPatterns, $newaction)
     {
 
         $m->connect($path, array('action' => $newaction), $paramPatterns);
 
-		$regex = URLMapper::makeRegex($path, $paramPatterns);
+		$regex = self::makeRegex($path, $paramPatterns);
 
 		foreach($m->variables as $n=>$v)
 			if($v[1] == $regex)
